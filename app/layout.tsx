@@ -76,7 +76,10 @@ export const metadata: Metadata = {
       "Full Stack Web Developer dan IT Helper di Surakarta. Membangun aplikasi web modern dengan Laravel, React, Next.js, PHP, dan solusi digital terstruktur.",
   },
   verification: {
-    google: "vZvOJFKUyjkf51wp4QB-PVebBu8QDUxgB7HHfB-g_zs",
+    google: [
+      "vZvOJFKUyjkf51wp4QB-PVebBu8QDUxgB7HHfB-g_zs",
+      "cyGmm4ksQoNsW11MjtcGW5m1VRPtT1doIuQAoQV2mzA",
+    ],
   },
 };
 
