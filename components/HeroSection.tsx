@@ -32,7 +32,7 @@ export default function HeroSection() {
             {/* Headline */}
             <div>
               <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-5xl sm:leading-tight lg:text-5xl lg:leading-[1.15]">
-                Halo, saya <span className="text-blue-600">Faiz Arfian</span>. <br />
+                Halo, saya <span className="text-blue-600">Faiz Arfian Ilhami</span>. <br />
                 Web Developer &amp; IT Helper di Surakarta.
               </h1>
 
