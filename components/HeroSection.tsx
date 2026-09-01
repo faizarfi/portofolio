@@ -5,9 +5,6 @@ import {
   faDownload,
   faLocationDot,
   faEnvelope,
-  faCode,
-  faServer,
-  faDatabase,
 } from "@fortawesome/free-solid-svg-icons";
 import { SOCIALS } from "@/lib/data/socials";
 import { Button, TechBadge } from "@/components/ui";

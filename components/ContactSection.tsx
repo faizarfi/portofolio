@@ -4,23 +4,59 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
-  faArrowRight,
   faMapPin,
   faCopy,
   faCheck,
   faArrowUpRightFromSquare,
 } from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { SOCIALS } from "@/lib/data/socials";
 import { SectionHeading, Reveal } from "@/components/ui";
 
+const SUBJECT_OPTIONS = [
+  "Pembuatan Website / Aplikasi Web Baru",
+  "Pengembangan Sistem Informasi / Dashboard",
+  "Bantuan Teknis IT & Troubleshooting",
+  "Peluang Kerja / Kolaborasi Proyek",
+  "Lainnya / Konsultasi Santai",
+];
+
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    contactInfo: "",
+    subject: SUBJECT_OPTIONS[0],
+    message: "",
+  });
+
   const email = "faizarfianilhami020204@gmail.com";
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
+  };
+
+  const getFormattedMessage = () => {
+    const namePart = formData.name ? `Halo Faiz, perkenalkan saya ${formData.name}.` : "Halo Faiz,";
+    const contactPart = formData.contactInfo ? ` (Kontak: ${formData.contactInfo})` : "";
+    const subjectPart = `Mengenai: ${formData.subject}.`;
+    const messagePart = formData.message ? `\n\nPesan:\n${formData.message}` : "";
+    return `${namePart}${contactPart}\n${subjectPart}${messagePart}`;
+  };
+
+  const handleSendWhatsApp = (e: React.FormEvent) => {
+    e.preventDefault();
+    const text = encodeURIComponent(getFormattedMessage());
+    window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
+  };
+
+  const handleSendEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`[Inquiry Portofolio] ${formData.subject} — ${formData.name || "Klien"}`);
+    const body = encodeURIComponent(getFormattedMessage());
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -30,29 +66,110 @@ export default function ContactSection() {
           <SectionHeading
             tag="Kontak &amp; Diskusi"
             title="Mari Mulai Diskusi Proyek"
-            subtitle="Saya terbuka untuk peluang kerja sama pembuatan website, pengembangan sistem informasi, maupun konsultasi IT."
+            subtitle="Saya terbuka untuk peluang kerja sama pembuatan website, pengembangan sistem informasi, maupun konsultasi bantuan IT di Surakarta."
           />
         </Reveal>
 
         {/* ── 2-Column Responsive Contact Grid ── */}
         <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
-          {/* Main Action (7 cols) */}
+          {/* Main Action & Form (7 cols) */}
           <Reveal delay={60} className="lg:col-span-7">
             <div className="neat-card flex h-full flex-col justify-between p-6 sm:p-8 lg:p-10">
               <div>
                 <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-xs font-bold text-blue-800">
                   <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
-                  <span>Tersedia untuk Freelance &amp; Kesempatan Fulltime</span>
+                  <span>Tersedia untuk Freelance &amp; Kesempatan Kerja</span>
                 </div>
 
                 <h3 className="text-xl font-black text-slate-900 sm:text-2xl lg:text-3xl">
-                  Punya ide sistem atau ingin membuat website baru?
+                  Punya ide sistem atau butuh solusi web?
                 </h3>
 
-                <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-                  Silakan hubungi saya melalui email langsung atau salin alamat email di bawah ini.
-                  Saya akan merespons secepat mungkin.
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  Tulis pesan Anda melalui formulir di bawah ini dan kirim langsung melalui WhatsApp
+                  atau Email. Pesan akan terformat otomatis dan siap dikirimkan.
                 </p>
+
+                {/* ── Interactive Contact Form ── */}
+                <form className="mt-6 space-y-4">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Nama Anda
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Contoh: Budi Santoso"
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Email atau No. WhatsApp
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.contactInfo}
+                        onChange={(e) => setFormData({ ...formData, contactInfo: e.target.value })}
+                        placeholder="contoh@email.com / 0812..."
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Kebutuhan / Topik Diskusi
+                    </label>
+                    <select
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                    >
+                      {SUBJECT_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Detail Pesan atau Gambaran Proyek
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Ceritakan sedikit tentang kebutuhan proyek atau kendala teknis yang ingin diselesaikan..."
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Dual Submit Buttons */}
+                  <div className="flex flex-wrap items-center gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={handleSendWhatsApp}
+                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-xs font-bold text-white shadow-xs transition-all hover:bg-emerald-500 active:scale-95 sm:flex-none"
+                    >
+                      <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
+                      <span>Kirim via WhatsApp</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleSendEmail}
+                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-500 active:scale-95 sm:flex-none"
+                    >
+                      <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
+                      <span>Kirim via Email</span>
+                    </button>
+                  </div>
+                </form>
 
                 {/* Email Copy Box */}
                 <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-slate-200/90 bg-slate-50/80 p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -78,26 +195,15 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              {/* Direct Buttons */}
-              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-6">
-                <a
-                  href={`mailto:${email}`}
-                  className="btn-pulse inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-500 hover:shadow-md"
-                >
-                  <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
-                  Kirim Pesan Email
-                  <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3" />
-                </a>
-
-                <div className="flex items-center gap-2 text-xs font-medium text-slate-500 sm:text-sm">
-                  <FontAwesomeIcon icon={faMapPin} className="h-3.5 w-3.5 text-blue-600" />
-                  Surakarta, Jawa Tengah, ID
-                </div>
+              {/* Location indicator */}
+              <div className="mt-6 flex items-center gap-2 border-t border-slate-100 pt-4 text-xs font-medium text-slate-500">
+                <FontAwesomeIcon icon={faMapPin} className="h-3.5 w-3.5 text-blue-600" />
+                Surakarta, Jawa Tengah, Indonesia (Bisa Remote / On-Site)
               </div>
             </div>
           </Reveal>
 
-          {/* Social Deck (5 cols) */}
+          {/* Social Deck & Info (5 cols) */}
           <Reveal delay={100} className="lg:col-span-5">
             <div className="neat-card flex h-full flex-col justify-between p-6 sm:p-8">
               <div>
@@ -130,11 +236,13 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/60 p-4 text-xs text-blue-900 sm:text-sm">
-                <p className="font-bold">Respon Cepat</p>
-                <p className="mt-0.5 text-xs text-blue-700">
-                  Aktif membalas email dan pesan profesional setiap hari kerja.
-                </p>
+              <div className="mt-6 space-y-3">
+                <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4 text-xs text-blue-900 sm:text-sm">
+                  <p className="font-bold">Respon Cepat &amp; Ramah</p>
+                  <p className="mt-0.5 text-xs text-blue-700">
+                    Aktif menanggapi pesan diskusi proyek dan pertanyaan teknis setiap hari kerja.
+                  </p>
+                </div>
               </div>
             </div>
           </Reveal>

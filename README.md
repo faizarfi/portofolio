@@ -15,7 +15,7 @@
 - 🎨 **Modern Blue & White Bento Layout**: Antarmuka bersih, elegan, *full-width*, dan terstruktur rapi.
 - ⚡ **Dynamic TechIcon System**: Ikon resmi untuk berbagai tech stack (Laravel, PHP, React, Next.js, MySQL, Python, Tailwind, Git, AI, dan Hardware).
 - 📊 **Live GitHub Activity Integration**: Sinkronisasi data publik GitHub `@faizarfi`, metrik repositori, bintang, dan kalender kontribusi 1 tahun terakhir.
-- 📂 **Real Project Showcase & Case Studies**: Katalog proyek lengkap (*Said Connect*, *AI Chatbot BPS Karanganyar*, *Pengingat Absen*, *Pordes Score*, dll.).
+- 📂 **Real Project Showcase & Case Studies**: Katalog proyek lengkap (*Said Connect*, *AI Chatbot*, *Pengingat Absen*, *Pordes Score*, *API 9 Router*, dll.).
 - 📱 **100% Responsif**: Dioptimalkan secara mulus untuk mobile, tablet, laptop, dan monitor widescreen.
 - 🚀 **Performa Tinggi & SEO Friendly**: Schema.org JSON-LD Person, Open Graph, sitemap.xml, robots.txt, dan Server-Side Rendering (SSR/SSG).
 

@@ -4,12 +4,12 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data";
 import { Navbar, Footer } from "@/components";
-import { SectionHeading, Reveal, PageBackground, ProjectCard } from "@/components/ui";
+import { SectionHeading, Reveal, PageBackground, ProjectCard, FloatingContact } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Semua Proyek — Faiz Arfian Ilhami",
   description:
-    "Koleksi proyek web yang telah dikembangkan oleh Faiz Arfian Ilhami — mulai dari sistem tracer alumni kampus, asisten chatbot AI BPS, hingga aplikasi live scoring.",
+    "Koleksi proyek web yang telah dikembangkan oleh Faiz Arfian Ilhami — mulai dari sistem tracer alumni kampus, asisten AI chatbot, hingga aplikasi live scoring.",
   alternates: { canonical: "/projects" },
 };
 
@@ -66,6 +66,7 @@ export default function ProjectsPage() {
       </main>
 
       <Footer />
+      <FloatingContact />
     </div>
   );
 }

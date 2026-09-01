@@ -1,3 +1,4 @@
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPhp,
@@ -6,30 +7,21 @@ import {
   faJs,
   faPython,
   faGitAlt,
-  faGithub,
   faHtml5,
   faCss3Alt,
-  faNodeJs,
-  faDocker,
-  faLinux,
-  faBootstrap,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faDatabase,
   faServer,
   faCode,
-  faTerminal,
   faNetworkWired,
   faMicrochip,
   faRobot,
-  faSliders,
   faClock,
-  faWrench,
-  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 export function getTechIconInfo(tech: string): {
-  icon: any;
+  icon: IconDefinition;
   colorClass: string;
 } {
   const t = tech.toLowerCase();

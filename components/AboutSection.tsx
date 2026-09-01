@@ -4,7 +4,6 @@ import {
   faStar,
   faCode,
   faHeadset,
-  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { SectionHeading, Reveal } from "@/components/ui";
 import { ABOUT_EDUCATION, ABOUT_FOCUS_TAGS } from "@/lib/data/about";

@@ -13,7 +13,7 @@ import {
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data";
 import { Navbar, Footer } from "@/components";
-import { Reveal, PageBackground, TechBadge } from "@/components/ui";
+import { Reveal, PageBackground, TechBadge, FloatingContact } from "@/components/ui";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -227,6 +227,7 @@ export default async function ProjectDetailPage({
       </main>
 
       <Footer />
+      <FloatingContact />
     </div>
   );
 }

@@ -5,19 +5,15 @@ import {
   faWind,
   faServer,
   faDatabase,
-  faGears,
   faHeadset,
-  faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faHtml5,
-  faCss3Alt,
   faJs,
   faReact,
   faPhp,
   faPython,
   faGitAlt,
-  faBootstrap,
 } from "@fortawesome/free-brands-svg-icons";
 
 export const SKILLS: { name: string; icon: IconDefinition }[] = [

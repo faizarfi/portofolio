@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark, faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { NAV_LINKS } from "@/lib/data";
 
 export default function Navbar() {
@@ -14,9 +14,11 @@ export default function Navbar() {
   const [scrollActive, setScrollActive] = useState("");
   const pathname = usePathname();
 
-  useEffect(() => {
+  const [prevPath, setPrevPath] = useState(pathname);
+  if (prevPath !== pathname) {
+    setPrevPath(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -58,12 +60,12 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full px-4 pt-3.5 pb-2 transition-all sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-50 w-full px-3.5 pt-3.5 pb-2 transition-all sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
           {/* ── Brand ── */}
           <Link
             href="/"
-            className="group flex items-center gap-3 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 shadow-xs backdrop-blur-md transition-all hover:border-blue-300 hover:shadow-sm"
+            className="group flex items-center gap-3 rounded-full border border-slate-200/90 bg-white/95 px-3 py-1.5 shadow-xs backdrop-blur-md transition-all hover:border-blue-300 hover:shadow-sm sm:px-3.5"
           >
             <div className="relative h-8 w-8 overflow-hidden rounded-full ring-2 ring-blue-500/30">
               <Image
@@ -95,7 +97,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-150 ${
+                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 lg:px-4 ${
                     active
                       ? "bg-blue-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
@@ -121,7 +123,7 @@ export default function Navbar() {
 
             <a
               href="#contact"
-              className="btn-pulse inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-500 hover:shadow-md"
+              className="btn-pulse inline-flex items-center gap-2 rounded-full bg-blue-600 px-3.5 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-500 hover:shadow-md sm:px-4"
             >
               <FontAwesomeIcon icon={faEnvelope} className="h-3 w-3" />
               <span>Kontak Saya</span>
@@ -131,7 +133,7 @@ export default function Navbar() {
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Tutup menu" : "Buka menu"}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-xs md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-xs transition-colors hover:bg-slate-50 md:hidden"
             >
               <FontAwesomeIcon icon={open ? faXmark : faBars} className="h-4 w-4" />
             </button>
@@ -148,7 +150,7 @@ export default function Navbar() {
         }`}
       >
         <div
-          className={`absolute inset-0 bg-slate-900/30 backdrop-blur-xs transition-opacity duration-200 ${
+          className={`absolute inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity duration-200 ${
             open ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setOpen(false)}
@@ -156,26 +158,27 @@ export default function Navbar() {
         />
 
         <div
-          className={`absolute top-0 right-0 flex h-full w-72 flex-col bg-white shadow-2xl transition-transform duration-200 ease-out ${
+          className={`absolute top-0 right-0 flex h-full w-72 max-w-[85vw] flex-col bg-white shadow-2xl transition-transform duration-200 ease-out ${
             open ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <div className="flex h-16 items-center justify-between border-b border-slate-100 px-5">
             <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-blue-600" />
+              <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
               <span className="text-xs font-bold tracking-wider text-slate-600 uppercase">
-                Navigasi
+                Menu Portofolio
               </span>
             </div>
             <button
               onClick={() => setOpen(false)}
+              aria-label="Tutup menu samping"
               className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50"
             >
               <FontAwesomeIcon icon={faXmark} className="h-3.5 w-3.5" />
             </button>
           </div>
 
-          <nav className="flex flex-1 flex-col gap-1 p-4">
+          <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-4">
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
               return (
@@ -185,7 +188,7 @@ export default function Navbar() {
                   onClick={() => setOpen(false)}
                   className={`rounded-xl px-4 py-3 text-sm font-semibold transition-all ${
                     active
-                      ? "bg-blue-50 text-blue-800 font-bold"
+                      ? "bg-blue-50 text-blue-800 font-bold border border-blue-200/60"
                       : "text-slate-700 hover:bg-slate-50"
                   }`}
                 >
@@ -195,14 +198,25 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="border-t border-slate-100 p-5">
+          <div className="border-t border-slate-100 p-4 space-y-2">
+            <a
+              href="https://api.whatsapp.com/send?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-emerald-500"
+            >
+              <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
+              Chat via WhatsApp
+            </a>
+
             <a
               href="mailto:faizarfianilhami020204@gmail.com"
               onClick={() => setOpen(false)}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-xs font-bold text-white shadow-xs"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-500"
             >
               <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
-              Kirim Email Sekarang
+              Kirim Email
             </a>
           </div>
         </div>

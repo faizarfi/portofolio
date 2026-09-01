@@ -10,3 +10,5 @@ export { default as RoleBadge } from "./RoleBadge";
 export { default as SectionHeading } from "./SectionHeading";
 export { default as TechBadge } from "./TechBadge";
 export { default as TechIcon, getTechIconInfo } from "./TechIcon";
+export { default as ProjectModal } from "./ProjectModal";
+export { default as FloatingContact } from "./FloatingContact";

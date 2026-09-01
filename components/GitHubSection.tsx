@@ -5,6 +5,7 @@ import {
   faArrowUpRightFromSquare,
   faBook,
   faCodeCommit,
+  faArrowsLeftRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { SectionHeading, Reveal } from "@/components/ui";
@@ -99,19 +100,21 @@ async function getGitHubData() {
     const ownRepos = repos.filter((r) => !r.fork);
     const totalStars = ownRepos.reduce((sum, r) => sum + r.stargazers_count, 0);
 
-    const langCounts = ownRepos
-      .filter((r) => r.language)
-      .reduce<Record<string, number>>((acc, r) => {
-        acc[r.language!] = (acc[r.language!] || 0) + 1;
-        return acc;
-      }, {});
+    const langCounts: Record<string, number> = {};
+    ownRepos.forEach((r) => {
+      if (r.language) langCounts[r.language] = (langCounts[r.language] || 0) + 1;
+    });
 
     const topLanguages = Object.entries(langCounts)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 5);
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 4);
 
-    const contributions: Contribution[] = contribJson?.contributions ?? [];
-    const totalContributions: number = contribJson?.total?.lastYear ?? 0;
+    let contributions: Contribution[] = [];
+    let totalContributions = 0;
+    if (contribJson?.contributions) {
+      contributions = contribJson.contributions;
+      totalContributions = contribJson.total?.lastYear ?? 0;
+    }
 
     return {
       user,
@@ -132,7 +135,7 @@ export default async function GitHubSection() {
   const monthLabels = getMonthLabels(weeks);
 
   return (
-    <section id="github" className="w-full px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
+    <section id="github" className="w-full px-3.5 py-12 sm:px-6 lg:px-8 lg:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl">
         <Reveal>
           <SectionHeading
@@ -144,105 +147,116 @@ export default async function GitHubSection() {
 
         {data ? (
           <div className="space-y-6">
-            {/* Top Stat Row */}
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              <div className="neat-card flex items-center gap-4 p-5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                  <FontAwesomeIcon icon={faBook} className="h-5 w-5" />
+            {/* Top Stat Row - Fully responsive 2 cols on mobile with compact padding, 4 cols on tablet/desktop */}
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-4">
+              <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 sm:h-11 sm:w-11 sm:rounded-xl">
+                  <FontAwesomeIcon icon={faBook} className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <p className="text-2xl font-black text-slate-900">{data.user.public_repos}</p>
-                  <p className="text-xs font-semibold text-slate-500">Public Repos</p>
-                </div>
-              </div>
-
-              <div className="neat-card flex items-center gap-4 p-5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700">
-                  <FontAwesomeIcon icon={faCodeCommit} className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-2xl font-black text-slate-900">{data.totalContributions || "Aktif"}</p>
-                  <p className="text-xs font-semibold text-slate-500">Kontribusi 1 Thn</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xl font-black text-slate-900 sm:text-2xl">{data.user.public_repos}</p>
+                  <p className="truncate text-[11px] font-semibold text-slate-500 sm:text-xs">Public Repos</p>
                 </div>
               </div>
 
-              <div className="neat-card flex items-center gap-4 p-5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-700">
-                  <FontAwesomeIcon icon={faStar} className="h-5 w-5" />
+              <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700 sm:h-11 sm:w-11 sm:rounded-xl">
+                  <FontAwesomeIcon icon={faCodeCommit} className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <p className="text-2xl font-black text-slate-900">{data.totalStars}</p>
-                  <p className="text-xs font-semibold text-slate-500">Repository Stars</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xl font-black text-slate-900 sm:text-2xl">{data.totalContributions || "Aktif"}</p>
+                  <p className="truncate text-[11px] font-semibold text-slate-500 sm:text-xs">Kontribusi 1 Thn</p>
                 </div>
               </div>
 
-              <div className="neat-card flex items-center gap-4 p-5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                  <FontAwesomeIcon icon={faUsers} className="h-5 w-5" />
+              <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-700 sm:h-11 sm:w-11 sm:rounded-xl">
+                  <FontAwesomeIcon icon={faStar} className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <p className="text-2xl font-black text-slate-900">{data.user.followers}</p>
-                  <p className="text-xs font-semibold text-slate-500">Followers</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xl font-black text-slate-900 sm:text-2xl">{data.totalStars}</p>
+                  <p className="truncate text-[11px] font-semibold text-slate-500 sm:text-xs">Repo Stars</p>
+                </div>
+              </div>
+
+              <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 sm:h-11 sm:w-11 sm:rounded-xl">
+                  <FontAwesomeIcon icon={faUsers} className="h-4 w-4 sm:h-5 sm:w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xl font-black text-slate-900 sm:text-2xl">{data.user.followers}</p>
+                  <p className="truncate text-[11px] font-semibold text-slate-500 sm:text-xs">Followers</p>
                 </div>
               </div>
             </div>
 
-            {/* Heatmap & Languages */}
+            {/* Heatmap & Languages Grid */}
             <div className="grid gap-6 lg:grid-cols-12">
-              {/* Heatmap (8 cols) */}
-              <div className="neat-card p-6 sm:p-8 lg:col-span-8">
-                <div className="mb-5 flex items-center justify-between">
+              {/* Heatmap Card (8 cols) - fully responsive with horizontal scrolling and scroll indicator */}
+              <div className="neat-card max-w-full overflow-hidden p-4 sm:p-6 lg:p-8 lg:col-span-8">
+                {/* Header with Title and Levels Legend */}
+                <div className="mb-4 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
                   <span className="text-xs font-bold tracking-wider text-slate-700 uppercase">
                     Kalender Kontribusi GitHub
                   </span>
                   <div className="flex items-center gap-1.5 text-xs text-slate-400">
                     <span>Sedikit</span>
                     {CONTRIBUTION_LEVELS.map((lvl, idx) => (
-                      <span key={idx} className={`h-3 w-3 rounded-xs ${lvl}`} />
+                      <span key={idx} className={`h-2.5 w-2.5 rounded-xs sm:h-3 sm:w-3 ${lvl}`} />
                     ))}
                     <span>Banyak</span>
                   </div>
                 </div>
 
-                <div className="overflow-x-auto pb-3">
-                  <div
-                    className="relative mb-2.5"
-                    style={{ height: 16, width: weeks.length * STRIDE }}
-                  >
-                    {monthLabels.map((ml) => (
-                      <span
-                        key={`${ml.label}-${ml.col}`}
-                        className="absolute font-mono text-[11px] font-semibold text-slate-400"
-                        style={{ left: ml.col * STRIDE }}
-                      >
-                        {ml.label}
-                      </span>
-                    ))}
-                  </div>
+                {/* Mobile scroll hint */}
+                <div className="mb-2.5 flex items-center gap-1.5 text-[11px] font-medium text-slate-400 sm:hidden">
+                  <FontAwesomeIcon icon={faArrowsLeftRight} className="h-3 w-3 text-blue-500" />
+                  <span>Geser ke samping untuk melihat kalender penuh</span>
+                </div>
 
-                  <div className="flex gap-1">
-                    {weeks.map((week, wi) => (
-                      <div key={wi} className="flex flex-col gap-1">
-                        {Array.from({ length: 7 }).map((_, di) => {
-                          const day = week[di];
-                          return day ? (
-                            <div
-                              key={di}
-                              title={`${day.date}: ${day.count} kontribusi`}
-                              className={`h-3 w-3 rounded-xs ${CONTRIBUTION_LEVELS[day.level]} transition-transform hover:scale-125`}
-                            />
-                          ) : (
-                            <div key={di} className="h-3 w-3" />
-                          );
-                        })}
-                      </div>
-                    ))}
+                {/* Horizontal scrollable calendar wrapper */}
+                <div className="max-w-full overflow-x-auto pb-3 pt-1">
+                  <div className="inline-block min-w-max">
+                    <div
+                      className="relative mb-2"
+                      style={{ height: 16, width: weeks.length * STRIDE }}
+                    >
+                      {monthLabels.map((ml) => (
+                        <span
+                          key={`${ml.label}-${ml.col}`}
+                          className="absolute font-mono text-[10px] font-semibold text-slate-400 sm:text-[11px]"
+                          style={{ left: ml.col * STRIDE }}
+                        >
+                          {ml.label}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-1">
+                      {weeks.map((week, wi) => (
+                        <div key={wi} className="flex flex-col gap-1">
+                          {Array.from({ length: 7 }).map((_, di) => {
+                            const day = week[di];
+                            return day ? (
+                              <div
+                                key={di}
+                                title={`${day.date}: ${day.count} kontribusi`}
+                                className={`h-2.5 w-2.5 rounded-xs sm:h-3 sm:w-3 ${CONTRIBUTION_LEVELS[day.level]} transition-transform hover:scale-125`}
+                              />
+                            ) : (
+                              <div key={di} className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4 text-xs text-slate-500 sm:text-sm">
+                {/* Bottom stats and direct link */}
+                <div className="mt-4 flex flex-col gap-2.5 border-t border-slate-100 pt-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:text-sm">
                   <span>
-                    Total <strong className="text-slate-900 font-bold">{data.totalContributions}</strong>{" "}
+                    Total <strong className="font-bold text-slate-900">{data.totalContributions}</strong>{" "}
                     aktivitas di tahun terakhir
                   </span>
                   <a
@@ -257,10 +271,10 @@ export default async function GitHubSection() {
                 </div>
               </div>
 
-              {/* Languages (4 cols) */}
-              <div className="neat-card flex flex-col justify-between p-6 sm:p-8 lg:col-span-4">
+              {/* Languages Card (4 cols) */}
+              <div className="neat-card flex flex-col justify-between p-5 sm:p-6 lg:p-8 lg:col-span-4">
                 <div>
-                  <span className="mb-5 block text-xs font-bold tracking-wider text-slate-700 uppercase">
+                  <span className="mb-4 block text-xs font-bold tracking-wider text-slate-700 uppercase">
                     Distribusi Bahasa
                   </span>
                   <div className="space-y-3.5">
@@ -289,7 +303,7 @@ export default async function GitHubSection() {
                   href={`https://github.com/${GITHUB_USERNAME}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-xs font-bold text-white transition-all hover:bg-blue-500 shadow-xs"
+                  className="mt-6 flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-500 sm:py-3"
                 >
                   <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
                   Lihat Semua di GitHub

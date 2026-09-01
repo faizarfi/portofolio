@@ -3,7 +3,6 @@ import {
   faGithub,
   faLinkedinIn,
   faInstagram,
-  faXTwitter,
   faTiktok,
 } from "@fortawesome/free-brands-svg-icons";
 

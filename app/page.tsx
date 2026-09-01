@@ -3,14 +3,14 @@ import {
   HeroSection,
   AboutSection,
   SkillsSection,
-  SpeakingSection,
   ProjectsSection,
+  SpeakingSection,
   WorkflowSection,
   GitHubSection,
   ContactSection,
   Footer,
 } from "@/components";
-import { PageBackground } from "@/components/ui";
+import { PageBackground, FloatingContact } from "@/components/ui";
 
 export default function Home() {
   return (
@@ -32,6 +32,7 @@ export default function Home() {
           <ContactSection />
         </main>
         <Footer />
+        <FloatingContact />
       </div>
     </div>
   );

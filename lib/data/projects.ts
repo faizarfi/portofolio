@@ -3,6 +3,8 @@ export interface ProjectDetail {
   overview: string;
   contributions: string[];
   contributionsCount?: number;
+  year?: string;
+  metric?: string;
 }
 
 export interface Project {
@@ -45,25 +47,24 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    name: "AI Chatbot Layanan BPS Karanganyar",
+    name: "AI Chatbot",
     slug: "aichatbot-bps",
     description:
-      "Aplikasi asisten virtual berbasis kecerdasan buatan (AI) untuk mempermudah masyarakat mengakses data statistik dan layanan publik Badan Pusat Statistik Kabupaten Karanganyar.",
+      "Aplikasi asisten virtual berbasis kecerdasan buatan (AI) untuk mempermudah masyarakat mengakses data statistik dan layanan publik secara cepat dan akurat.",
     tech: ["Laravel", "PHP", "Blade", "Gemini AI API", "MySQL", "Tailwind CSS"],
     url: "https://github.com/faizarfi/aichatbotbps",
     github: "https://github.com/faizarfi/aichatbotbps",
-    image: "/projects/kalanderAkademik.jpg",
     featured: true,
     category: "AI & Tools",
     details: {
       role: "Full Stack Developer",
       overview:
-        "Sistem chatbot cerdas terintegrasi yang dibangun untuk membantu staf dan publik dalam menelusuri publikasi statistik, indikator makro ekonomi, dan layanan data BPS Karanganyar secara cepat melalui interaksi percakapan natural bertenaga AI.",
+        "Sistem chatbot cerdas terintegrasi yang dibangun untuk membantu staf dan publik dalam menelusuri publikasi statistik, indikator layanan publik, dan data informasi secara cepat melalui interaksi percakapan natural bertenaga AI.",
       contributions: [
-        "Integrasi AI API: Menghubungkan engine AI dengan basis pengetahuan statistik daerah untuk memberikan respons kontekstual dan akurat.",
+        "Integrasi AI API: Menghubungkan engine AI dengan basis pengetahuan statistik untuk memberikan respons kontekstual dan akurat.",
         "Sistem Manajemen Konten (CMS): Membangun panel backend Laravel untuk mengelola riwayat chat, feedback kepuasan pengguna, dan basis data pengetahuan.",
         "Antarmuka Chat Interaktif: Mendesain tampilan chat box modern yang ringan, intuitif, dan responsif dengan indikator pesan real-time.",
-        "Keamanan Data & Monitoring: Mengimplementasikan sistem logging dan filter prompt untuk menjaga keandalan informasi statistik yang disajikan.",
+        "Keamanan Data & Monitoring: Mengimplementasikan sistem logging dan filter prompt untuk menjaga keandalan informasi yang disajikan.",
       ],
       contributionsCount: 4,
     },
@@ -112,5 +113,26 @@ export const PROJECTS: Project[] = [
       contributionsCount: 3,
     },
   },
-
+  {
+    name: "API 9 Router Gateway",
+    slug: "api9router",
+    description:
+      "Layanan gateway routing API ringan berbasis serverless untuk manajemen endpoint data dan konektivitas antarlayanan web.",
+    tech: ["JavaScript", "Node.js", "REST API", "Vercel"],
+    url: "https://api9router.vercel.app",
+    github: "https://github.com/faizarfi/api9router",
+    featured: true,
+    category: "AI & Tools",
+    details: {
+      role: "Backend Developer",
+      overview:
+        "Microservice API Router yang memfasilitasi pengalihan permintaan (request routing), penanganan CORS, dan standarisasi respon JSON untuk berbagai integrasi aplikasi web.",
+      contributions: [
+        "API Endpoint Routing: Merancang struktur rute yang modular dan efisien untuk mendistribusikan request ke downstream service.",
+        "Middleware & Error Handling: Menerapkan penanganan kesalahan terpusat dan validasi parameter request yang aman.",
+        "Serverless Deployment: Menjalankan arsitektur serverless function di Vercel untuk efisiensi latensi dan biaya hosting.",
+      ],
+      contributionsCount: 3,
+    },
+  },
 ];
