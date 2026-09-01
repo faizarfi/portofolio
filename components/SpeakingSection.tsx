@@ -23,7 +23,7 @@ export default function SpeakingSection() {
   return (
     <section id="organizational-experience" className="w-full px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
       <div className="mx-auto max-w-7xl">
-        <Reveal>
+        <Reveal direction="up">
           <SectionHeading
             tag="Organisasi &amp; Kepemimpinan"
             title="Pengalaman Organisasi"
@@ -34,12 +34,12 @@ export default function SpeakingSection() {
         {/* ── 2-Column Responsive Grid ── */}
         <div className="grid gap-6 sm:grid-cols-2">
           {visible.map((item, index) => (
-            <Reveal key={index} delay={index * 50} className="h-full">
-              <div className="neat-card flex h-full flex-col justify-between p-6 sm:p-8">
+            <Reveal key={item.event} delay={index * 60} direction="up" className="h-full">
+              <div className="neat-card flex h-full flex-col justify-between p-6 sm:p-8 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
                 <div>
                   {/* Top Bar */}
                   <div className="mb-4 flex items-center justify-between gap-2">
-                    <span className="rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-xs font-bold text-blue-800">
+                    <span className="rounded-full bg-blue-50 border border-blue-200/80 px-3 py-1 text-xs font-bold text-blue-800 shadow-xs">
                       {item.title}
                     </span>
                     <span className="font-mono text-xs font-semibold text-slate-500">
@@ -47,7 +47,7 @@ export default function SpeakingSection() {
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-slate-900 sm:text-lg">
+                  <h3 className="font-display text-base font-bold text-slate-900 sm:text-lg">
                     {item.event}
                   </h3>
                   <p className="mt-1 text-xs font-bold text-blue-700 sm:text-sm">
@@ -73,7 +73,7 @@ export default function SpeakingSection() {
                     {item.topics.map((t) => (
                       <span
                         key={t}
-                        className="rounded-lg border border-slate-100 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-600"
+                        className="rounded-lg border border-slate-100 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-600 transition-colors hover:border-blue-200 hover:bg-blue-50/50 hover:text-blue-800"
                       >
                         {t}
                       </span>
@@ -88,7 +88,7 @@ export default function SpeakingSection() {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 hover:text-blue-800"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 hover:text-blue-800 transition-colors"
                     >
                       <span>Lihat Dokumentasi Kegiatan</span>
                       <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
@@ -101,11 +101,11 @@ export default function SpeakingSection() {
         </div>
 
         {hasMore && (
-          <Reveal>
+          <Reveal direction="up" delay={80}>
             <div className="mt-8 flex justify-center">
               <button
                 onClick={() => setShowAll((prev) => !prev)}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-2.5 text-xs font-bold text-slate-700 shadow-xs transition-all hover:bg-slate-50 hover:text-blue-700"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-2.5 text-xs font-bold text-slate-700 shadow-xs transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 active:scale-95"
               >
                 {showAll ? (
                   <>
