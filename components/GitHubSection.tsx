@@ -61,15 +61,15 @@ function buildCalendar(contributions: Contribution[]): (Contribution | null)[][]
 
 function getMonthLabels(weeks: (Contribution | null)[][]): Array<{ col: number; label: string }> {
   const labels: Array<{ col: number; label: string }> = [];
-  const seen = new Set<string>();
+  let lastCol = -10;
   weeks.forEach((week, i) => {
     const first = week.find(Boolean) as Contribution | undefined;
     if (!first) return;
     const d = new Date(first.date);
-    const key = `${d.getFullYear()}-${d.getMonth()}`;
-    if (!seen.has(key)) {
-      seen.add(key);
+    // Place label at month boundary and ensure at least 4 columns (52px) spacing to avoid overlapping
+    if (d.getDate() <= 7 && i - lastCol >= 4) {
       labels.push({ col: i, label: d.toLocaleString("id-ID", { month: "short" }) });
+      lastCol = i;
     }
   });
   return labels;
@@ -150,23 +150,23 @@ export default async function GitHubSection() {
             {/* Top Stat Row with Animated Counters */}
             <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-4">
               <Reveal delay={40} direction="up">
-                <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 sm:h-11 sm:w-11 sm:rounded-xl">
-                    <FontAwesomeIcon icon={faBook} className="h-4 w-4 sm:h-5 sm:w-5" />
+                <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 sm:h-10 sm:w-10 sm:rounded-xl">
+                    <FontAwesomeIcon icon={faBook} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display text-xl font-black text-slate-900 sm:text-2xl">
                       <AnimatedCounter target={data.user.public_repos} />
                     </p>
-                    <p className="truncate text-[11px] font-semibold text-slate-500 sm:text-xs">Public Repos</p>
+                    <p className="truncate text-[11px] font-semibold text-slate-500">Public Repos</p>
                   </div>
                 </div>
               </Reveal>
 
               <Reveal delay={80} direction="up">
-                <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700 sm:h-11 sm:w-11 sm:rounded-xl">
-                    <FontAwesomeIcon icon={faCodeCommit} className="h-4 w-4 sm:h-5 sm:w-5" />
+                <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700 sm:h-10 sm:w-10 sm:rounded-xl">
+                    <FontAwesomeIcon icon={faCodeCommit} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display text-xl font-black text-slate-900 sm:text-2xl">
@@ -176,47 +176,47 @@ export default async function GitHubSection() {
                         "Aktif"
                       )}
                     </p>
-                    <p className="truncate text-[11px] font-semibold text-slate-500 sm:text-xs">Kontribusi 1 Thn</p>
+                    <p className="truncate text-[11px] font-semibold text-slate-500">Kontribusi 1 Thn</p>
                   </div>
                 </div>
               </Reveal>
 
               <Reveal delay={120} direction="up">
-                <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-700 sm:h-11 sm:w-11 sm:rounded-xl">
-                    <FontAwesomeIcon icon={faStar} className="h-4 w-4 sm:h-5 sm:w-5" />
+                <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-700 sm:h-10 sm:w-10 sm:rounded-xl">
+                    <FontAwesomeIcon icon={faStar} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display text-xl font-black text-slate-900 sm:text-2xl">
                       <AnimatedCounter target={data.totalStars} />
                     </p>
-                    <p className="truncate text-[11px] font-semibold text-slate-500 sm:text-xs">Repo Stars</p>
+                    <p className="truncate text-[11px] font-semibold text-slate-500">Repo Stars</p>
                   </div>
                 </div>
               </Reveal>
 
               <Reveal delay={160} direction="up">
-                <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 sm:h-11 sm:w-11 sm:rounded-xl">
-                    <FontAwesomeIcon icon={faUsers} className="h-4 w-4 sm:h-5 sm:w-5" />
+                <div className="neat-card flex items-center gap-3 p-3.5 sm:gap-4 sm:p-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 sm:h-10 sm:w-10 sm:rounded-xl">
+                    <FontAwesomeIcon icon={faUsers} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display text-xl font-black text-slate-900 sm:text-2xl">
                       <AnimatedCounter target={data.user.followers} />
                     </p>
-                    <p className="truncate text-[11px] font-semibold text-slate-500 sm:text-xs">Followers</p>
+                    <p className="truncate text-[11px] font-semibold text-slate-500">Followers</p>
                   </div>
                 </div>
               </Reveal>
             </div>
 
             {/* Heatmap & Languages Grid */}
-            <div className="grid gap-6 lg:grid-cols-12">
-              {/* Heatmap Card (8 cols) - fully responsive with horizontal scrolling */}
+            <div className="grid gap-5 lg:grid-cols-12">
+              {/* Heatmap Card (8 cols) */}
               <Reveal delay={100} direction="left" className="lg:col-span-8">
-                <div className="neat-card max-w-full overflow-hidden p-4 sm:p-6 lg:p-8">
+                <div className="neat-card max-w-full overflow-hidden p-4 sm:p-5 lg:p-6">
                   {/* Header with Title and Levels Legend */}
-                  <div className="mb-4 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="mb-3.5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <span className="font-display text-xs font-bold tracking-wider text-slate-700 uppercase">
                       Kalender Kontribusi GitHub
                     </span>
@@ -230,13 +230,13 @@ export default async function GitHubSection() {
                   </div>
 
                   {/* Mobile scroll hint */}
-                  <div className="mb-2.5 flex items-center gap-1.5 text-[11px] font-medium text-slate-400 sm:hidden">
+                  <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium text-slate-400 sm:hidden">
                     <FontAwesomeIcon icon={faArrowsLeftRight} className="h-3 w-3 text-blue-500" />
-                    <span>Geser ke samping untuk melihat kalender penuh</span>
+                    <span>Geser untuk melihat seluruh kalender</span>
                   </div>
 
-                  {/* Horizontal scrollable calendar wrapper */}
-                  <div className="max-w-full overflow-x-auto pb-3 pt-1">
+                  {/* Horizontal scrollable calendar wrapper with smooth touch scrolling */}
+                  <div className="max-w-full overflow-x-auto pb-2 pt-1 [-webkit-overflow-scrolling:touch]">
                     <div className="inline-block min-w-max">
                       <div
                         className="relative mb-2"
@@ -275,7 +275,7 @@ export default async function GitHubSection() {
                   </div>
 
                   {/* Bottom stats and direct link */}
-                  <div className="mt-4 flex flex-col gap-2.5 border-t border-slate-100 pt-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:text-sm">
+                  <div className="mt-3.5 flex flex-col gap-2 border-t border-slate-100 pt-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:text-sm">
                     <span>
                       Total <strong className="font-bold text-slate-900">{data.totalContributions}</strong>{" "}
                       aktivitas di tahun terakhir
@@ -295,12 +295,12 @@ export default async function GitHubSection() {
 
               {/* Languages Card (4 cols) */}
               <Reveal delay={140} direction="right" className="lg:col-span-4">
-                <div className="neat-card flex h-full flex-col justify-between p-5 sm:p-6 lg:p-8">
+                <div className="neat-card flex h-full flex-col justify-between p-4 sm:p-5 lg:p-6">
                   <div>
-                    <span className="font-display mb-4 block text-xs font-bold tracking-wider text-slate-700 uppercase">
+                    <span className="font-display mb-3 block text-xs font-bold tracking-wider text-slate-700 uppercase">
                       Distribusi Bahasa
                     </span>
-                    <div className="space-y-3.5">
+                    <div className="space-y-3">
                       {data.topLanguages.map(([lang, count]) => {
                         const pct = Math.round((count / (data.totalLangCount || 1)) * 100);
                         const color = LANG_COLORS[lang] ?? "bg-blue-600";
@@ -329,9 +329,9 @@ export default async function GitHubSection() {
                     href={`https://github.com/${GITHUB_USERNAME}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-6 flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-xs font-bold text-white shadow-xs shadow-blue-600/25 transition-all duration-200 hover:bg-blue-500 hover:shadow-md sm:py-3 active:scale-95"
+                    className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-2 text-xs font-bold text-white shadow-xs shadow-blue-600/25 transition-all duration-200 hover:bg-blue-500 hover:shadow-md sm:py-2.5 active:scale-95"
                   >
-                    <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
+                    <FontAwesomeIcon icon={faGithub} className="h-3.5 w-3.5" />
                     Lihat Semua di GitHub
                   </a>
                 </div>
