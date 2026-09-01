@@ -8,7 +8,7 @@ export default function Footer() {
       {/* Subtle Gradient Shimmer Top Line */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
 
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           {/* Brand Info */}
           <div className="text-center sm:text-left">

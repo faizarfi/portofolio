@@ -40,7 +40,7 @@ export default function ProjectsSection() {
   }, [activeTab, searchQuery]);
 
   return (
-    <section id="projects" className="w-full px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
+    <section id="projects" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
@@ -51,17 +51,17 @@ export default function ProjectsSection() {
         </Reveal>
 
         {/* ── Search Bar & Filter Tabs ── */}
-        <Reveal delay={50} direction="up">
-          <div className="mb-8 flex flex-col gap-4 border-b border-slate-200/80 pb-6 lg:flex-row lg:items-center lg:justify-between">
+        <Reveal delay={40} direction="up">
+          <div className="mb-5 flex flex-col gap-3.5 border-b border-slate-200/80 pb-4 lg:flex-row lg:items-center lg:justify-between">
             {/* Category Filter Tabs */}
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
               {CATEGORIES.map((cat) => {
                 const isActive = activeTab === cat.key;
                 return (
                   <button
                     key={cat.key}
                     onClick={() => setActiveTab(cat.key)}
-                    className={`flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-200 sm:px-4 sm:py-2 active:scale-95 ${
+                    className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold transition-all duration-200 sm:px-3.5 sm:py-1.5 active:scale-95 ${
                       isActive
                         ? "bg-blue-600 text-white shadow-xs shadow-blue-600/30"
                         : "bg-white border border-slate-200 text-slate-600 hover:border-blue-300 hover:bg-blue-50/60 hover:text-blue-800"
@@ -84,7 +84,7 @@ export default function ProjectsSection() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari nama atau teknologi..."
-                className="w-full rounded-full border border-slate-200 bg-white py-2 pl-9 pr-9 text-xs text-slate-800 placeholder-slate-400 shadow-xs transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                className="w-full rounded-full border border-slate-200 bg-white py-1.5 pl-9 pr-9 text-xs text-slate-800 placeholder-slate-400 shadow-xs transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
               />
               {searchQuery && (
                 <button
@@ -99,7 +99,7 @@ export default function ProjectsSection() {
           </div>
 
           {/* Results count indicator */}
-          <div className="mb-6 flex items-center justify-between text-xs text-slate-500">
+          <div className="mb-4 flex items-center justify-between text-xs text-slate-500">
             <span>
               Menampilkan <strong>{filteredProjects.length}</strong> dari {PROJECTS.length} proyek
               {searchQuery && ` untuk "${searchQuery}"`}
@@ -115,11 +115,11 @@ export default function ProjectsSection() {
           </div>
         </Reveal>
 
-        {/* ── 3-Column Responsive Projects Grid ── */}
+        {/* ── 3-Column Responsive Projects Grid with compact gaps ── */}
         {filteredProjects.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProjects.map((project, index) => (
-              <Reveal key={project.slug} delay={Math.min(index * 60, 300)} direction="up" className="h-full">
+              <Reveal key={project.slug} delay={Math.min(index * 50, 250)} direction="up" className="h-full">
                 <ProjectCard
                   project={project}
                   onQuickView={(p) => setSelectedProject(p)}
@@ -128,7 +128,7 @@ export default function ProjectsSection() {
             ))}
           </div>
         ) : (
-          <div className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-xs">
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xs">
             <p className="font-display text-sm font-bold text-slate-800">Tidak ada proyek yang sesuai pencarian</p>
             <p className="mt-1 text-xs text-slate-500">Coba ubah kata kunci atau pilih tab kategori lain.</p>
             <button
@@ -136,7 +136,7 @@ export default function ProjectsSection() {
                 setActiveTab("all");
                 setSearchQuery("");
               }}
-              className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-500 active:scale-95"
+              className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-blue-500 active:scale-95"
             >
               Tampilkan Semua Proyek
             </button>
@@ -144,17 +144,17 @@ export default function ProjectsSection() {
         )}
 
         {/* ── Full Width Footer CTA ── */}
-        <Reveal delay={100} direction="up">
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 rounded-3xl border border-slate-200/90 bg-gradient-to-r from-blue-50/40 via-white to-indigo-50/40 p-6 shadow-xs sm:flex-row sm:p-8">
+        <Reveal delay={80} direction="up">
+          <div className="mt-8 flex flex-col items-center justify-between gap-3.5 rounded-3xl border border-slate-200/90 bg-gradient-to-r from-blue-50/40 via-white to-indigo-50/40 p-5 shadow-xs sm:flex-row sm:p-6">
             <div>
-              <h3 className="font-display text-base font-bold text-slate-900 sm:text-lg">
+              <h3 className="font-display text-sm font-bold text-slate-900 sm:text-base">
                 Ingin melihat kode sumber proyek lainnya?
               </h3>
-              <p className="mt-1 text-xs text-slate-500 sm:text-sm">
+              <p className="mt-0.5 text-xs text-slate-500">
                 Seluruh repositori open-source dan skrip utilitas tersedia di GitHub @faizarfi.
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <Button href="/projects" variant="outline" size="sm">
                 Katalog Proyek ({PROJECTS.length})
               </Button>

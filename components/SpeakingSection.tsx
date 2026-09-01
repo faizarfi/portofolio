@@ -21,7 +21,7 @@ export default function SpeakingSection() {
   const hasMore = SPEAKING.length > INITIAL_SHOW;
 
   return (
-    <section id="organizational-experience" className="w-full px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
+    <section id="organizational-experience" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
@@ -32,10 +32,10 @@ export default function SpeakingSection() {
         </Reveal>
 
         {/* ── 2-Column Responsive Grid ── */}
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           {visible.map((item, index) => (
-            <Reveal key={item.event} delay={index * 60} direction="up" className="h-full">
-              <div className="neat-card flex h-full flex-col justify-between p-6 sm:p-8 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
+            <Reveal key={item.event} delay={index * 50} direction="up" className="h-full">
+              <div className="neat-card flex h-full flex-col justify-between p-5 sm:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
                 <div>
                   {/* Top Bar */}
                   <div className="mb-4 flex items-center justify-between gap-2">

@@ -43,7 +43,7 @@ const STEPS = [
 
 export default function WorkflowSection() {
   return (
-    <section id="workflow" className="w-full px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
+    <section id="workflow" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
@@ -54,14 +54,14 @@ export default function WorkflowSection() {
         </Reveal>
 
         {/* ── 5 Symmetrical Clean Cards with Staggered Reveals ── */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-5">
           {STEPS.map((step, i) => (
-            <Reveal key={step.number} delay={i * 90} direction="up" className="h-full">
-              <div className="neat-card group relative flex h-full flex-col justify-between p-6 text-left transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
+            <Reveal key={step.number} delay={i * 60} direction="up" className="h-full">
+              <div className="neat-card group relative flex h-full flex-col justify-between p-4 sm:p-5 text-left transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
                 {/* Step Top Bar */}
                 <div>
-                  <div className="mb-5 flex items-center justify-between">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-700 shadow-xs transition-transform duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
+                  <div className="mb-3.5 flex items-center justify-between">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700 shadow-xs transition-transform duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
                       <FontAwesomeIcon icon={step.icon} className="h-4 w-4" />
                     </div>
                     <span className="rounded-full bg-slate-100 px-2.5 py-0.5 font-mono text-xs font-bold text-slate-500 transition-colors group-hover:bg-blue-100 group-hover:text-blue-800">

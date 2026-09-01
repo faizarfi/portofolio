@@ -14,7 +14,7 @@ export default function SectionHeading({
   className = "",
 }: SectionHeadingProps) {
   return (
-    <div className={`mb-8 sm:mb-12 ${centered ? "text-center" : ""} ${className}`}>
+    <div className={`mb-5 sm:mb-7 ${centered ? "text-center" : ""} ${className}`}>
       {/* Animated Tag Pill */}
       <div
         className={`mb-3 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/90 px-3.5 py-1 text-xs font-semibold tracking-wide text-blue-700 shadow-xs backdrop-blur-xs transition-transform duration-300 hover:scale-105 ${

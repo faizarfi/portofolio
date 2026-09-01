@@ -60,7 +60,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="w-full px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
+    <section id="contact" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
@@ -71,17 +71,17 @@ export default function ContactSection() {
         </Reveal>
 
         {/* ── 2-Column Responsive Contact Grid ── */}
-        <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+        <div className="grid gap-5 lg:grid-cols-12 lg:gap-6">
           {/* Main Action & Form (7 cols) */}
           <Reveal delay={60} direction="left" className="lg:col-span-7">
-            <div className="neat-card flex h-full flex-col justify-between p-6 sm:p-8 lg:p-10">
+            <div className="neat-card flex h-full flex-col justify-between p-5 sm:p-7 lg:p-8">
               <div>
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/90 px-3.5 py-1.5 text-xs font-bold text-blue-800 shadow-xs">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/90 px-3 py-1 text-xs font-bold text-blue-800 shadow-xs">
                   <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
                   <span>Tersedia untuk Freelance &amp; Kesempatan Kerja</span>
                 </div>
 
-                <h3 className="font-display text-xl font-black text-slate-900 sm:text-2xl lg:text-3xl">
+                <h3 className="font-display text-lg font-black text-slate-900 sm:text-xl lg:text-2xl">
                   Punya ide sistem atau butuh solusi web?
                 </h3>
 

@@ -61,21 +61,21 @@ export default function InteractivePhotoCard() {
         </div>
       </div>
 
-      {/* Floating Badge Bottom-Right: WhatsApp Direct Button */}
+      {/* Floating Badge Bottom-Right: Clean WhatsApp Action */}
       <a
         href="https://wa.me/6282327867328?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat WhatsApp Faiz 0823-2786-7328"
-        className="animate-float-reverse absolute -bottom-5 -right-3 z-20 flex items-center gap-2.5 rounded-2xl border border-emerald-300 bg-white/95 px-4 py-2.5 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-emerald-50 hover:border-emerald-400 group/wa"
+        aria-label="Chat WhatsApp Faiz Arfian"
+        className="animate-float-reverse absolute -bottom-4 -right-3 z-20 flex items-center gap-2.5 rounded-2xl border border-emerald-200 bg-white/95 px-3.5 py-2 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-emerald-50/60 hover:border-emerald-300 group/wa"
       >
-        <span className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-md shadow-emerald-500/30 transition-transform duration-300 group-hover/wa:scale-110">
-          <FontAwesomeIcon icon={faWhatsapp} className="h-4.5 w-4.5" />
+        <span className="relative flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-md shadow-emerald-600/30 transition-transform duration-300 group-hover/wa:scale-110">
+          <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
           <span className="ping-slow absolute -inset-0.5 rounded-xl bg-emerald-400 opacity-60" />
         </span>
         <div className="text-left">
-          <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Fast Response WA</p>
-          <p className="font-mono text-xs font-black text-slate-900">0823-2786-7328</p>
+          <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Fast Response</p>
+          <p className="text-xs font-bold text-slate-900">Chat WhatsApp</p>
         </div>
       </a>
 

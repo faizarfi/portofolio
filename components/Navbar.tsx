@@ -214,7 +214,7 @@ export default function Navbar() {
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-emerald-500 active:scale-95"
             >
               <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
-              Chat WhatsApp (0823-2786-7328)
+              Chat via WhatsApp
             </a>
 
             <a

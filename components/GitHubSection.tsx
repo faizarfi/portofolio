@@ -135,7 +135,7 @@ export default async function GitHubSection() {
   const monthLabels = getMonthLabels(weeks);
 
   return (
-    <section id="github" className="w-full px-3.5 py-12 sm:px-6 lg:px-8 lg:py-20 overflow-hidden">
+    <section id="github" className="w-full px-3.5 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10 overflow-hidden">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
@@ -146,7 +146,7 @@ export default async function GitHubSection() {
         </Reveal>
 
         {data ? (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-5">
             {/* Top Stat Row with Animated Counters */}
             <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-4">
               <Reveal delay={40} direction="up">
