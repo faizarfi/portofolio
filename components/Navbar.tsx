@@ -207,14 +207,14 @@ export default function Navbar() {
 
           <div className="border-t border-slate-100 p-4 space-y-2">
             <a
-              href="https://api.whatsapp.com/send?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
+              href="https://wa.me/6282327867328?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-emerald-500 active:scale-95"
             >
               <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
-              Chat via WhatsApp
+              Chat WhatsApp (0823-2786-7328)
             </a>
 
             <a

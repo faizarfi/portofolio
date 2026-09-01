@@ -49,7 +49,7 @@ export default function ContactSection() {
   const handleSendWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
     const text = encodeURIComponent(getFormattedMessage());
-    window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
+    window.open(`https://wa.me/6282327867328?text=${text}`, "_blank");
   };
 
   const handleSendEmail = (e: React.FormEvent) => {
@@ -171,8 +171,33 @@ export default function ContactSection() {
                   </div>
                 </form>
 
+                {/* Direct WhatsApp Strip */}
+                <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-emerald-200/90 bg-emerald-50/70 p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-xs">
+                      <FontAwesomeIcon icon={faWhatsapp} className="h-4.5 w-4.5" />
+                    </div>
+                    <div>
+                      <p className="font-mono text-xs font-bold text-emerald-950 sm:text-sm">
+                        0823-2786-7328
+                      </p>
+                      <p className="text-[11px] font-medium text-emerald-700">WhatsApp Resmi Faiz Arfian</p>
+                    </div>
+                  </div>
+
+                  <a
+                    href="https://wa.me/6282327867328?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition-all duration-200 hover:bg-emerald-500 active:scale-95"
+                  >
+                    <FontAwesomeIcon icon={faWhatsapp} className="h-3.5 w-3.5" />
+                    <span>Chat Langsung</span>
+                  </a>
+                </div>
+
                 {/* Email Copy Box */}
-                <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-slate-200/90 bg-slate-50/80 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-3 flex flex-col gap-3 rounded-2xl border border-slate-200/90 bg-slate-50/80 p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-blue-800">
                       <FontAwesomeIcon icon={faEnvelope} className="h-4 w-4" />

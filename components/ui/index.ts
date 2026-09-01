@@ -13,3 +13,5 @@ export { default as TechIcon, getTechIconInfo } from "./TechIcon";
 export { default as ProjectModal } from "./ProjectModal";
 export { default as FloatingContact } from "./FloatingContact";
 export { default as AnimatedCounter } from "./AnimatedCounter";
+export { default as InteractivePhotoCard } from "./InteractivePhotoCard";
+export { default as TypewriterRole } from "./TypewriterRole";

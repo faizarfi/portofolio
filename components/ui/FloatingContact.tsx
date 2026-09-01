@@ -30,8 +30,8 @@ export default function FloatingContact() {
   const whatsappMessage = encodeURIComponent(
     "Halo Faiz Arfian, saya melihat website portofolio Anda dan tertarik untuk mendiskusikan peluang proyek web / bantuan teknis IT."
   );
-  // Direct WhatsApp URL (without specific number it lets user open WA / select contact, or if number is provided opens directly)
-  const whatsappUrl = `https://api.whatsapp.com/send?text=${whatsappMessage}`;
+  // Direct WhatsApp URL to user's phone number 082327867328
+  const whatsappUrl = `https://wa.me/6282327867328?text=${whatsappMessage}`;
   const emailUrl = `mailto:faizarfianilhami020204@gmail.com?subject=${encodeURIComponent(
     "Diskusi Proyek Web / Bantuan IT — dari Portofolio"
   )}&body=${whatsappMessage}`;
@@ -72,7 +72,7 @@ export default function FloatingContact() {
             </div>
             <div>
               <p className="font-bold">Chat WhatsApp</p>
-              <p className="text-[10px] font-medium text-emerald-600">Pesan otomatis terisi</p>
+              <p className="text-[10px] font-medium text-emerald-700 font-mono">0823-2786-7328</p>
             </div>
           </a>
 
