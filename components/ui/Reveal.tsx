@@ -60,7 +60,7 @@ export default function Reveal({
   return (
     <div
       ref={ref}
-      className={className}
+      className={`min-w-0 max-w-full ${className}`}
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? getActiveTransform() : getInitialTransform(),
