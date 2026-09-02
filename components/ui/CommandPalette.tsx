@@ -178,9 +178,10 @@ export default function CommandPalette() {
       id: "nav-org",
       category: "Navigasi",
       title: "Pengalaman Organisasi & BEM",
-      subtitle: "Rekam jejak kepemimpinan di UMS Surakarta",
+      subtitle: "Rekam jejak kepemimpinan & organisasi UMS",
       icon: faBriefcase,
       action: () => navigateTo("/#organizational-experience"),
+
     },
     {
       id: "nav-github",
@@ -322,7 +323,7 @@ export default function CommandPalette() {
             <p><span className="font-bold text-white">Nama:</span> Faiz Arfian Ilhami</p>
             <p><span className="font-bold text-white">Pendidikan:</span> S1 Teknik Informatika — Universitas Muhammadiyah Surakarta (Lulus 2026, IPK 3.3)</p>
             <p><span className="font-bold text-white">Fokus:</span> Full Stack Web Developer &amp; IT Support (Troubleshooting LAN/Hardware)</p>
-            <p><span className="font-bold text-white">Lokasi:</span> Surakarta, Jawa Tengah, Indonesia</p>
+            <p><span className="font-bold text-white">Lokasi:</span> Indonesia (Terbuka untuk Remote &amp; On-Site ke Mana Saja)</p>
           </div>
         );
         break;
@@ -399,12 +400,13 @@ export default function CommandPalette() {
           <div className="space-y-1 text-slate-300 font-mono text-xs">
             <p className="text-emerald-400 font-bold">[SYSTEM TELEMETRY]</p>
             <p>Availability: <span className="text-white font-bold">READY FOR HIRE / PROJECT COLLAB</span></p>
-            <p>Preferred Work: Full-time Web Developer / IT Support (Surakarta &amp; Remote)</p>
+            <p>Preferred Work: Full-time Web Developer / IT Support (Seluruh Indonesia &amp; Remote)</p>
             <p>Workstation: Windows 11 Pro &amp; Ubuntu WSL2 Environment</p>
-            <p>Latency: &lt;15ms (Surakarta ID)</p>
+            <p>Latency: &lt;15ms (Indonesia Cloud)</p>
           </div>
         );
         break;
+
 
       case "sudo hire":
       case "hire":

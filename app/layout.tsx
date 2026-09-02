@@ -32,17 +32,18 @@ export const metadata: Metadata = {
     template: "%s | Faiz Arfian Ilhami",
   },
   description:
-    "Portofolio Faiz Arfian Ilhami — Full Stack Web Developer & IT Helper di Surakarta. Mengembangkan sistem informasi berbasis Laravel, React, Next.js, PHP, dan solusi teknologi informasi yang andal.",
+    "Portofolio Faiz Arfian Ilhami — Full Stack Web Developer & IT Helper Indonesia. Mengembangkan sistem informasi berbasis Laravel, React, Next.js, PHP, dan solusi teknologi informasi yang andal.",
   keywords: [
     "Faiz Arfian Ilhami",
     "Full Stack Web Developer",
-    "Web Developer Surakarta",
+    "Web Developer Indonesia",
+    "Web Developer Remote",
     "Laravel Developer",
     "Next.js Developer",
     "React Developer",
     "PHP Developer",
     "IT Helper",
-    "IT Support Surakarta",
+    "IT Support Indonesia",
     "Jasa Pembuatan Website",
   ],
   icons: {
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Faiz Arfian Ilhami | Full Stack Web Developer & IT Helper",
     description:
-      "Full Stack Web Developer dan IT Helper di Surakarta. Membangun aplikasi web modern dengan Laravel, React, Next.js, PHP, dan solusi digital yang terstruktur.",
+      "Full Stack Web Developer dan IT Helper Indonesia. Membangun aplikasi web modern dengan Laravel, React, Next.js, PHP, dan solusi digital yang terstruktur.",
     url: "https://faizarfian.id",
     siteName: "faizarfian.id",
     locale: "id_ID",
@@ -73,7 +74,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Faiz Arfian Ilhami | Full Stack Web Developer & IT Helper",
     description:
-      "Full Stack Web Developer dan IT Helper di Surakarta. Membangun aplikasi web modern dengan Laravel, React, Next.js, PHP, dan solusi digital terstruktur.",
+      "Full Stack Web Developer dan IT Helper Indonesia. Membangun aplikasi web modern dengan Laravel, React, Next.js, PHP, dan solusi digital terstruktur.",
   },
   verification: {
     google: [
@@ -105,10 +106,11 @@ export default function RootLayout({
     },
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Surakarta",
-      addressRegion: "Jawa Tengah",
+      addressLocality: "Indonesia",
+      addressRegion: "Indonesia",
       addressCountry: "ID",
     },
+
     sameAs: [
       "https://github.com/faizarfi",
       "https://www.linkedin.com/in/faizarfianilhami",

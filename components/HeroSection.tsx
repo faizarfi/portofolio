@@ -29,7 +29,7 @@ export default function HeroSection() {
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
                 <span className="inline-flex items-center gap-1.5">
                   <FontAwesomeIcon icon={faLocationDot} className="h-2.5 w-2.5 text-slate-500" />
-                  <span>Surakarta, ID &mdash; Terbuka untuk Kerja Sama Proyek &amp; IT Support</span>
+                  <span>Indonesia &mdash; Terbuka untuk Kerja Sama Proyek &amp; IT Support (Remote / On-Site)</span>
                 </span>
               </div>
             </Reveal>
@@ -46,10 +46,11 @@ export default function HeroSection() {
                   Saya merancang dan membangun sistem informasi serta aplikasi web yang solutif dan terstruktur
                   menggunakan <strong className="font-semibold text-slate-900">Laravel, PHP, React / Next.js</strong>,
                   dan <strong className="font-semibold text-slate-900">MySQL</strong>. Mengutamakan kode yang rapi,
-                  keamanan data, dan siap mendampingi kebutuhan teknis IT secara langsung di Surakarta maupun remote.
+                  keamanan data, dan siap mendampingi kebutuhan teknis IT di mana saja, baik secara on-site di seluruh Indonesia maupun remote.
                 </p>
               </div>
             </Reveal>
+
 
             {/* CTAs */}
             <Reveal direction="up" delay={120}>

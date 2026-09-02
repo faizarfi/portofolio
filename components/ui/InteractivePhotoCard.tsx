@@ -61,8 +61,9 @@ export default function InteractivePhotoCard() {
           {/* Location Chip (Bottom-Left) */}
           <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-slate-800 shadow-xs">
             <FontAwesomeIcon icon={faLocationDot} className="h-3 w-3 text-slate-600" />
-            <span>Surakarta, Jawa Tengah</span>
+            <span>Indonesia (Remote / On-Site)</span>
           </div>
+
         </div>
 
         {/* Bottom Highlight Strip */}

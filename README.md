@@ -6,7 +6,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
-> Official portfolio website of **Faiz Arfian Ilhami** — Full Stack Web Developer & IT Helper based in Surakarta, Indonesia. Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, and FontAwesome.
+> Official portfolio website of **Faiz Arfian Ilhami** — Full Stack Web Developer & IT Helper based in Indonesia (Open for Remote & On-Site nationwide). Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, and FontAwesome.
 
 ---
 
@@ -71,8 +71,9 @@ npm run start
 
 - **Nama**: Faiz Arfian Ilhami
 - **Pendidikan**: Fresh Graduate S1 Teknik Informatika — Universitas Muhammadiyah Surakarta (2022 - 2026)
-- **Lokasi**: Surakarta, Jawa Tengah, Indonesia
+- **Lokasi**: Indonesia (Terbuka untuk Remote &amp; On-Site ke Seluruh Wilayah)
 - **Email**: [faizarfianilhami020204@gmail.com](mailto:faizarfianilhami020204@gmail.com)
+
 - **GitHub**: [@faizarfi](https://github.com/faizarfi)
 - **LinkedIn**: [Faiz Arfian](https://www.linkedin.com/in/faiz-arfian-ilhami-100236316/)
 

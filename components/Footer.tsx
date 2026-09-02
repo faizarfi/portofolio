@@ -13,8 +13,9 @@ export default function Footer() {
               Faiz Arfian Ilhami
             </p>
             <p className="text-xs text-slate-500 font-mono">
-              Full Stack Web Developer &middot; IT Support &middot; Surakarta
+              Full Stack Web Developer &middot; IT Support &middot; Indonesia
             </p>
+
           </div>
 
           {/* Nav Links */}

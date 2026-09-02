@@ -66,7 +66,7 @@ export default function ContactSection() {
           <SectionHeading
             tag="Kontak &amp; Diskusi"
             title="Mari Terhubung &amp; Berkolaborasi"
-            subtitle="Saya terbuka untuk peluang kerja sama pembuatan website, perancangan sistem informasi instansi, maupun dukungan teknis IT di wilayah Surakarta dan sekitarnya."
+            subtitle="Saya terbuka untuk peluang kerja sama pembuatan website, perancangan sistem informasi instansi, maupun dukungan teknis IT ke seluruh wilayah Indonesia (Remote &amp; On-Site)."
           />
         </Reveal>
 
@@ -78,8 +78,9 @@ export default function ContactSection() {
               <div>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-mono font-medium text-slate-700 shadow-2xs">
                   <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  <span>Surakarta, ID &bull; Tersedia Kerja Sama Proyek</span>
+                  <span>Indonesia &bull; Tersedia Kerja Sama Proyek (Remote &amp; On-Site)</span>
                 </div>
+
 
                 <h3 className="font-display text-lg font-black text-slate-950 sm:text-xl lg:text-2xl">
                   Punya kebutuhan sistem atau kendala teknis?
@@ -222,8 +223,9 @@ export default function ContactSection() {
               {/* Location indicator */}
               <div className="mt-6 flex items-center gap-2 border-t border-slate-100 pt-4 text-xs font-mono text-slate-500">
                 <FontAwesomeIcon icon={faMapPin} className="h-3.5 w-3.5 text-slate-500" />
-                Surakarta, Jawa Tengah, Indonesia (Bisa Remote / On-Site)
+                Indonesia (Terbuka untuk Remote &amp; On-Site ke Mana Saja)
               </div>
+
             </div>
           </Reveal>
 

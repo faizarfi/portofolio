@@ -6,11 +6,13 @@ import {
   faSchool,
   faCode,
   faHeadset,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const ABOUT_META: { icon: IconDefinition; text: string }[] = [
-  { icon: faLocationDot, text: "Surakarta, Jawa Tengah" },
-  { icon: faBriefcase, text: "2+ Tahun Pengalaman" },
+export const PERSONAL_INFO: { icon: IconDefinition; text: string }[] = [
+  { icon: faGraduationCap, text: "S1 Teknik Informatika — UMS (IPK 3.3)" },
+  { icon: faLocationDot, text: "Indonesia (Remote / On-Site)" },
+  { icon: faEnvelope, text: "faizarfianilhami020204@gmail.com" },
   { icon: faCode, text: "Laravel, PHP & Next.js" },
   { icon: faHeadset, text: "IT Support & Troubleshooting" },
 ];

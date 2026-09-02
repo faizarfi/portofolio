@@ -17,8 +17,9 @@ export default function AboutSection() {
           <SectionHeading
             tag="Tentang Saya"
             title="Latar Belakang &amp; Rekam Jejak"
-            subtitle="Mengenal perjalanan saya sebagai web developer di Surakarta, dedikasi pada kode yang rapi, dan komitmen memberikan dukungan teknis IT yang solutif."
+            subtitle="Mengenal perjalanan saya sebagai web developer profesional, dedikasi pada kode yang rapi, dan komitmen memberikan dukungan teknis IT yang solutif ke seluruh Indonesia."
           />
+
         </Reveal>
 
         {/* ── 2-Column Full-Width Grid ── */}
