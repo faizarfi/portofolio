@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark, faEnvelope, faTerminal } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { NAV_LINKS } from "@/lib/data";
+import { LanguageSelector } from "@/components/ui";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -123,6 +124,9 @@ export default function Navbar() {
 
           {/* ── Action Buttons ── */}
           <div className="flex items-center gap-2">
+            {/* Global Multi-Language Selector */}
+            <LanguageSelector />
+
             {/* Terminal Quick Button */}
             <button
               onClick={openTerminal}
@@ -213,6 +217,7 @@ export default function Navbar() {
               </span>
               <span className="text-[10px] text-slate-400">Ctrl K</span>
             </button>
+
 
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);

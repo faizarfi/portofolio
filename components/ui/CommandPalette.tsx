@@ -16,6 +16,7 @@ import {
   faDiagramProject,
   faCopy,
   faCheck,
+  faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data/projects";
@@ -207,6 +208,18 @@ export default function CommandPalette() {
       action: () => navigateTo(`/projects/${p.slug}`),
     })),
     // Actions
+    {
+      id: "act-change-lang",
+      category: "Aksi Cepat",
+      title: "Pilih Bahasa / Change Language (80+ Bahasa Dunia)",
+      subtitle: "Terjemahkan seluruh web ke English, العربية, 日本語, Deutsch, Español, dll.",
+      icon: faGlobe,
+      action: () => {
+        setIsOpen(false);
+        const btn = document.querySelector('button[title="Pilih Bahasa / Choose Language"]') as HTMLButtonElement;
+        if (btn) btn.click();
+      },
+    },
     {
       id: "act-whatsapp",
       category: "Aksi Cepat",
