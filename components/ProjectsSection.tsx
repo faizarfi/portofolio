@@ -44,9 +44,9 @@ export default function ProjectsSection() {
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
-            tag="Portofolio"
-            title="Koleksi Proyek Nyata"
-            subtitle="Sistem informasi, aplikasi web, dan repositori open-source yang telah saya bangun dan rilis secara publik di GitHub."
+            tag="Koleksi Karya"
+            title="Proyek Pilihan &amp; Studi Kasus"
+            subtitle="Sistem informasi instansi, aplikasi live scoring turnamen, chatbot AI, dan utilitas web yang telah saya selesaikan dan rilis publik."
           />
         </Reveal>
 
@@ -61,10 +61,10 @@ export default function ProjectsSection() {
                   <button
                     key={cat.key}
                     onClick={() => setActiveTab(cat.key)}
-                    className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold transition-all duration-200 sm:px-3.5 sm:py-1.5 active:scale-95 ${
+                    className={`flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 ${
                       isActive
-                        ? "bg-blue-600 text-white shadow-xs shadow-blue-600/30"
-                        : "bg-white border border-slate-200 text-slate-600 hover:border-blue-300 hover:bg-blue-50/60 hover:text-blue-800"
+                        ? "bg-slate-900 text-white shadow-2xs"
+                        : "bg-white border border-slate-200 text-slate-700 hover:border-slate-400 hover:text-slate-950"
                     }`}
                   >
                     <FontAwesomeIcon icon={cat.icon} className="h-3 w-3" />
@@ -74,7 +74,7 @@ export default function ProjectsSection() {
               })}
             </div>
 
-            {/* Interactive Live Search Input */}
+            {/* Live Search Input */}
             <div className="relative w-full lg:w-72">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                 <FontAwesomeIcon icon={faMagnifyingGlass} className="h-3.5 w-3.5" />
@@ -84,13 +84,13 @@ export default function ProjectsSection() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari nama atau teknologi..."
-                className="w-full rounded-full border border-slate-200 bg-white py-1.5 pl-9 pr-9 text-xs text-slate-800 placeholder-slate-400 shadow-xs transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                className="w-full rounded-lg border border-slate-200 bg-white py-1.5 pl-9 pr-9 text-xs text-slate-800 placeholder-slate-400 shadow-2xs transition-colors focus:border-slate-900 focus:outline-none"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
                   aria-label="Hapus kata kunci pencarian"
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-700"
                 >
                   <FontAwesomeIcon icon={faXmark} className="h-3 w-3" />
                 </button>
@@ -99,7 +99,7 @@ export default function ProjectsSection() {
           </div>
 
           {/* Results count indicator */}
-          <div className="mb-4 flex items-center justify-between text-xs text-slate-500">
+          <div className="mb-4 flex items-center justify-between text-xs text-slate-500 font-mono">
             <span>
               Menampilkan <strong>{filteredProjects.length}</strong> dari {PROJECTS.length} proyek
               {searchQuery && ` untuk "${searchQuery}"`}
@@ -107,7 +107,7 @@ export default function ProjectsSection() {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="font-semibold text-blue-600 hover:underline"
+                className="font-bold text-slate-900 hover:underline"
               >
                 Reset pencarian
               </button>
@@ -115,7 +115,7 @@ export default function ProjectsSection() {
           </div>
         </Reveal>
 
-        {/* ── 3-Column Responsive Projects Grid with compact gaps ── */}
+        {/* ── 3-Column Responsive Projects Grid ── */}
         {filteredProjects.length > 0 ? (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProjects.map((project, index) => (
@@ -128,24 +128,24 @@ export default function ProjectsSection() {
             ))}
           </div>
         ) : (
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xs">
+          <div className="neat-card p-8 text-center">
             <p className="font-display text-sm font-bold text-slate-800">Tidak ada proyek yang sesuai pencarian</p>
-            <p className="mt-1 text-xs text-slate-500">Coba ubah kata kunci atau pilih tab kategori lain.</p>
+            <p className="mt-1 text-xs text-slate-500">Coba ubah kata kunci atau pilih kategori lain.</p>
             <button
               onClick={() => {
                 setActiveTab("all");
                 setSearchQuery("");
               }}
-              className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-blue-500 active:scale-95"
+              className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-4 py-1.5 text-xs font-semibold text-white hover:bg-slate-800"
             >
               Tampilkan Semua Proyek
             </button>
           </div>
         )}
 
-        {/* ── Full Width Footer CTA ── */}
+        {/* ── Clean Paper Footer CTA ── */}
         <Reveal delay={80} direction="up">
-          <div className="mt-8 flex flex-col items-center justify-between gap-3.5 rounded-3xl border border-slate-200/90 bg-gradient-to-r from-blue-50/40 via-white to-indigo-50/40 p-5 shadow-xs sm:flex-row sm:p-6">
+          <div className="neat-card mt-8 flex flex-col items-center justify-between gap-3.5 p-5 sm:flex-row sm:p-6">
             <div>
               <h3 className="font-display text-sm font-bold text-slate-900 sm:text-base">
                 Ingin melihat kode sumber proyek lainnya?
@@ -180,3 +180,5 @@ export default function ProjectsSection() {
     </section>
   );
 }
+
+

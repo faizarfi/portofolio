@@ -51,33 +51,33 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300 animate-fade-in"
+        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-200 animate-fade-in"
       />
 
       {/* Modal Container */}
-      <div className="relative z-10 flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-2xl transition-all">
+      <div className="relative z-10 flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-slate-300 bg-white shadow-xl transition-all">
         {/* Modal Header */}
-        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-blue-600 animate-pulse" />
-            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase">
-              Detail Ringkas Proyek
+            <span className="h-2 w-2 rounded-full bg-slate-900" />
+            <span className="text-xs font-mono font-bold tracking-wider text-slate-500 uppercase">
+              Detail Proyek
             </span>
           </div>
 
           <button
             onClick={onClose}
             aria-label="Tutup modal proyek"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900"
           >
-            <FontAwesomeIcon icon={faXmark} className="h-4 w-4" />
+            <FontAwesomeIcon icon={faXmark} className="h-3.5 w-3.5" />
           </button>
         </div>
 
         {/* Modal Scrollable Body */}
         <div className="flex-1 overflow-y-auto p-6 sm:p-8">
           {/* Project Screenshot / Fallback */}
-          <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm">
+          <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
             {project.image ? (
               <Image
                 src={project.image}
@@ -87,8 +87,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 sizes="(max-width: 768px) 100vw, 800px"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-                <span className="text-6xl font-black text-blue-300/80 select-none">
+              <div className="flex h-full w-full items-center justify-center bg-slate-50">
+                <span className="text-6xl font-black text-slate-300 select-none">
                   {project.name.charAt(0)}
                 </span>
               </div>
@@ -96,13 +96,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
             {/* Badges on preview */}
             <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-slate-800 shadow-sm backdrop-blur-md">
-                <FontAwesomeIcon icon={faBriefcase} className="h-3 w-3 text-blue-600" />
+              <span className="inline-flex items-center gap-1.5 rounded-md bg-white/95 px-2.5 py-1 text-xs font-bold text-slate-800 shadow-xs">
+                <FontAwesomeIcon icon={faBriefcase} className="h-3 w-3 text-slate-600" />
                 {project.details.role}
               </span>
               {project.details.metric && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-600/95 px-3 py-1 text-xs font-bold text-white shadow-sm backdrop-blur-md">
-                  <FontAwesomeIcon icon={faChartLine} className="h-3 w-3" />
+                <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-950/90 px-2.5 py-1 text-xs font-mono font-medium text-white shadow-xs">
+                  <FontAwesomeIcon icon={faChartLine} className="h-3 w-3 text-emerald-400" />
                   {project.details.metric}
                 </span>
               )}
@@ -112,11 +112,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Title & Metadata */}
           <div className="mt-6">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-blue-50 border border-blue-200 px-3 py-0.5 text-xs font-bold text-blue-800">
+              <span className="rounded border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-xs font-mono font-semibold text-slate-700">
                 {project.category || "Full Stack"}
               </span>
               {project.details.year && (
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500">
+                <span className="inline-flex items-center gap-1 text-xs font-mono text-slate-500">
                   <FontAwesomeIcon icon={faCalendarDays} className="h-3 w-3 text-slate-400" />
                   {project.details.year}
                 </span>
@@ -125,7 +125,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
             <h2
               id="modal-project-title"
-              className="mt-2 text-xl font-extrabold text-slate-900 sm:text-2xl"
+              className="mt-2 text-xl font-extrabold text-slate-950 sm:text-2xl"
             >
               {project.name}
             </h2>
@@ -136,9 +136,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {/* Overview */}
-          <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50/80 p-5">
-            <h3 className="text-xs font-bold tracking-wider text-blue-700 uppercase">
-              Gambaran Sistem
+          <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50/60 p-5">
+            <h3 className="text-xs font-mono font-bold tracking-wider text-slate-600 uppercase">
+              Gambaran Sistem &amp; Masalah yang Diselesaikan
             </h3>
             <p className="mt-2 text-xs leading-relaxed text-slate-700 sm:text-sm">
               {project.details.overview}
@@ -147,18 +147,18 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           {/* Key Contributions */}
           <div className="mt-6">
-            <h3 className="text-xs font-bold tracking-wider text-slate-400 uppercase">
+            <h3 className="text-xs font-mono font-bold tracking-wider text-slate-600 uppercase">
               Poin Implementasi &amp; Kontribusi
             </h3>
-            <div className="mt-3 space-y-2.5">
+            <div className="mt-3 space-y-2">
               {project.details.contributions.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 rounded-xl border border-slate-100 bg-white p-3.5 shadow-xs"
+                  className="flex items-start gap-3 rounded-lg border border-slate-200 bg-white p-3.5 shadow-2xs"
                 >
                   <FontAwesomeIcon
                     icon={faCircleCheck}
-                    className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blue-600"
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-800"
                   />
                   <span className="text-xs leading-relaxed text-slate-700 sm:text-sm">{item}</span>
                 </div>
@@ -168,7 +168,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           {/* Tech Stack */}
           <div className="mt-6">
-            <h3 className="text-xs font-bold tracking-wider text-slate-400 uppercase">
+            <h3 className="text-xs font-mono font-bold tracking-wider text-slate-600 uppercase">
               Teknologi Digunakan
             </h3>
             <div className="mt-2.5 flex flex-wrap gap-1.5">
@@ -180,11 +180,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Modal Footer Actions */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 bg-slate-50/80 px-6 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-slate-50/80 px-6 py-4">
           <Link
             href={`/projects/${project.slug}`}
             onClick={onClose}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 transition-colors hover:text-blue-800"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-900 transition-colors hover:underline"
           >
             <span>Buka Halaman Studi Kasus Lengkap</span>
             <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3" />
@@ -196,7 +196,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 shadow-xs transition-all hover:bg-slate-50"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-2xs transition-colors hover:bg-slate-50 hover:text-slate-950"
               >
                 <FontAwesomeIcon icon={faGithub} className="h-3.5 w-3.5" />
                 <span>GitHub Repo</span>
@@ -208,7 +208,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-500"
+                className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800"
               >
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
                 <span>Kunjungi Web</span>
@@ -220,3 +220,5 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     </div>
   );
 }
+
+

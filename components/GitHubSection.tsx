@@ -14,21 +14,21 @@ const GITHUB_USERNAME = "faizarfi";
 
 const LANG_COLORS: Record<string, string> = {
   TypeScript: "bg-blue-600",
-  JavaScript: "bg-amber-400",
+  JavaScript: "bg-amber-500",
   PHP: "bg-indigo-600",
   Blade: "bg-rose-500",
   CSS: "bg-sky-500",
   HTML: "bg-orange-500",
   Vue: "bg-emerald-500",
-  Python: "bg-blue-500",
+  Python: "bg-emerald-600",
 };
 
 const CONTRIBUTION_LEVELS = [
   "bg-slate-100",
-  "bg-blue-200",
-  "bg-blue-400",
-  "bg-blue-600",
-  "bg-blue-800",
+  "bg-emerald-200",
+  "bg-emerald-400",
+  "bg-emerald-600",
+  "bg-emerald-800",
 ] as const;
 
 const CELL_PX = 10;
@@ -66,7 +66,7 @@ function getMonthLabels(weeks: (Contribution | null)[][]): Array<{ col: number; 
     const first = week.find(Boolean) as Contribution | undefined;
     if (!first) return;
     const d = new Date(first.date);
-    // Place label at month boundary and ensure at least 4 columns (52px) spacing to avoid overlapping
+    // Place label at month boundary and ensure at least 4 columns spacing
     if (d.getDate() <= 7 && i - lastCol >= 4) {
       labels.push({ col: i, label: d.toLocaleString("id-ID", { month: "short" }) });
       lastCol = i;
@@ -141,7 +141,7 @@ export default async function GitHubSection() {
           <SectionHeading
             tag="Aktivitas Koding"
             title="Aktivitas Open Source &amp; GitHub"
-            subtitle="Pantauan terhadap repositori, riwayat commit, dan kontribusi kode publik saya di GitHub (@faizarfi)."
+            subtitle="Pantauan repositori, riwayat commit berkala, dan kontribusi kode publik saya di GitHub (@faizarfi)."
           />
         </Reveal>
 
@@ -151,21 +151,21 @@ export default async function GitHubSection() {
             <div className="grid w-full min-w-0 grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-4">
               <Reveal delay={40} direction="up" className="w-full min-w-0">
                 <div className="neat-card flex w-full min-w-0 items-center gap-3 p-3 sm:gap-4 sm:p-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 sm:h-10 sm:w-10 sm:rounded-xl">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-800 sm:h-10 sm:w-10">
                     <FontAwesomeIcon icon={faBook} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display text-lg font-black text-slate-900 sm:text-2xl">
                       <AnimatedCounter target={data.user.public_repos} />
                     </p>
-                    <p className="truncate text-[10px] font-semibold text-slate-500 sm:text-xs">Public Repos</p>
+                    <p className="truncate text-[10px] font-mono text-slate-500 sm:text-xs">Public Repos</p>
                   </div>
                 </div>
               </Reveal>
 
               <Reveal delay={80} direction="up" className="w-full min-w-0">
                 <div className="neat-card flex w-full min-w-0 items-center gap-3 p-3 sm:gap-4 sm:p-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-700 sm:h-10 sm:w-10 sm:rounded-xl">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-800 sm:h-10 sm:w-10">
                     <FontAwesomeIcon icon={faCodeCommit} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -176,35 +176,35 @@ export default async function GitHubSection() {
                         "Aktif"
                       )}
                     </p>
-                    <p className="truncate text-[10px] font-semibold text-slate-500 sm:text-xs">Kontribusi 1 Thn</p>
+                    <p className="truncate text-[10px] font-mono text-slate-500 sm:text-xs">Kontribusi 1 Thn</p>
                   </div>
                 </div>
               </Reveal>
 
               <Reveal delay={120} direction="up" className="w-full min-w-0">
                 <div className="neat-card flex w-full min-w-0 items-center gap-3 p-3 sm:gap-4 sm:p-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-700 sm:h-10 sm:w-10 sm:rounded-xl">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-800 sm:h-10 sm:w-10">
                     <FontAwesomeIcon icon={faStar} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display text-lg font-black text-slate-900 sm:text-2xl">
                       <AnimatedCounter target={data.totalStars} />
                     </p>
-                    <p className="truncate text-[10px] font-semibold text-slate-500 sm:text-xs">Repo Stars</p>
+                    <p className="truncate text-[10px] font-mono text-slate-500 sm:text-xs">Repo Stars</p>
                   </div>
                 </div>
               </Reveal>
 
               <Reveal delay={160} direction="up" className="w-full min-w-0">
                 <div className="neat-card flex w-full min-w-0 items-center gap-3 p-3 sm:gap-4 sm:p-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 sm:h-10 sm:w-10 sm:rounded-xl">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-800 sm:h-10 sm:w-10">
                     <FontAwesomeIcon icon={faUsers} className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display text-lg font-black text-slate-900 sm:text-2xl">
                       <AnimatedCounter target={data.user.followers} />
                     </p>
-                    <p className="truncate text-[10px] font-semibold text-slate-500 sm:text-xs">Followers</p>
+                    <p className="truncate text-[10px] font-mono text-slate-500 sm:text-xs">Followers</p>
                   </div>
                 </div>
               </Reveal>
@@ -217,10 +217,10 @@ export default async function GitHubSection() {
                 <div className="neat-card w-full min-w-0 max-w-full overflow-hidden p-3.5 sm:p-5 lg:p-6">
                   {/* Header with Title and Levels Legend */}
                   <div className="mb-3.5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <span className="font-display text-xs font-bold tracking-wider text-slate-700 uppercase">
+                    <span className="font-mono text-xs font-bold tracking-wider text-slate-700 uppercase">
                       Kalender Kontribusi GitHub
                     </span>
-                    <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
                       <span>Sedikit</span>
                       {CONTRIBUTION_LEVELS.map((lvl, idx) => (
                         <span key={idx} className={`h-2.5 w-2.5 rounded-xs sm:h-3 sm:w-3 ${lvl}`} />
@@ -231,7 +231,7 @@ export default async function GitHubSection() {
 
                   {/* Mobile scroll hint */}
                   <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium text-slate-400 sm:hidden">
-                    <FontAwesomeIcon icon={faArrowsLeftRight} className="h-3 w-3 text-blue-500 shrink-0" />
+                    <FontAwesomeIcon icon={faArrowsLeftRight} className="h-3 w-3 text-slate-600 shrink-0" />
                     <span>Geser untuk melihat seluruh kalender</span>
                   </div>
 
@@ -284,7 +284,7 @@ export default async function GitHubSection() {
                       href={`https://github.com/${GITHUB_USERNAME}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:text-blue-800 transition-colors"
+                      className="inline-flex items-center gap-1.5 font-semibold text-slate-900 hover:underline transition-colors"
                     >
                       Buka Profil
                       <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
@@ -297,13 +297,13 @@ export default async function GitHubSection() {
               <Reveal delay={120} direction="up" className="w-full min-w-0 max-w-full lg:col-span-4">
                 <div className="neat-card w-full min-w-0 max-w-full overflow-hidden flex h-full flex-col justify-between p-3.5 sm:p-5 lg:p-6">
                   <div>
-                    <span className="font-display mb-3 block text-xs font-bold tracking-wider text-slate-700 uppercase">
+                    <span className="font-mono mb-3 block text-xs font-bold tracking-wider text-slate-700 uppercase">
                       Distribusi Bahasa
                     </span>
                     <div className="space-y-3">
                       {data.topLanguages.map(([lang, count]) => {
                         const pct = Math.round((count / (data.totalLangCount || 1)) * 100);
-                        const color = LANG_COLORS[lang] ?? "bg-blue-600";
+                        const color = LANG_COLORS[lang] ?? "bg-slate-700";
                         return (
                           <div key={lang}>
                             <div className="mb-1 flex items-center justify-between text-xs sm:text-sm">
@@ -329,7 +329,7 @@ export default async function GitHubSection() {
                     href={`https://github.com/${GITHUB_USERNAME}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-3 py-2.5 text-center text-xs font-bold text-white shadow-xs shadow-blue-600/25 transition-all duration-200 hover:bg-blue-500 hover:shadow-md active:scale-95"
+                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-3 py-2.5 text-center text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800"
                   >
                     <FontAwesomeIcon icon={faGithub} className="h-3.5 w-3.5 shrink-0" />
                     <span>Lihat Semua di GitHub</span>
@@ -347,3 +347,5 @@ export default async function GitHubSection() {
     </section>
   );
 }
+
+

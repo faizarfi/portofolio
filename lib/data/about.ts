@@ -11,8 +11,8 @@ import {
 export const ABOUT_META: { icon: IconDefinition; text: string }[] = [
   { icon: faLocationDot, text: "Surakarta, Jawa Tengah" },
   { icon: faBriefcase, text: "2+ Tahun Pengalaman" },
-  { icon: faCode, text: "Laravel & React/Next.js" },
-  { icon: faHeadset, text: "IT Support & Helper" },
+  { icon: faCode, text: "Laravel, PHP & Next.js" },
+  { icon: faHeadset, text: "IT Support & Troubleshooting" },
 ];
 
 export const ABOUT_EDUCATION: {
@@ -40,18 +40,19 @@ export const ABOUT_EDUCATION: {
 
 export const ABOUT_HIGHLIGHTS: { value: string; label: string }[] = [
   { value: "2+", label: "Tahun\nPengalaman" },
-  { value: "14+", label: "Proyek\nSelesai" },
-  { value: "12+", label: "Repository\nGitHub" },
-  { value: "100%", label: "Komitmen\nKualitas" },
+  { value: "14+", label: "Proyek &\nRepositori" },
+  { value: "5+", label: "Sistem Web\nProduksi" },
+  { value: "100%", label: "Tanggung Jawab\n& Support" },
 ];
 
 export const ABOUT_FOCUS_TAGS: string[] = [
-  "Laravel & PHP",
-  "React / Next.js",
-  "TypeScript & JavaScript",
-  "MySQL & Relational DB",
-  "Tailwind CSS",
-  "Python & Django",
-  "IT Support & Problem Solving",
-  "RESTful API Development",
+  "Laravel & PHP Modern",
+  "React & Next.js (App Router)",
+  "MySQL & Database Schema",
+  "Tailwind CSS & Responsive UI",
+  "REST API Integration",
+  "IT Support & Hardware Troubleshooting",
+  "Git & GitHub Workflow",
+  "Otomasi Skrip & Cron Jobs",
 ];
+

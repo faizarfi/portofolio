@@ -9,13 +9,13 @@ import { SectionHeading, Reveal, PageBackground, ProjectCard, FloatingContact } 
 export const metadata: Metadata = {
   title: "Semua Proyek — Faiz Arfian Ilhami",
   description:
-    "Koleksi proyek web yang telah dikembangkan oleh Faiz Arfian Ilhami — mulai dari sistem tracer alumni kampus, asisten AI chatbot, hingga aplikasi live scoring.",
+    "Koleksi proyek web yang telah dibangun oleh Faiz Arfian Ilhami — mulai dari sistem tracer alumni kampus, asisten AI chatbot, hingga aplikasi live scoring.",
   alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {
   return (
-    <div className="relative min-h-screen bg-[#f8fafc] text-slate-800">
+    <div className="relative min-h-screen bg-[#fafaf9] text-slate-800">
       <PageBackground />
       <Navbar />
 
@@ -24,9 +24,9 @@ export default function ProjectsPage() {
           {/* ── Page Header ── */}
           <div className="hero-animate hero-delay-1">
             <SectionHeading
-              tag="Portfolio &amp; Work"
-              title="Seluruh Koleksi Proyek"
-              subtitle="Kumpulan sistem informasi, modul backend, antarmuka frontend, dan aplikasi web yang telah saya selesaikan untuk berbagai kebutuhan instansi dan organisasi."
+              tag="Koleksi Karya"
+              title="Katalog Lengkap Proyek"
+              subtitle="Kumpulan sistem informasi, modul backend, antarmuka web interaktif, dan utilitas yang telah saya selesaikan untuk berbagai kebutuhan instansi dan organisasi."
             />
           </div>
 
@@ -41,20 +41,20 @@ export default function ProjectsPage() {
 
           {/* ── GitHub CTA ── */}
           <Reveal delay={PROJECTS.length * 60 + 100}>
-            <div className="mt-16 flex flex-col items-center justify-center rounded-3xl border border-slate-200/80 bg-white p-8 text-center shadow-sm sm:p-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-800 mb-3">
+            <div className="neat-card mt-16 flex flex-col items-center justify-center p-8 text-center sm:p-10">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-800 mb-3">
                 <FontAwesomeIcon icon={faGithub} className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900">Ingin melihat lebih banyak kode?</h3>
               <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-600 sm:text-sm">
-                Seluruh repository open source, skrip utilitas, dan eksperimen teknologi terbaru saya
-                tersedia secara publik di GitHub.
+                Seluruh repositori open-source, skrip utilitas, dan proyek eksperimental saya
+                tersedia secara terbuka di GitHub.
               </p>
               <a
                 href="https://github.com/faizarfi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-xs font-bold text-white shadow-xs transition-all hover:bg-slate-800 hover:shadow-md"
+                className="mt-5 inline-flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800"
               >
                 <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
                 Kunjungi Profil GitHub @faizarfi
@@ -70,3 +70,5 @@ export default function ProjectsPage() {
     </div>
   );
 }
+
+

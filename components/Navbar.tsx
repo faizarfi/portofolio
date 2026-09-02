@@ -72,9 +72,9 @@ export default function Navbar() {
           {/* ── Brand ── */}
           <Link
             href="/"
-            className="group flex items-center gap-3 rounded-full border border-slate-200/80 bg-white/90 px-3 py-1.5 shadow-xs backdrop-blur-xl transition-all duration-200 hover:border-blue-300 hover:shadow-sm sm:px-3.5"
+            className="group flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-1.5 shadow-2xs transition-colors hover:border-slate-400 sm:px-3.5"
           >
-            <div className="relative h-8 w-8 overflow-hidden rounded-full ring-2 ring-blue-500/30 transition-transform duration-300 group-hover:scale-105 group-hover:ring-blue-500/60">
+            <div className="relative h-7 w-7 overflow-hidden rounded-md border border-slate-200">
               <Image
                 src="/foto.jpeg"
                 alt="Faiz Arfian Ilhami"
@@ -84,18 +84,18 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-xs font-bold text-slate-900 transition-colors group-hover:text-blue-700">
-                Faiz <span className="text-blue-600">Arfian</span>
+              <span className="font-display text-xs font-bold text-slate-950">
+                Faiz Arfian
               </span>
-              <span className="text-[10px] font-medium text-slate-500">
-                Web Developer &middot; IT Helper
+              <span className="text-[10px] font-mono text-slate-500">
+                Web Dev &middot; IT Support
               </span>
             </div>
           </Link>
 
           {/* ── Navigation Links ── */}
           <nav
-            className="hidden items-center gap-1 rounded-full border border-slate-200/80 bg-white/90 p-1.5 shadow-xs backdrop-blur-xl md:flex"
+            className="hidden items-center gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-2xs md:flex"
             aria-label="Main Navigation"
           >
             {NAV_LINKS.map((link) => {
@@ -104,10 +104,10 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 lg:px-4 ${
+                  className={`rounded-md px-3.5 py-1.5 text-xs font-semibold transition-colors ${
                     active
-                      ? "bg-blue-600 text-white shadow-xs shadow-blue-600/30"
-                      : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
+                      ? "bg-slate-900 text-white font-bold"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
                   }`}
                 >
                   {link.label}
@@ -123,24 +123,24 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub Profile"
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-slate-200/90 bg-white text-slate-700 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 sm:flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-2xs transition-colors hover:border-slate-400 hover:text-slate-950 sm:flex"
             >
               <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
             </a>
 
             <a
               href="#contact"
-              className="btn-pulse inline-flex items-center gap-2 rounded-full bg-blue-600 px-3.5 py-2 text-xs font-bold text-white shadow-xs shadow-blue-600/25 transition-all duration-200 hover:bg-blue-500 hover:shadow-md sm:px-4"
+              className="inline-flex items-center gap-2 rounded-lg bg-slate-900 border border-slate-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-slate-800 sm:px-4"
             >
               <FontAwesomeIcon icon={faEnvelope} className="h-3 w-3" />
-              <span>Kontak Saya</span>
+              <span>Kontak</span>
             </a>
 
             {/* Mobile menu trigger */}
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Tutup menu" : "Buka menu"}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-xs transition-colors hover:bg-slate-50 md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs transition-colors hover:bg-slate-50 md:hidden"
             >
               <FontAwesomeIcon icon={open ? faXmark : faBars} className="h-4 w-4" />
             </button>
@@ -157,7 +157,7 @@ export default function Navbar() {
         }`}
       >
         <div
-          className={`absolute inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity duration-300 ${
+          className={`absolute inset-0 bg-slate-950/50 backdrop-blur-xs transition-opacity duration-300 ${
             open ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setOpen(false)}
@@ -165,21 +165,21 @@ export default function Navbar() {
         />
 
         <div
-          className={`absolute top-0 right-0 flex h-full w-72 max-w-[85vw] flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${
+          className={`absolute top-0 right-0 flex h-full w-72 max-w-[85vw] flex-col bg-white shadow-xl transition-transform duration-300 ease-out border-l border-slate-200 ${
             open ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="flex h-16 items-center justify-between border-b border-slate-100 px-5">
+          <div className="flex h-16 items-center justify-between border-b border-slate-200 px-5">
             <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
-              <span className="text-xs font-bold tracking-wider text-slate-600 uppercase">
-                Menu Portofolio
+              <span className="h-2 w-2 rounded-full bg-slate-900" />
+              <span className="text-xs font-mono font-bold tracking-wider text-slate-700 uppercase">
+                Menu Navigasi
               </span>
             </div>
             <button
               onClick={() => setOpen(false)}
               aria-label="Tutup menu samping"
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:bg-slate-50"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition-colors hover:bg-slate-50"
             >
               <FontAwesomeIcon icon={faXmark} className="h-3.5 w-3.5" />
             </button>
@@ -193,10 +193,10 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`rounded-xl px-4 py-3 text-sm font-semibold transition-all ${
+                  className={`rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors ${
                     active
-                      ? "bg-blue-50 text-blue-800 font-bold border border-blue-200/60 shadow-xs"
-                      : "text-slate-700 hover:bg-slate-50"
+                      ? "bg-slate-900 text-white font-bold"
+                      : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
                   {link.label}
@@ -205,13 +205,13 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="border-t border-slate-100 p-4 space-y-2">
+          <div className="border-t border-slate-200 p-4 space-y-2">
             <a
               href="https://wa.me/6282327867328?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-emerald-500 active:scale-95"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 py-2.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-emerald-700"
             >
               <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
               Chat via WhatsApp
@@ -220,7 +220,7 @@ export default function Navbar() {
             <a
               href="mailto:faizarfianilhami020204@gmail.com"
               onClick={() => setOpen(false)}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-500 active:scale-95"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 py-2.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800"
             >
               <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
               Kirim Email
@@ -231,3 +231,5 @@ export default function Navbar() {
     </>
   );
 }
+
+

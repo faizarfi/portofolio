@@ -13,7 +13,7 @@ export default function TechBadge({
 }: TechBadgeProps) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-lg border border-slate-200/90 bg-slate-50 font-mono font-medium text-slate-700 shadow-xs transition-colors duration-150 hover:border-blue-300 hover:bg-blue-50/60 hover:text-blue-900 ${
+      className={`inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white font-mono font-medium text-slate-700 shadow-2xs transition-colors duration-150 hover:border-slate-400 hover:text-slate-950 ${
         size === "md"
           ? "px-2.5 py-1 text-xs"
           : "px-2 py-0.5 text-[11px]"
@@ -24,3 +24,5 @@ export default function TechBadge({
     </span>
   );
 }
+
+

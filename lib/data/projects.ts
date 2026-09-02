@@ -22,10 +22,10 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    name: "Said Connect — Alumni Tracer Study",
+    name: "Said Connect — Tracer Study Alumni",
     slug: "said-connect",
     description:
-      "Platform sistem informasi pelacakan dan pendataan alumni digital berbasis web menggunakan Laravel untuk memperkuat relasi antara kampus UIN Raden Mas Said Surakarta dan lulusan.",
+      "Sistem informasi pelacakan dan survei karier alumni UIN Raden Mas Said Surakarta untuk mendata lulusan, keselarasan studi, dan statistik dunia kerja secara terpusat.",
     tech: ["Laravel", "PHP", "MySQL", "JavaScript", "Tailwind CSS", "Git"],
     url: "https://saidconnect.pribumics.my.id/",
     github: "https://github.com/faizarfi/tracer-alumni",
@@ -35,22 +35,22 @@ export const PROJECTS: Project[] = [
     details: {
       role: "Full Stack Developer",
       overview:
-        "Said Connect adalah sistem informasi yang dirancang untuk mengelola data lulusan secara terpusat dan digital. Dibangun dengan arsitektur framework Laravel yang kokoh, aplikasi ini memfasilitasi survei tracer study, pemetaan karier alumni di dunia industri, serta rekapitulasi data statistik alumni secara akurat.",
+        "Said Connect dibangun untuk mengatasi kendala pengumpulan data alumni yang sebelumnya masih tersebar dan manual. Dengan aplikasi ini, alumni kampus UIN Raden Mas Said Surakarta dapat mengisi kuesioner pelacakan karier secara mandiri, sementara pihak universitas memperoleh dashboard visual real-time mengenai sebaran profesi dan relevansi kurikulum perkuliahan.",
       contributions: [
-        "Arsitektur Backend: Merancang struktur database relasional dan API backend menggunakan Laravel dan PHP untuk menjamin efisiensi pengolahan data alumni.",
-        "Modul Tracer Study: Membangun formulir kuesioner dinamis dan sistem pelacakan karier alumni dengan validasi data yang ketat.",
-        "Dashboard Statistik Real-time: Mengembangkan panel admin untuk rekapitulasi data pekerjaan, keselarasan bidang studi, dan sebaran domisili alumni.",
-        "Optimasi & Keamanan: Menerapkan proteksi otentikasi peran (role-based access control), sanitasi input, dan pencegahan SQL Injection.",
-        "Desain Antarmuka Responsif: Merancang dashboard modern yang responsif dan mudah diakses dari perangkat desktop maupun mobile.",
+        "Merancang struktur basis data relasional MySQL untuk menampung ratusan respons survei dan profil alumni secara terstruktur.",
+        "Mengembangkan formulir tracer study dinamis dengan validasi input yang ketat agar data yang masuk valid dan tidak ganda.",
+        "Membangun dashboard admin untuk rekapitulasi data pekerjaan, keselarasan bidang studi, dan sebaran domisili alumni.",
+        "Menerapkan sistem autentikasi multi-peran (admin kampus dan akun alumni) dengan perlindungan keamanan standar Laravel.",
+        "Mendesain antarmuka yang bersih dan responsif agar alumni nyaman mengisi survei langsung dari ponsel cerdas mereka.",
       ],
       contributionsCount: 5,
     },
   },
   {
-    name: "AI Chatbot",
+    name: "AI Chatbot Layanan Informasi",
     slug: "aichatbot-bps",
     description:
-      "Aplikasi asisten virtual berbasis kecerdasan buatan (AI) untuk mempermudah masyarakat mengakses data statistik dan layanan publik secara cepat dan akurat.",
+      "Asisten virtual cerdas berbasis AI untuk mempermudah masyarakat dan instansi menemukan data statistik serta informasi layanan publik secara cepat lewat tanya jawab natural.",
     tech: ["Laravel", "PHP", "Blade", "Gemini AI API", "MySQL", "Tailwind CSS"],
     url: "https://github.com/faizarfi/aichatbotbps",
     github: "https://github.com/faizarfi/aichatbotbps",
@@ -59,12 +59,12 @@ export const PROJECTS: Project[] = [
     details: {
       role: "Full Stack Developer",
       overview:
-        "Sistem chatbot cerdas terintegrasi yang dibangun untuk membantu staf dan publik dalam menelusuri publikasi statistik, indikator layanan publik, dan data informasi secara cepat melalui interaksi percakapan natural bertenaga AI.",
+        "Proyek asisten chatbot ini dirancang untuk menjawab pertanyaan seputar indikator statistik publik tanpa pengguna harus membaca dokumen laporan tebal secara manual. Sistem mengintegrasikan API kecerdasan buatan dengan basis pengetahuan lokal agar dapat memberikan jawaban yang tepat dan relevan.",
       contributions: [
-        "Integrasi AI API: Menghubungkan engine AI dengan basis pengetahuan statistik untuk memberikan respons kontekstual dan akurat.",
-        "Sistem Manajemen Konten (CMS): Membangun panel backend Laravel untuk mengelola riwayat chat, feedback kepuasan pengguna, dan basis data pengetahuan.",
-        "Antarmuka Chat Interaktif: Mendesain tampilan chat box modern yang ringan, intuitif, dan responsif dengan indikator pesan real-time.",
-        "Keamanan Data & Monitoring: Mengimplementasikan sistem logging dan filter prompt untuk menjaga keandalan informasi yang disajikan.",
+        "Mengintegrasikan Gemini AI API ke dalam backend Laravel dengan prompt engineering terarah agar respon tetap akurat dan faktual.",
+        "Membuat panel manajemen riwayat percakapan dan feedback pengguna untuk evaluasi kepuasan layanan secara berkala.",
+        "Mendesain antarmuka obrolan (*chat UI*) interaktif yang ringan, dilengkapi animasi indikator mengetik dan respons real-time.",
+        "Menyiapkan filter keamanan input percakapan untuk mencegah eksploitasi prompt injection.",
       ],
       contributionsCount: 4,
     },
@@ -73,7 +73,7 @@ export const PROJECTS: Project[] = [
     name: "Sistem Pengingat & Rekap Absen",
     slug: "pengingat-absen",
     description:
-      "Sistem otomatisasi jadwal dan notifikasi presensi pegawai berbasis web dengan pelaporan rekapitulasi kehadiran berkala untuk efisiensi operasional.",
+      "Aplikasi otomasi jadwal dan notifikasi pengingat presensi kerja dengan fitur rekapitulasi kehadiran berkala untuk membantu kelancaran operasional tim.",
     tech: ["Laravel", "PHP", "MySQL", "Cron Jobs", "Tailwind CSS", "JavaScript"],
     url: "https://github.com/faizarfi/pengingat-absen",
     github: "https://github.com/faizarfi/pengingat-absen",
@@ -82,11 +82,11 @@ export const PROJECTS: Project[] = [
     details: {
       role: "Backend & Full Stack Developer",
       overview:
-        "Aplikasi otomasi manajemen kehadiran yang dirancang untuk mencegah keterlambatan presensi kerja melalui pengingat otomatis terjadwal dan penyusunan laporan absensi bulanan secara otomatis.",
+        "Aplikasi ini lahir dari kebutuhan nyata untuk mengurangi keterlambatan presensi kerja dan menyederhanakan penyusunan laporan kehadiran bulanan yang memakan waktu jika dikerjakan manual.",
       contributions: [
-        "Automated Task Scheduling: Mengonfigurasi cron jobs dan Laravel Scheduler untuk pengiriman notifikasi pengingat tepat waktu.",
-        "Rekapitulasi Data Kehadiran: Mengembangkan algoritma kalkulasi jam kerja, status izin, lembur, dan ekspor laporan terstruktur.",
-        "Manajemen Database Teroptimasi: Mendesain skema database MySQL yang efisien untuk menampung log harian presensi.",
+        "Mengonfigurasi Laravel Scheduler dan Cron Jobs server untuk otomatisasi pengiriman pesan pengingat jadwal kerja tepat waktu.",
+        "Menulis algoritma rekapitulasi absensi otomatis yang menghitung kehadiran, izin, dan jam lembur menjadi laporan siap pakai.",
+        "Menyusun skema database log harian presensi yang efisien dan cepat saat diproses untuk periode panjang.",
       ],
       contributionsCount: 3,
     },
@@ -95,7 +95,7 @@ export const PROJECTS: Project[] = [
     name: "Pordes Jomblang Scoring System",
     slug: "score-pordes-jomblang",
     description:
-      "Aplikasi web turnamen dan live scoring real-time untuk mencatat skor pertandingan, klasemen, dan statistik olahraga secara akurat dan instan.",
+      "Papan skor digital dan live scoring turnamen olahraga desa real-time untuk mencatat skor pertandingan, klasemen grup, dan statistik laga secara instan.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
     url: "https://pordesjomblang.vercel.app",
     github: "https://github.com/faizarfi/score",
@@ -104,20 +104,21 @@ export const PROJECTS: Project[] = [
     details: {
       role: "Frontend Developer",
       overview:
-        "Sistem papan skor digital yang digunakan dalam ajang kompetisi olahraga Pekan Olahraga Desa (Pordes). Menyajikan informasi live score pertandingan, bagan turnamen, dan klasemen grup secara langsung kepada penonton dan panitia.",
+        "Sistem live score ini dibuat dan digunakan langsung di lapangan pada ajang turnamen Pekan Olahraga Desa (Pordes). Penonton di tribun dan panitia pertandingan dapat memantau perkembangan skor secara langsung di browser tanpa perlu me-refresh halaman.",
       contributions: [
-        "Dynamic Score Engine: Membangun logika kalkulasi skor poin real-time berbasis state management React dan TypeScript.",
-        "Leaderboard & Bracket Viewer: Mengembangkan visualisasi bagan eliminasi dan klasemen pertandingan dengan update instan.",
-        "Optimasi Performa Web: Menerapkan Static Site Generation (SSG) dan deployment cepat via Vercel untuk latency minimal.",
+        "Membangun mesin penghitung poin dan manajemen state dinamis menggunakan React dan TypeScript.",
+        "Merancang tampilan papan skor bergaya scoreboard modern dengan visibilitas tinggi saat diproyeksikan ke layar monitor besar.",
+        "Menyediakan bagan fase gugur (*tournament bracket*) dan tabel klasemen otomatis yang update saat pertandingan selesai.",
+        "Mengoptimalkan loading website via Vercel agar sangat ringan dibuka ratusan penonton dengan jaringan internet seluler lapangan.",
       ],
-      contributionsCount: 3,
+      contributionsCount: 4,
     },
   },
   {
     name: "API 9 Router Gateway",
     slug: "api9router",
     description:
-      "Layanan gateway routing API ringan berbasis serverless untuk manajemen endpoint data dan konektivitas antarlayanan web.",
+      "Gateway perutean API serverless ringan untuk mengelola rute endpoint, standarisasi response JSON, dan penanganan CORS antarlayanan web.",
     tech: ["JavaScript", "Node.js", "REST API", "Vercel"],
     url: "https://api9router.vercel.app",
     github: "https://github.com/faizarfi/api9router",
@@ -126,11 +127,11 @@ export const PROJECTS: Project[] = [
     details: {
       role: "Backend Developer",
       overview:
-        "Microservice API Router yang memfasilitasi pengalihan permintaan (request routing), penanganan CORS, dan standarisasi respon JSON untuk berbagai integrasi aplikasi web.",
+        "Micro-service utilitas yang dibuat untuk menghubungkan beberapa frontend dengan service pihak ketiga secara aman, menyediakan format respon JSON yang seragam dan menangani izin header CORS.",
       contributions: [
-        "API Endpoint Routing: Merancang struktur rute yang modular dan efisien untuk mendistribusikan request ke downstream service.",
-        "Middleware & Error Handling: Menerapkan penanganan kesalahan terpusat dan validasi parameter request yang aman.",
-        "Serverless Deployment: Menjalankan arsitektur serverless function di Vercel untuk efisiensi latensi dan biaya hosting.",
+        "Merancang arsitektur router modular untuk mempermudah penambahan endpoint baru tanpa mengganggu service lain.",
+        "Menerapkan middleware validasi parameter request dan error handling terpusat yang informatif.",
+        "Men-deploy ke environment serverless Vercel Edge untuk respon berkecepatan tinggi dengan biaya infrastruktur minimal.",
       ],
       contributionsCount: 3,
     },

@@ -28,9 +28,8 @@ export default function FloatingContact() {
   };
 
   const whatsappMessage = encodeURIComponent(
-    "Halo Faiz Arfian, saya melihat website portofolio Anda dan tertarik untuk mendiskusikan peluang proyek web / bantuan teknis IT."
+    "Halo Faiz Arfian, saya melihat portofolio Anda dan ingin berdiskusi mengenai proyek web / bantuan IT."
   );
-  // Direct WhatsApp URL to user's phone number 082327867328
   const whatsappUrl = `https://wa.me/6282327867328?text=${whatsappMessage}`;
   const emailUrl = `mailto:faizarfianilhami020204@gmail.com?subject=${encodeURIComponent(
     "Diskusi Proyek Web / Bantuan IT — dari Portofolio"
@@ -43,7 +42,7 @@ export default function FloatingContact() {
         <button
           onClick={scrollToTop}
           aria-label="Scroll kembali ke atas"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-600 shadow-md backdrop-blur-md transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:scale-105 active:scale-95"
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-xs transition-colors hover:bg-slate-50 hover:text-slate-950"
         >
           <FontAwesomeIcon icon={faArrowUp} className="h-3.5 w-3.5" />
         </button>
@@ -51,12 +50,12 @@ export default function FloatingContact() {
 
       {/* Expanded Quick Contact Menu */}
       {open && (
-        <div className="flex flex-col gap-2 rounded-2xl border border-slate-200/90 bg-white/95 p-3 shadow-xl backdrop-blur-md transition-all animate-fade-in sm:p-3.5">
+        <div className="flex flex-col gap-2 rounded-xl border border-slate-300 bg-white p-3 shadow-lg transition-all animate-fade-in sm:p-3.5">
           <div className="mb-1 flex items-center justify-between border-b border-slate-100 pb-2 px-1">
-            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+            <span className="text-[11px] font-mono font-bold tracking-wider text-slate-500 uppercase">
               Hubungi Langsung
             </span>
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="h-2 w-2 rounded-full bg-emerald-500" />
           </div>
 
           {/* WhatsApp Direct Option */}
@@ -65,13 +64,13 @@ export default function FloatingContact() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 rounded-xl border border-emerald-100 bg-emerald-50/70 px-3.5 py-2.5 text-xs font-bold text-emerald-800 transition-all hover:bg-emerald-100 hover:scale-[1.02]"
+            className="flex items-center gap-2.5 rounded-lg border border-emerald-200 bg-emerald-50/60 px-3.5 py-2.5 text-xs font-semibold text-emerald-950 transition-colors hover:bg-emerald-100"
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500 text-white shadow-xs">
+            <div className="flex h-7 w-7 items-center justify-center rounded bg-emerald-600 text-white">
               <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-bold">Chat WhatsApp</p>
+              <p className="font-bold text-emerald-950">Chat WhatsApp</p>
               <p className="text-[10px] font-medium text-emerald-700 font-mono">0823-2786-7328</p>
             </div>
           </a>
@@ -80,14 +79,14 @@ export default function FloatingContact() {
           <a
             href={emailUrl}
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 rounded-xl border border-blue-100 bg-blue-50/70 px-3.5 py-2.5 text-xs font-bold text-blue-800 transition-all hover:bg-blue-100 hover:scale-[1.02]"
+            className="flex items-center gap-2.5 rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs font-semibold text-slate-900 transition-colors hover:bg-slate-100"
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">
+            <div className="flex h-7 w-7 items-center justify-center rounded bg-slate-900 text-white">
               <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
             </div>
             <div>
-              <p className="font-bold">Kirim Email</p>
-              <p className="text-[10px] font-medium text-blue-600">faizarfianilhami020204@gmail.com</p>
+              <p className="font-bold text-slate-900">Kirim Email</p>
+              <p className="text-[10px] font-medium text-slate-500 truncate max-w-[180px] font-mono">faizarfianilhami020204@gmail.com</p>
             </div>
           </a>
         </div>
@@ -97,14 +96,10 @@ export default function FloatingContact() {
       <button
         onClick={() => setOpen((prev) => !prev)}
         aria-label={open ? "Tutup menu kontak cepat" : "Buka menu kontak cepat"}
-        className="group relative flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 py-3 px-4.5 text-xs font-bold text-white shadow-lg shadow-blue-600/30 transition-all hover:shadow-xl hover:shadow-blue-600/40 hover:scale-105 active:scale-95"
+        className="group relative flex items-center gap-2 rounded-lg bg-slate-900 border border-slate-800 py-2.5 px-3.5 text-xs font-semibold text-white shadow-md transition-colors hover:bg-slate-800"
       >
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="ping-slow absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-        </span>
-
-        <FontAwesomeIcon icon={open ? faXmark : faCommentDots} className="h-4 w-4" />
+        <span className="h-2 w-2 rounded-full bg-emerald-400" />
+        <FontAwesomeIcon icon={open ? faXmark : faCommentDots} className="h-3.5 w-3.5" />
         <span className="hidden sm:inline">
           {open ? "Tutup" : "Tanya Proyek / Chat"}
         </span>
@@ -112,3 +107,5 @@ export default function FloatingContact() {
     </div>
   );
 }
+
+

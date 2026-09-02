@@ -1,43 +1,43 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faComments,
-  faPenRuler,
+  faDatabase,
   faCode,
   faShieldHalved,
-  faRocket,
+  faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
 import { SectionHeading, Reveal } from "@/components/ui";
 
-const STEPS = [
+const PRINCIPLES = [
   {
     icon: faComments,
     number: "01",
-    title: "Discovery & Analisis",
-    description: "Memahami kebutuhan fitur, alur proses pengguna, dan spesifikasi teknis sistem.",
+    title: "Pahami Kebutuhan Nyata",
+    description: "Mendiskusikan alur kerja asli dan kendala pengguna secara langsung sebelum mulai menulis kode.",
   },
   {
-    icon: faPenRuler,
+    icon: faDatabase,
     number: "02",
-    title: "Skema DB & Wireframe",
-    description: "Merancang relasi database MySQL yang terstruktur dan tata letak UI yang intuitif.",
+    title: "Skema Database Rapi",
+    description: "Menata struktur tabel MySQL dan relasi Eloquent yang bersih agar sistem efisien dan mudah dirawat.",
   },
   {
     icon: faCode,
     number: "03",
-    title: "Development & Coding",
-    description: "Implementasi backend Laravel/PHP yang aman serta frontend reaktif React/Next.js.",
+    title: "Bangun Cepat & Iteratif",
+    description: "Implementasi fitur utama dengan Laravel / Next.js agar prototype sistem bisa segera diuji coba.",
   },
   {
     icon: faShieldHalved,
     number: "04",
-    title: "Testing & Validasi",
-    description: "Pengujian fungsionalitas, keamanan otentikasi data, dan efisiensi beban query.",
+    title: "Validasi & Uji Responsif",
+    description: "Memastikan keamanan autentikasi, sanitasi input, dan tampilan nyaman digunakan di layar HP maupun laptop.",
   },
   {
-    icon: faRocket,
+    icon: faHeadset,
     number: "05",
-    title: "Deploy & IT Support",
-    description: "Peluncuran sistem ke server dan penyediaan dukungan teknis berkelanjutan.",
+    title: "Dukungan IT & Support",
+    description: "Membantu setup server, panduan penggunaan sistem, dan siap mendampingi jika ada kendala teknis.",
   },
 ];
 
@@ -47,40 +47,40 @@ export default function WorkflowSection() {
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
-            tag="Metodologi Kerja"
-            title="Alur Proses Pengerjaan"
-            subtitle="Pendekatan 5 tahap terstruktur untuk memastikan setiap sistem web dibangun dengan standar tinggi dan handal."
+            tag="Prinsip &amp; Alur Kerja"
+            title="Pendekatan Kerja &amp; Kolaborasi"
+            subtitle="Cara saya bekerja untuk memastikan setiap sistem yang dibangun benar-benar solutif, mudah dipahami pengguna, dan siap digunakan jangka panjang."
           />
         </Reveal>
 
-        {/* ── 5 Symmetrical Clean Cards with Staggered Reveals ── */}
+        {/* ── 5 Symmetrical Clean Cards ── */}
         <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-5">
-          {STEPS.map((step, i) => (
+          {PRINCIPLES.map((step, i) => (
             <Reveal key={step.number} delay={i * 60} direction="up" className="h-full">
-              <div className="neat-card group relative flex h-full flex-col justify-between p-4 sm:p-5 text-left transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
+              <div className="neat-card flex h-full flex-col justify-between p-4 sm:p-5 text-left">
                 {/* Step Top Bar */}
                 <div>
                   <div className="mb-3.5 flex items-center justify-between">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700 shadow-xs transition-transform duration-300 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
-                      <FontAwesomeIcon icon={step.icon} className="h-4 w-4" />
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
+                      <FontAwesomeIcon icon={step.icon} className="h-3.5 w-3.5" />
                     </div>
-                    <span className="rounded-full bg-slate-100 px-2.5 py-0.5 font-mono text-xs font-bold text-slate-500 transition-colors group-hover:bg-blue-100 group-hover:text-blue-800">
+                    <span className="font-mono text-xs font-bold text-slate-400">
                       {step.number}
                     </span>
                   </div>
 
-                  <h3 className="font-display mb-2 text-sm font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-base">
+                  <h3 className="font-display mb-2 text-sm font-bold text-slate-900 sm:text-base">
                     {step.title}
                   </h3>
-                  <p className="text-xs leading-relaxed text-slate-600 sm:text-sm">
+                  <p className="text-xs leading-relaxed text-slate-600">
                     {step.description}
                   </p>
                 </div>
 
                 {/* Bottom Step Indicator Bar */}
-                <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-400">
+                <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono font-medium text-slate-400">
                   <span>Tahap {i + 1}</span>
-                  <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition-colors group-hover:bg-blue-600" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
                 </div>
               </div>
             </Reveal>
@@ -90,3 +90,5 @@ export default function WorkflowSection() {
     </section>
   );
 }
+
+

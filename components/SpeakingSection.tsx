@@ -26,8 +26,8 @@ export default function SpeakingSection() {
         <Reveal direction="up">
           <SectionHeading
             tag="Organisasi &amp; Kepemimpinan"
-            title="Pengalaman Organisasi"
-            subtitle="Rekam jejak kontribusi aktif dalam manajemen organisasi, kepemimpinan departemen, dan hubungan masyarakat di Universitas Muhammadiyah Surakarta."
+            title="Pengalaman Organisasi &amp; Kolaborasi"
+            subtitle="Rekam jejak kepemimpinan departemen, koordinasi tim, dan hubungan masyarakat di Universitas Muhammadiyah Surakarta."
           />
         </Reveal>
 
@@ -35,11 +35,11 @@ export default function SpeakingSection() {
         <div className="grid gap-4 sm:grid-cols-2">
           {visible.map((item, index) => (
             <Reveal key={item.event} delay={index * 50} direction="up" className="h-full">
-              <div className="neat-card flex h-full flex-col justify-between p-5 sm:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
+              <div className="neat-card flex h-full flex-col justify-between p-5 sm:p-6">
                 <div>
                   {/* Top Bar */}
                   <div className="mb-4 flex items-center justify-between gap-2">
-                    <span className="rounded-full bg-blue-50 border border-blue-200/80 px-3 py-1 text-xs font-bold text-blue-800 shadow-xs">
+                    <span className="rounded-md bg-slate-100 border border-slate-200 px-2.5 py-0.5 text-xs font-semibold text-slate-800">
                       {item.title}
                     </span>
                     <span className="font-mono text-xs font-semibold text-slate-500">
@@ -50,7 +50,7 @@ export default function SpeakingSection() {
                   <h3 className="font-display text-base font-bold text-slate-900 sm:text-lg">
                     {item.event}
                   </h3>
-                  <p className="mt-1 text-xs font-bold text-blue-700 sm:text-sm">
+                  <p className="mt-1 text-xs font-semibold text-slate-600 sm:text-sm font-mono">
                     {item.organizer}
                   </p>
 
@@ -73,7 +73,7 @@ export default function SpeakingSection() {
                     {item.topics.map((t) => (
                       <span
                         key={t}
-                        className="rounded-lg border border-slate-100 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-600 transition-colors hover:border-blue-200 hover:bg-blue-50/50 hover:text-blue-800"
+                        className="rounded border border-slate-200 bg-white px-2 py-0.5 font-mono text-xs text-slate-600"
                       >
                         {t}
                       </span>
@@ -88,7 +88,7 @@ export default function SpeakingSection() {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 hover:text-blue-800 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-900 hover:underline transition-colors"
                     >
                       <span>Lihat Dokumentasi Kegiatan</span>
                       <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
@@ -105,7 +105,7 @@ export default function SpeakingSection() {
             <div className="mt-8 flex justify-center">
               <button
                 onClick={() => setShowAll((prev) => !prev)}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-2.5 text-xs font-bold text-slate-700 shadow-xs transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 active:scale-95"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2 text-xs font-semibold text-slate-800 shadow-2xs transition-colors hover:bg-slate-50 hover:border-slate-400"
               >
                 {showAll ? (
                   <>
@@ -126,3 +126,5 @@ export default function SpeakingSection() {
     </section>
   );
 }
+
+

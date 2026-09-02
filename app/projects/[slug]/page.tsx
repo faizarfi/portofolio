@@ -44,7 +44,7 @@ export default async function ProjectDetailPage({
   if (!project) notFound();
 
   return (
-    <div className="relative min-h-screen bg-[#f8fafc] text-slate-800">
+    <div className="relative min-h-screen bg-[#fafaf9] text-slate-800">
       <PageBackground />
       <Navbar />
 
@@ -54,7 +54,7 @@ export default async function ProjectDetailPage({
           <div className="hero-animate hero-delay-1 mb-8">
             <Link
               href="/projects"
-              className="group inline-flex items-center gap-2 text-xs font-semibold text-slate-500 transition-colors hover:text-blue-700"
+              className="group inline-flex items-center gap-2 text-xs font-mono font-medium text-slate-500 transition-colors hover:text-slate-900"
             >
               <FontAwesomeIcon
                 icon={faArrowLeft}
@@ -66,7 +66,7 @@ export default async function ProjectDetailPage({
 
           {/* ── Hero image card ── */}
           <div className="hero-animate hero-delay-2">
-            <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-200/90 bg-slate-100 shadow-xl shadow-slate-900/5">
+            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-300 bg-slate-100 shadow-sm">
               {project.image ? (
                 <Image
                   src={project.image}
@@ -77,8 +77,8 @@ export default async function ProjectDetailPage({
                   sizes="(max-width: 768px) 100vw, 1024px"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-100/50 to-slate-100">
-                  <span className="text-8xl font-black text-blue-200 select-none">
+                <div className="flex h-full w-full items-center justify-center bg-slate-50">
+                  <span className="text-8xl font-black text-slate-300 select-none">
                     {project.name.charAt(0)}
                   </span>
                 </div>
@@ -86,8 +86,8 @@ export default async function ProjectDetailPage({
 
               {/* Top-left Role Badge overlay */}
               <div className="absolute top-4 left-4">
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/90 px-3.5 py-1.5 text-xs font-bold text-slate-900 shadow-md backdrop-blur-md">
-                  <FontAwesomeIcon icon={faBriefcase} className="h-3 w-3 text-blue-600" />
+                <span className="inline-flex items-center gap-2 rounded-md bg-white/95 px-3.5 py-1.5 text-xs font-bold text-slate-900 shadow-xs">
+                  <FontAwesomeIcon icon={faBriefcase} className="h-3 w-3 text-slate-700" />
                   {project.details.role}
                 </span>
               </div>
@@ -101,11 +101,11 @@ export default async function ProjectDetailPage({
               {/* Title & Category */}
               <div className="hero-animate hero-delay-3">
                 <div className="mb-2 flex items-center gap-2">
-                  <span className="rounded-full bg-blue-50 border border-blue-200 px-3 py-0.5 text-xs font-bold text-blue-800">
+                  <span className="rounded border border-slate-200 bg-slate-50 px-3 py-0.5 text-xs font-mono font-semibold text-slate-700">
                     {project.category || "Full Stack"}
                   </span>
                 </div>
-                <h1 className="mb-4 text-2xl font-extrabold text-slate-900 sm:text-3xl lg:text-4xl">
+                <h1 className="mb-4 text-2xl font-extrabold text-slate-950 sm:text-3xl lg:text-4xl">
                   {project.name}
                 </h1>
                 <p className="text-base leading-relaxed text-slate-600">{project.description}</p>
@@ -113,8 +113,8 @@ export default async function ProjectDetailPage({
 
               {/* Overview Section */}
               <Reveal delay={150}>
-                <div className="mt-8 rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
-                  <h2 className="mb-3 text-xs font-bold tracking-wider text-blue-700 uppercase">
+                <div className="neat-card mt-8 p-6 sm:p-8">
+                  <h2 className="mb-3 text-xs font-mono font-bold tracking-wider text-slate-500 uppercase">
                     Tentang Proyek
                   </h2>
                   <p className="text-sm leading-relaxed text-slate-700 sm:text-base">
@@ -123,21 +123,21 @@ export default async function ProjectDetailPage({
                 </div>
               </Reveal>
 
-              {/* Key Contributions / Yang Saya Kerjakan */}
+              {/* Key Contributions */}
               <Reveal delay={220}>
-                <div className="mt-8 rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
-                  <h2 className="mb-5 text-xs font-bold tracking-wider text-blue-700 uppercase">
-                    Tanggung Jawab &amp; Yang Saya Kerjakan
+                <div className="neat-card mt-8 p-6 sm:p-8">
+                  <h2 className="mb-5 text-xs font-mono font-bold tracking-wider text-slate-500 uppercase">
+                    Tanggung Jawab &amp; Fitur yang Saya Bangun
                   </h2>
-                  <div className="space-y-3.5">
+                  <div className="space-y-3">
                     {project.details.contributions.map((item, i) => (
                       <div
                         key={i}
-                        className="flex items-start gap-3.5 rounded-2xl border border-slate-100 bg-slate-50/70 p-4 transition-colors hover:border-blue-200 hover:bg-blue-50/30"
+                        className="flex items-start gap-3.5 rounded-xl border border-slate-200/80 bg-slate-50/50 p-4 transition-colors hover:border-slate-300 hover:bg-white"
                       >
                         <FontAwesomeIcon
                           icon={faCircleCheck}
-                          className="mt-0.5 h-4 w-4 shrink-0 text-blue-600"
+                          className="mt-0.5 h-4 w-4 shrink-0 text-slate-800"
                         />
                         <span className="text-sm leading-relaxed text-slate-700">{item}</span>
                       </div>
@@ -154,7 +154,7 @@ export default async function ProjectDetailPage({
                       href={project.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm shadow-blue-600/20 transition-all hover:bg-blue-500 hover:shadow-md"
+                      className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-5 py-2.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800"
                     >
                       <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
                       Buka Live Demo
@@ -166,7 +166,7 @@ export default async function ProjectDetailPage({
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-xs font-bold text-slate-700 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-950"
+                      className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 shadow-2xs transition-colors hover:bg-slate-50 hover:text-slate-950"
                     >
                       <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
                       Lihat Source Code
@@ -175,7 +175,7 @@ export default async function ProjectDetailPage({
 
                   <Link
                     href="/projects"
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-600 transition-all hover:bg-slate-50 hover:text-slate-900"
+                    className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50"
                   >
                     <FontAwesomeIcon icon={faArrowLeft} className="h-3 w-3" />
                     Proyek Lainnya
@@ -188,19 +188,19 @@ export default async function ProjectDetailPage({
             <Reveal delay={150}>
               <aside className="flex flex-col gap-4 lg:sticky lg:top-24">
                 {/* Role Card */}
-                <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
-                  <p className="mb-2 text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                <div className="neat-card p-5">
+                  <p className="mb-2 text-[11px] font-mono font-bold tracking-wider text-slate-400 uppercase">
                     Peran / Role
                   </p>
                   <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
-                    <FontAwesomeIcon icon={faBriefcase} className="h-3.5 w-3.5 text-blue-600" />
+                    <FontAwesomeIcon icon={faBriefcase} className="h-3.5 w-3.5 text-slate-700" />
                     {project.details.role}
                   </div>
                 </div>
 
                 {/* Tech Stack Card */}
-                <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
-                  <p className="mb-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                <div className="neat-card p-5">
+                  <p className="mb-3 text-[11px] font-mono font-bold tracking-wider text-slate-400 uppercase">
                     Teknologi yang Digunakan
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -211,12 +211,12 @@ export default async function ProjectDetailPage({
                 </div>
 
                 {/* Contribution points count */}
-                <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
-                  <p className="mb-2 text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                <div className="neat-card p-5">
+                  <p className="mb-2 text-[11px] font-mono font-bold tracking-wider text-slate-400 uppercase">
                     Cakupan Pengerjaan
                   </p>
                   <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                    <FontAwesomeIcon icon={faLayerGroup} className="h-3.5 w-3.5 text-blue-600" />
+                    <FontAwesomeIcon icon={faLayerGroup} className="h-3.5 w-3.5 text-slate-700" />
                     <span>{project.details.contributions.length} poin implementasi fitur</span>
                   </div>
                 </div>
@@ -231,3 +231,5 @@ export default async function ProjectDetailPage({
     </div>
   );
 }
+
+

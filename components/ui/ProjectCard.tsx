@@ -21,20 +21,20 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, onQuickView }: ProjectCardProps) {
   return (
-    <div className="neat-card group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-blue-600/10">
+    <div className="neat-card flex h-full flex-col overflow-hidden">
       {/* ── Screenshot / Preview ── */}
-      <div className="relative aspect-16/10 w-full overflow-hidden bg-slate-100 border-b border-slate-100">
+      <div className="relative aspect-16/10 w-full overflow-hidden bg-slate-100 border-b border-slate-200/80">
         {project.image ? (
           <Image
             src={project.image}
             alt={`Screenshot ${project.name}`}
             fill
-            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+            className="object-cover object-top transition-transform duration-500 ease-out hover:scale-103"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-50/80 via-slate-50 to-indigo-50/80">
-            <span className="font-display text-5xl font-black text-blue-200/90 select-none transition-transform duration-500 group-hover:scale-110">
+          <div className="flex h-full w-full items-center justify-center bg-slate-50">
+            <span className="font-display text-4xl font-black text-slate-300 select-none">
               {project.name.charAt(0)}
             </span>
           </div>
@@ -45,10 +45,10 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
           <button
             onClick={() => onQuickView(project)}
             aria-label={`Lihat ringkasan proyek ${project.name}`}
-            className="absolute inset-0 flex items-center justify-center bg-slate-900/40 opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:opacity-100"
+            className="absolute inset-0 flex items-center justify-center bg-slate-950/30 opacity-0 backdrop-blur-[1px] transition-all duration-200 hover:opacity-100"
           >
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-slate-800 shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95">
-              <FontAwesomeIcon icon={faEye} className="h-3.5 w-3.5 text-blue-600" />
+            <span className="inline-flex items-center gap-2 rounded-md bg-white px-3.5 py-1.5 text-xs font-bold text-slate-900 shadow-sm">
+              <FontAwesomeIcon icon={faEye} className="h-3 w-3 text-slate-600" />
               Quick View
             </span>
           </button>
@@ -57,8 +57,8 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
         {/* Metric badge top-right */}
         {project.details.metric && (
           <div className="absolute top-2.5 right-2.5 pointer-events-none">
-            <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/85 px-2.5 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-xs">
-              <FontAwesomeIcon icon={faChartLine} className="h-2.5 w-2.5 text-blue-400" />
+            <span className="inline-flex items-center gap-1 rounded-md bg-slate-950/80 px-2 py-0.5 text-[10px] font-mono font-medium text-white shadow-2xs">
+              <FontAwesomeIcon icon={faChartLine} className="h-2.5 w-2.5 text-emerald-400" />
               {project.details.metric}
             </span>
           </div>
@@ -70,13 +70,13 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
         <div className="mb-2.5 flex items-center justify-between gap-2">
           <RoleBadge role={project.details.role} />
           {project.category && (
-            <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-semibold text-slate-600">
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-600">
               {project.category}
             </span>
           )}
         </div>
 
-        <h3 className="font-display mb-1.5 line-clamp-1 text-base font-bold text-slate-900 transition-colors group-hover:text-blue-600">
+        <h3 className="font-display mb-1.5 line-clamp-1 text-base font-bold text-slate-900 transition-colors hover:text-slate-700">
           <Link href={`/projects/${project.slug}`}>{project.name}</Link>
         </h3>
 
@@ -90,7 +90,7 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
             <TechBadge key={t} label={t} size="sm" />
           ))}
           {project.tech.length > 4 && (
-            <span className="inline-flex items-center rounded-lg bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] text-slate-500">
+            <span className="inline-flex items-center rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[10px] text-slate-500">
               +{project.tech.length - 4}
             </span>
           )}
@@ -101,17 +101,17 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
           {onQuickView ? (
             <button
               onClick={() => onQuickView(project)}
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 active:scale-95"
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-800 shadow-2xs transition-colors hover:bg-slate-50"
             >
-              <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3 text-blue-600" />
+              <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3 text-slate-500" />
               Detail
             </button>
           ) : (
             <Link
               href={`/projects/${project.slug}`}
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-800 shadow-2xs transition-colors hover:bg-slate-50"
             >
-              <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3 text-blue-600" />
+              <FontAwesomeIcon icon={faBookOpen} className="h-3 w-3 text-slate-500" />
               Detail
             </Link>
           )}
@@ -121,7 +121,7 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-3 py-2 text-xs font-bold text-white shadow-xs shadow-blue-600/20 transition-all duration-200 hover:bg-blue-500 hover:shadow-md active:scale-95"
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800"
             >
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3" />
               Live Demo
@@ -134,7 +134,7 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub Repository"
-              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 transition-all duration-200 hover:bg-slate-100 active:scale-95"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-2xs transition-colors hover:bg-slate-50 hover:text-slate-950"
             >
               <FontAwesomeIcon icon={faGithub} className="h-3.5 w-3.5" />
             </a>
@@ -144,3 +144,5 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
     </div>
   );
 }
+
+
