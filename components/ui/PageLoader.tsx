@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
-const BOOT_LOGS = [
-  { threshold: 0, text: "INITIALIZING ENVIRONMENT..." },
-  { threshold: 28, text: "LOADING PROJECTS & CASE STUDIES..." },
-  { threshold: 65, text: "MOUNTING CORE ARCHITECTURE..." },
-  { threshold: 92, text: "SYSTEM READY" },
+const STATUS_STEPS = [
+  { threshold: 0, text: "Memuat profil & keahlian..." },
+  { threshold: 30, text: "Menyiapkan katalog proyek..." },
+  { threshold: 65, text: "Menghubungkan data arsitektur..." },
+  { threshold: 90, text: "Portofolio siap ditampilkan..." },
 ];
 
 export default function PageLoader() {
@@ -15,19 +16,17 @@ export default function PageLoader() {
   const [closing, setClosing] = useState(false);
 
   useEffect(() => {
-    // Smooth non-linear progress counter
     let current = 0;
     const interval = setInterval(() => {
-      // Non-linear increment for realistic loading feel
       let increment = 1;
-      if (current < 30) {
+      if (current < 35) {
         increment = Math.floor(Math.random() * 5) + 3;
       } else if (current < 75) {
         increment = Math.floor(Math.random() * 4) + 2;
       } else if (current < 90) {
         increment = Math.floor(Math.random() * 3) + 1;
       } else {
-        increment = Math.floor(Math.random() * 4) + 2;
+        increment = Math.floor(Math.random() * 5) + 2;
       }
 
       current += increment;
@@ -36,9 +35,9 @@ export default function PageLoader() {
         setPercent(100);
         clearInterval(interval);
 
-        // Start closing animation after brief 100% satisfaction
+        // Smooth closing sequence after hitting 100%
         setTimeout(() => setClosing(true), 250);
-        setTimeout(() => setVisible(false), 750);
+        setTimeout(() => setVisible(false), 700);
       } else {
         setPercent(current);
       }
@@ -49,80 +48,93 @@ export default function PageLoader() {
 
   if (!visible) return null;
 
-  // Determine current active boot status text
-  const currentLog =
-    BOOT_LOGS.slice()
+  const currentStatus =
+    STATUS_STEPS.slice()
       .reverse()
-      .find((l) => percent >= l.threshold)?.text || BOOT_LOGS[0].text;
+      .find((s) => percent >= s.threshold)?.text || STATUS_STEPS[0].text;
 
   return (
-    <aside
-      aria-label="Loading page"
+    <div
+      id="site-preloader"
+      aria-label="Memuat portofolio"
       aria-busy="true"
-      className="fixed inset-0 z-9999 flex flex-col justify-between bg-[#090d16] p-6 text-white transition-all duration-500 sm:p-10"
+      className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/45 backdrop-blur-xl transition-all duration-500 ease-out font-sans p-4"
       style={{
         opacity: closing ? 0 : 1,
-        transform: closing ? "translateY(-16px) scale(0.99)" : "translateY(0) scale(1)",
+        transform: closing ? "scale(1.03)" : "scale(1)",
         pointerEvents: closing ? "none" : "all",
       }}
     >
-      {/* ── Top Header Bar ── */}
-      <div className="flex items-center justify-between font-mono text-[11px] text-slate-400">
-        <div className="flex items-center gap-2">
-          <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-          <span className="font-bold text-slate-200 uppercase tracking-wider">
-            FAIZ ARFIAN // PORTFOLIO
-          </span>
-        </div>
-        <div className="hidden sm:block font-medium text-slate-500">
-          SURAKARTA, ID &bull; FULL STACK &amp; IT SUPPORT
-        </div>
-      </div>
+      {/* ── Ambient Lighting Orbs ── */}
+      <div className="absolute w-80 h-80 rounded-full bg-slate-400/10 blur-3xl animate-pulse pointer-events-none" />
+      <div
+        className="absolute w-72 h-72 rounded-full bg-slate-300/15 blur-3xl animate-pulse pointer-events-none"
+        style={{ animationDelay: "1s" }}
+      />
+      <div
+        className="absolute w-64 h-64 rounded-full bg-slate-500/10 blur-3xl animate-pulse pointer-events-none"
+        style={{ animationDelay: "2s" }}
+      />
 
-      {/* ── Center Stage: Monogram, Counter & Progress ── */}
-      <div className="mx-auto flex w-full max-w-md flex-col items-center">
-        {/* Architectural Monogram Box with Corner Accents */}
-        <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border border-slate-700/80 bg-slate-900/90 shadow-2xl backdrop-blur-md">
-          {/* Corner tick marks */}
-          <span className="absolute -top-1 -left-1 h-2.5 w-2.5 border-t-2 border-l-2 border-slate-300" />
-          <span className="absolute -top-1 -right-1 h-2.5 w-2.5 border-t-2 border-r-2 border-slate-300" />
-          <span className="absolute -bottom-1 -left-1 h-2.5 w-2.5 border-b-2 border-l-2 border-slate-300" />
-          <span className="absolute -bottom-1 -right-1 h-2.5 w-2.5 border-b-2 border-r-2 border-slate-300" />
-
-          <span className="font-mono text-3xl font-black tracking-tight text-white">
-            FA
-          </span>
-        </div>
-
-        {/* Large Bold Percentage Counter */}
-        <div className="flex items-baseline gap-1 font-mono">
-          <span className="text-5xl font-black tracking-tight text-white sm:text-6xl">
-            {percent.toString().padStart(2, "0")}
-          </span>
-          <span className="text-xl font-bold text-slate-400 sm:text-2xl">%</span>
-        </div>
-
-        {/* High Precision Progress Bar */}
-        <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-slate-800 border border-slate-700/60 p-[1px]">
+      {/* ── Center Card Modal ── */}
+      <div className="relative z-10 bg-white/95 backdrop-blur-2xl rounded-3xl p-7 sm:p-9 border border-white/90 shadow-2xl shadow-slate-950/25 max-w-xs sm:max-w-sm w-[92%] text-center flex flex-col items-center transform transition-all duration-300">
+        
+        {/* ── Logo with Double Orbit Spinning Rings ── */}
+        <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
+          {/* Outer Spinning Ring */}
           <div
-            className="h-full rounded-full bg-white transition-all duration-75 ease-out shadow-[0_0_12px_rgba(255,255,255,0.8)]"
+            className="absolute inset-0 rounded-full border-2 border-transparent border-t-slate-900 border-r-slate-700 animate-spin"
+            style={{ animationDuration: "1.2s" }}
+          />
+
+          {/* Inner Reverse Spinning Accent Ring */}
+          <div
+            className="absolute inset-2 rounded-full border-2 border-transparent border-b-slate-400 border-l-slate-300 animate-spin"
+            style={{ animationDuration: "1.8s", animationDirection: "reverse" }}
+          />
+
+          {/* Subtle Pulse Glow */}
+          <div className="absolute inset-3 rounded-full bg-slate-100 animate-ping opacity-30" />
+
+          {/* Center Portrait Badge */}
+          <div className="relative w-14 h-14 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md border border-slate-200 overflow-hidden">
+            <Image
+              src="/foto.jpeg"
+              alt="Faiz Arfian Ilhami"
+              fill
+              className="object-cover rounded-xl"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* ── Title & Role ── */}
+        <h3 className="text-base sm:text-lg font-black text-slate-950 tracking-tight leading-tight">
+          Faiz Arfian Ilhami
+        </h3>
+        <span className="text-[10px] sm:text-[11px] font-mono font-bold text-slate-600 tracking-widest uppercase mt-1 mb-4">
+          Full Stack Web Developer &bull; IT Support
+        </span>
+
+        {/* ── Linear Progress Bar ── */}
+        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden relative shadow-inner mb-2 border border-slate-200/80 p-[1px]">
+          <div
+            className="h-full bg-slate-900 rounded-full transition-all duration-75 ease-out shadow-xs"
             style={{ width: `${percent}%` }}
           />
         </div>
 
-        {/* Dynamic Terminal Boot Log */}
-        <div className="mt-4 flex items-center gap-2 font-mono text-xs text-slate-400">
-          <span className="text-emerald-400">&gt;</span>
-          <span className="tracking-wide text-slate-300">{currentLog}</span>
+        {/* ── Percentage & Status Caption ── */}
+        <div className="w-full flex items-center justify-between font-mono text-[11px] text-slate-500 mb-1">
+          <div className="flex items-center gap-1.5 text-left truncate max-w-[200px]">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span className="truncate text-slate-600">{currentStatus}</span>
+          </div>
+          <span className="font-bold text-slate-900 shrink-0">{percent}%</span>
         </div>
       </div>
-
-      {/* ── Bottom Bar ── */}
-      <div className="flex items-center justify-between font-mono text-[10px] text-slate-500">
-        <div>STACK: LARAVEL &bull; REACT &bull; MYSQL</div>
-        <div>v2026.04</div>
-      </div>
-    </aside>
+    </div>
   );
 }
+
 
