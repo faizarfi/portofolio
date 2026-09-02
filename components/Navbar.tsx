@@ -78,9 +78,9 @@ export default function Navbar() {
           {/* ── Brand ── */}
           <Link
             href="/"
-            className="group flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-1.5 shadow-2xs transition-colors hover:border-slate-400 sm:px-3.5"
+            className="group flex items-center gap-2 sm:gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2.5 py-1 sm:px-3 sm:py-1.5 shadow-2xs transition-colors hover:border-slate-400 shrink-0"
           >
-            <div className="relative h-7 w-7 overflow-hidden rounded-md border border-slate-200">
+            <div className="relative h-6 w-6 sm:h-7 sm:w-7 overflow-hidden rounded-md border border-slate-200 dark:border-slate-700 shrink-0">
               <Image
                 src="/foto.jpeg"
                 alt="Faiz Arfian Ilhami"
@@ -89,11 +89,11 @@ export default function Navbar() {
                 priority
               />
             </div>
-            <div className="flex flex-col">
-              <span className="font-display text-xs font-bold text-slate-950">
+            <div className="flex flex-col min-w-0">
+              <span className="font-display text-xs font-bold text-slate-950 dark:text-white whitespace-nowrap leading-tight">
                 Faiz Arfian
               </span>
-              <span className="text-[10px] font-mono text-slate-500">
+              <span className="text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-slate-400 whitespace-nowrap leading-tight hidden xs:inline">
                 Web Dev &middot; IT Support
               </span>
             </div>
@@ -101,7 +101,7 @@ export default function Navbar() {
 
           {/* ── Navigation Links ── */}
           <nav
-            className="hidden items-center gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-2xs md:flex"
+            className="hidden items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1 shadow-2xs md:flex"
             aria-label="Main Navigation"
           >
             {NAV_LINKS.map((link) => {
@@ -112,8 +112,8 @@ export default function Navbar() {
                   href={link.href}
                   className={`rounded-md px-3.5 py-1.5 text-xs font-semibold transition-colors ${
                     active
-                      ? "bg-slate-900 text-white font-bold"
-                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                      ? "bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-950 dark:hover:text-white"
                   }`}
                 >
                   {link.label}
@@ -123,7 +123,7 @@ export default function Navbar() {
           </nav>
 
           {/* ── Action Buttons ── */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Global Multi-Language Selector */}
             <LanguageSelector />
 
@@ -135,26 +135,25 @@ export default function Navbar() {
               onClick={openTerminal}
               aria-label="Buka Terminal / Command Palette"
               title="Buka Terminal (Ctrl+K)"
-              className="hidden h-9 items-center gap-1.5 rounded-lg border border-slate-300 dark:border-slate-800 bg-white/90 dark:bg-slate-900 px-2.5 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white sm:flex"
+              className="hidden h-9 items-center gap-1.5 rounded-lg border border-slate-300 dark:border-slate-800 bg-white/90 dark:bg-slate-900 px-2.5 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white sm:flex shrink-0"
             >
               <FontAwesomeIcon icon={faTerminal} className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
               <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Ctrl K</span>
             </button>
-
 
             <a
               href="https://github.com/faizarfi"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub Profile"
-              className="hidden h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-2xs transition-colors hover:border-slate-400 hover:text-slate-950 sm:flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:border-slate-400 hover:text-slate-950 dark:hover:text-white sm:flex shrink-0"
             >
               <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
             </a>
 
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-lg bg-slate-900 border border-slate-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-slate-800 sm:px-4"
+              className="hidden md:inline-flex items-center gap-2 rounded-lg bg-slate-900 dark:bg-white border border-slate-800 dark:border-slate-200 px-3.5 py-2 text-xs font-semibold text-white dark:text-slate-950 shadow-xs transition-colors hover:bg-slate-800 dark:hover:bg-slate-100 sm:px-4 shrink-0"
             >
               <FontAwesomeIcon icon={faEnvelope} className="h-3 w-3" />
               <span>Kontak</span>
@@ -164,11 +163,12 @@ export default function Navbar() {
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Tutup menu" : "Buka menu"}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs transition-colors hover:bg-slate-50 md:hidden"
+              className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 md:hidden shrink-0"
             >
-              <FontAwesomeIcon icon={open ? faXmark : faBars} className="h-4 w-4" />
+              <FontAwesomeIcon icon={open ? faXmark : faBars} className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </button>
           </div>
+
         </div>
       </header>
 

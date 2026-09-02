@@ -84,29 +84,30 @@ export default function ThemeToggle() {
       <button
         type="button"
         aria-label="Pilih Tema"
-        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs"
+        className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs shrink-0"
       >
-        <FontAwesomeIcon icon={faMoon} className="h-3.5 w-3.5" />
+        <FontAwesomeIcon icon={faMoon} className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
       </button>
     );
   }
 
   return (
-    <div className="relative">
+    <div className="relative shrink-0">
       {/* ── Trigger Button ── */}
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         title={`Tema: ${mode === "system" ? "Mengikuti HP (Otomatis)" : mode === "dark" ? "Mode Gelap" : "Mode Terang"}`}
         aria-label="Pilih Tema Tampilan"
-        className="group flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 dark:border-slate-800 bg-white/90 dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs transition-all hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white"
+        className="group flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-slate-300 dark:border-slate-800 bg-white/90 dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs transition-all hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white shrink-0"
       >
         {resolvedTheme === "dark" ? (
-          <FontAwesomeIcon icon={faMoon} className="h-3.5 w-3.5 text-blue-400" />
+          <FontAwesomeIcon icon={faMoon} className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-blue-400" />
         ) : (
-          <FontAwesomeIcon icon={faSun} className="h-3.5 w-3.5 text-amber-500" />
+          <FontAwesomeIcon icon={faSun} className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-amber-500" />
         )}
       </button>
+
 
       {/* ── Dropdown Menu ── */}
       {isOpen && (
