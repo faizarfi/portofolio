@@ -43,10 +43,10 @@ export default function HeroSection() {
                 </h1>
 
                 <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-                  Saya merancang dan membangun sistem informasi serta aplikasi web yang solutif dan terstruktur
-                  menggunakan <strong className="font-semibold text-slate-900">Laravel, PHP, React / Next.js</strong>,
-                  dan <strong className="font-semibold text-slate-900">MySQL</strong>. Mengutamakan kode yang rapi,
-                  keamanan data, dan siap mendampingi kebutuhan teknis IT di mana saja, baik secara on-site di seluruh Indonesia maupun remote.
+                  Saya membantu <strong className="font-semibold text-slate-900">kampus, instansi, dan UMKM</strong>
+                  membangun sistem informasi, dashboard operasional, dan aplikasi web yang lebih mudah digunakan.
+                  Fokus utama saya adalah <strong className="font-semibold text-slate-900">Laravel, React / Next.js, dan MySQL</strong>;
+                  dukungan teknis IT tersedia sebagai layanan tambahan, baik remote maupun on-site.
                 </p>
               </div>
             </Reveal>
@@ -149,5 +149,4 @@ export default function HeroSection() {
     </section>
   );
 }
-
 

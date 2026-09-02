@@ -18,7 +18,7 @@ export default function SectionHeading({
       {/* Editorial Monospaced Tag */}
       <div className={`mb-2.5 flex items-center gap-2 ${centered ? "justify-center" : ""}`}>
         <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-500">
-          // {tag}
+          {`// ${tag}`}
         </span>
       </div>
 
@@ -47,5 +47,4 @@ export default function SectionHeading({
     </div>
   );
 }
-
 

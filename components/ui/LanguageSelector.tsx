@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable react-hooks/immutability -- Google Translate requires writing its compatibility cookie. */
+
 import { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,7 +12,7 @@ import {
   faRotateLeft,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import { LANGUAGES, LanguageItem } from "@/lib/data/languages";
+import { LANGUAGES } from "@/lib/data/languages";
 
 declare global {
   interface Window {

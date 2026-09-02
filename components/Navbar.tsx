@@ -38,7 +38,7 @@ export default function Navbar() {
       const ids = anchorLinks.map((l) => l.href.slice(2));
       for (const id of [...ids].reverse()) {
         const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= 120) {
+        if (el && el.getBoundingClientRect().top <= 140) {
           setScrollActive(`/#${id}`);
           return;
         }
@@ -69,18 +69,19 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full px-3.5 pt-3 pb-2 transition-all duration-300 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-50 w-full px-3.5 pt-2.5 pb-2 transition-all duration-300 sm:px-6 lg:px-8">
+        {/* ── Unified Glassmorphic Island Container ── */}
         <div
-          className={`mx-auto flex max-w-7xl items-center justify-between gap-3 transition-all duration-300 ${
-            scrolled ? "py-1" : "py-0"
+          className={`mx-auto flex max-w-7xl items-center justify-between gap-2.5 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/90 dark:bg-slate-950/90 px-3 py-2 shadow-xs backdrop-blur-md transition-all duration-300 ${
+            scrolled ? "shadow-md bg-white/95 dark:bg-slate-950/95" : ""
           }`}
         >
           {/* ── Brand ── */}
           <Link
             href="/"
-            className="group flex items-center gap-2 sm:gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2.5 py-1 sm:px-3 sm:py-1.5 shadow-2xs transition-colors hover:border-slate-400 shrink-0"
+            className="group flex items-center gap-2 sm:gap-2.5 rounded-xl px-2 py-1 transition-colors hover:bg-slate-100/70 dark:hover:bg-slate-900/70 shrink-0"
           >
-            <div className="relative h-6 w-6 sm:h-7 sm:w-7 overflow-hidden rounded-md border border-slate-200 dark:border-slate-700 shrink-0">
+            <div className="relative h-7 w-7 sm:h-8 sm:w-8 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 shrink-0">
               <Image
                 src="/foto.jpeg"
                 alt="Faiz Arfian Ilhami"
@@ -90,18 +91,18 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="font-display text-xs font-bold text-slate-950 dark:text-white whitespace-nowrap leading-tight">
+              <span className="font-display text-xs font-black text-slate-950 dark:text-white whitespace-nowrap leading-tight">
                 Faiz Arfian
               </span>
-              <span className="text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-slate-400 whitespace-nowrap leading-tight hidden xs:inline">
-                Web Dev &middot; IT Support
+              <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 whitespace-nowrap leading-tight hidden xs:inline">
+                Sistem Informasi &bull; Web Dev
               </span>
             </div>
           </Link>
 
-          {/* ── Navigation Links ── */}
+          {/* ── Center Navigation Links ── */}
           <nav
-            className="hidden items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1 shadow-2xs md:flex"
+            className="hidden items-center gap-1 rounded-xl bg-slate-100/80 dark:bg-slate-900/80 p-1 border border-slate-200/60 dark:border-slate-800/60 md:flex"
             aria-label="Main Navigation"
           >
             {NAV_LINKS.map((link) => {
@@ -110,10 +111,10 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`rounded-md px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                  className={`rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all ${
                     active
-                      ? "bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold"
-                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-950 dark:hover:text-white"
+                      ? "bg-slate-900 text-white shadow-2xs font-bold dark:bg-white dark:text-slate-950"
+                      : "text-slate-600 hover:text-slate-950 hover:bg-white/80 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
                   }`}
                 >
                   {link.label}
@@ -122,7 +123,7 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* ── Action Buttons ── */}
+          {/* ── Right Action Buttons ── */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Global Multi-Language Selector */}
             <LanguageSelector />
@@ -135,7 +136,7 @@ export default function Navbar() {
               onClick={openTerminal}
               aria-label="Buka Terminal / Command Palette"
               title="Buka Terminal (Ctrl+K)"
-              className="hidden h-9 items-center gap-1.5 rounded-lg border border-slate-300 dark:border-slate-800 bg-white/90 dark:bg-slate-900 px-2.5 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white sm:flex shrink-0"
+              className="hidden h-8 sm:h-9 items-center gap-1.5 rounded-lg border border-slate-200/90 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-2.5 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white sm:flex shrink-0"
             >
               <FontAwesomeIcon icon={faTerminal} className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
               <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Ctrl K</span>
@@ -146,14 +147,14 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub Profile"
-              className="hidden h-9 w-9 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:border-slate-400 hover:text-slate-950 dark:hover:text-white sm:flex shrink-0"
+              className="hidden h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-slate-200/90 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:border-slate-400 hover:text-slate-950 dark:hover:text-white sm:flex shrink-0"
             >
-              <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
+              <FontAwesomeIcon icon={faGithub} className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </a>
 
             <a
               href="#contact"
-              className="hidden md:inline-flex items-center gap-2 rounded-lg bg-slate-900 dark:bg-white border border-slate-800 dark:border-slate-200 px-3.5 py-2 text-xs font-semibold text-white dark:text-slate-950 shadow-xs transition-colors hover:bg-slate-800 dark:hover:bg-slate-100 sm:px-4 shrink-0"
+              className="hidden md:inline-flex items-center gap-2 rounded-lg bg-slate-900 dark:bg-white border border-slate-800 dark:border-slate-200 px-3.5 py-1.5 sm:py-2 text-xs font-semibold text-white dark:text-slate-950 shadow-xs transition-colors hover:bg-slate-800 dark:hover:bg-slate-100 shrink-0"
             >
               <FontAwesomeIcon icon={faEnvelope} className="h-3 w-3" />
               <span>Kontak</span>
@@ -168,7 +169,6 @@ export default function Navbar() {
               <FontAwesomeIcon icon={open ? faXmark : faBars} className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </button>
           </div>
-
         </div>
       </header>
 
@@ -222,7 +222,6 @@ export default function Navbar() {
               <span className="text-[10px] text-slate-400">Ctrl K</span>
             </button>
 
-
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
               return (
@@ -244,7 +243,7 @@ export default function Navbar() {
 
           <div className="border-t border-slate-200 p-4 space-y-2">
             <a
-              href="https://wa.me/6282327867328?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
+              href="https://wa.me/6282327867328?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20kebutuhan%20sistem%20informasi"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}
@@ -268,6 +267,3 @@ export default function Navbar() {
     </>
   );
 }
-
-
-

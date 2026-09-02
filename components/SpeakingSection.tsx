@@ -25,9 +25,9 @@ export default function SpeakingSection() {
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
-            tag="Organisasi &amp; Kepemimpinan"
-            title="Pengalaman Organisasi &amp; Kolaborasi"
-            subtitle="Rekam jejak kepemimpinan departemen, koordinasi tim, dan hubungan masyarakat di Universitas Muhammadiyah Surakarta."
+            tag="Bukti Kegiatan Nyata"
+            title="Dipercaya untuk Memimpin &amp; Berkolaborasi"
+            subtitle="Dokumentasi publik kegiatan organisasi, kepemimpinan, dan kolaborasi saya. Setiap kartu terhubung ke sumber kegiatan aslinya."
           />
         </Reveal>
 
@@ -126,5 +126,4 @@ export default function SpeakingSection() {
     </section>
   );
 }
-
 

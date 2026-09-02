@@ -63,6 +63,7 @@ export const PROJECTS: Project[] = [
     category: "Laravel / PHP",
     details: {
       role: "Full Stack Developer",
+      metric: "Demo dan kode tersedia",
       overview:
         "Said Connect dibangun untuk mengatasi kendala pengumpulan data alumni yang sebelumnya masih tersebar dan manual. Dengan aplikasi ini, alumni kampus UIN Raden Mas Said Surakarta dapat mengisi kuesioner pelacakan karier secara mandiri, sementara pihak universitas memperoleh dashboard visual real-time mengenai sebaran profesi dan relevansi kurikulum perkuliahan.",
       contributions: [
@@ -164,6 +165,7 @@ export const PROJECTS: Project[] = [
     category: "AI & Tools",
     details: {
       role: "Full Stack Developer",
+      metric: "Kode sumber publik",
       overview:
         "Proyek asisten chatbot ini dirancang untuk menjawab pertanyaan seputar indikator statistik publik tanpa pengguna harus membaca dokumen laporan tebal secara manual. Sistem mengintegrasikan API kecerdasan buatan dengan basis pengetahuan lokal agar dapat memberikan jawaban yang tepat dan relevan.",
       contributions: [
@@ -246,6 +248,7 @@ export const PROJECTS: Project[] = [
     category: "Laravel / PHP",
     details: {
       role: "Backend & Full Stack Developer",
+      metric: "Kode sumber publik",
       overview:
         "Aplikasi ini lahir dari kebutuhan nyata untuk mengurangi keterlambatan presensi kerja dan menyederhanakan penyusunan laporan kehadiran bulanan yang memakan waktu jika dikerjakan manual.",
       contributions: [
@@ -329,6 +332,7 @@ export const PROJECTS: Project[] = [
     category: "React / Next.js",
     details: {
       role: "Frontend Developer",
+      metric: "Digunakan pada Pordes",
       overview:
         "Sistem live score ini dibuat dan digunakan langsung di lapangan pada ajang turnamen Pekan Olahraga Desa (Pordes). Penonton di tribun dan panitia pertandingan dapat memantau perkembangan skor secara langsung di browser tanpa perlu me-refresh halaman.",
       contributions: [
@@ -401,6 +405,7 @@ export const PROJECTS: Project[] = [
     category: "AI & Tools",
     details: {
       role: "Backend Developer",
+      metric: "Demo live tersedia",
       overview:
         "Micro-service utilitas yang dibuat untuk menghubungkan beberapa frontend dengan service pihak ketiga secara aman, menyediakan format respon JSON yang seragam dan menangani izin header CORS.",
       contributions: [
@@ -441,4 +446,3 @@ export const PROJECTS: Project[] = [
     },
   },
 ];
-

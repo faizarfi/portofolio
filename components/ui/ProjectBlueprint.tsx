@@ -87,7 +87,7 @@ export default function ProjectBlueprint({ architecture }: ProjectBlueprintProps
       {activeTab === "layers" && (
         <div className="space-y-4">
           <p className="font-mono text-xs text-slate-500 uppercase tracking-wider mb-2">
-            // Alur Pemrosesan Data &amp; Layering Arsitektur
+            {`// Alur Pemrosesan Data dan Layering Arsitektur`}
           </p>
 
           <div className="grid gap-3 sm:grid-cols-2">
@@ -127,7 +127,7 @@ export default function ProjectBlueprint({ architecture }: ProjectBlueprintProps
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <p className="font-mono text-xs text-slate-500 uppercase tracking-wider">
-              // Skema Tabel Basis Data Relasional ({architecture.tables.length} Tabel)
+              {`// Skema Tabel Basis Data Relasional (${architecture.tables.length} Tabel)`}
             </p>
             <span className="font-mono text-[11px] text-slate-500">
               MySQL 8.0 &bull; InnoDB Engine
@@ -245,7 +245,7 @@ export default function ProjectBlueprint({ architecture }: ProjectBlueprintProps
       {activeTab === "highlights" && (
         <div className="space-y-4">
           <p className="font-mono text-xs text-slate-500 uppercase tracking-wider mb-2">
-            // Prinsip Keamanan, Integritas Data, &amp; Keputusan Desain
+            {`// Prinsip Keamanan, Integritas Data, dan Keputusan Desain`}
           </p>
 
           <div className="grid gap-3 sm:grid-cols-2">

@@ -1,7 +1,6 @@
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import {
   faLocationDot,
-  faBriefcase,
   faGraduationCap,
   faSchool,
   faCode,
@@ -57,4 +56,3 @@ export const ABOUT_FOCUS_TAGS: string[] = [
   "Git & GitHub Workflow",
   "Otomasi Skrip & Cron Jobs",
 ];
-

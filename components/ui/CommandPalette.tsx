@@ -26,7 +26,7 @@ interface CommandItem {
   category: "Navigasi" | "Proyek" | "Aksi Cepat" | "Terminal";
   title: string;
   subtitle?: string;
-  icon: any;
+  icon: import("@fortawesome/fontawesome-svg-core").IconDefinition;
   action: () => void;
   shortcut?: string;
 }
@@ -103,8 +103,6 @@ export default function CommandPalette() {
       }, 60);
     } else {
       document.body.style.overflow = "";
-      setQuery("");
-      setSelectedIndex(0);
     }
   }, [isOpen, mode]);
 

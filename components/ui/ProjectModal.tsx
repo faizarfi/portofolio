@@ -30,8 +30,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
   useEffect(() => {
     if (!project) return;
-    setActiveTab("overview");
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -255,6 +253,5 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     </div>
   );
 }
-
 
 
