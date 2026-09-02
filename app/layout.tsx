@@ -132,19 +132,38 @@ export default function RootLayout({
   return (
     <html
       lang="id"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} h-full scroll-smooth antialiased`}
     >
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (stored === 'dark' || (!stored && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="flex min-h-full flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-500/20 selection:text-blue-900">
+      <body className="flex min-h-full flex-col bg-[#fafaf9] dark:bg-[#090d16] text-slate-800 dark:text-slate-200 transition-colors duration-200 selection:bg-slate-900 dark:selection:bg-slate-100 selection:text-white dark:selection:text-slate-950">
         <PageLoader />
         <CommandPalette />
         {children}
       </body>
     </html>
+
   );
 }

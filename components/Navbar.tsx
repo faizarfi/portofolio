@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark, faEnvelope, faTerminal } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { NAV_LINKS } from "@/lib/data";
-import { LanguageSelector } from "@/components/ui";
+import { LanguageSelector, ThemeToggle } from "@/components/ui";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -127,16 +127,20 @@ export default function Navbar() {
             {/* Global Multi-Language Selector */}
             <LanguageSelector />
 
+            {/* Dark / Light / System Theme Toggle */}
+            <ThemeToggle />
+
             {/* Terminal Quick Button */}
             <button
               onClick={openTerminal}
               aria-label="Buka Terminal / Command Palette"
               title="Buka Terminal (Ctrl+K)"
-              className="hidden h-9 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 text-xs font-mono text-slate-700 shadow-2xs transition-colors hover:border-slate-400 hover:text-slate-950 sm:flex"
+              className="hidden h-9 items-center gap-1.5 rounded-lg border border-slate-300 dark:border-slate-800 bg-white/90 dark:bg-slate-900 px-2.5 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-2xs transition-colors hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white sm:flex"
             >
-              <FontAwesomeIcon icon={faTerminal} className="h-3 w-3 text-emerald-600" />
-              <span className="text-[11px] font-semibold text-slate-500">Ctrl K</span>
+              <FontAwesomeIcon icon={faTerminal} className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
+              <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Ctrl K</span>
             </button>
+
 
             <a
               href="https://github.com/faizarfi"

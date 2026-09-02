@@ -111,6 +111,103 @@ body {
   transform: translateY(-2px);
 }
 
+/* ── Dark Mode: Pure Black Background & Pure White Text ── */
+html.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card-bg: #0c0c0c;
+  --card-border: #262626;
+  --navy: #38bdf8;
+  --navy-dark: #000000;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.dark [class*="bg-[#fafaf9]"],
+html.dark [class*="bg-[#f8fafc]"],
+html.dark .bg-\[\#fafaf9\],
+html.dark .bg-\[\#f8fafc\] {
+  background-color: #000000 !important;
+}
+
+html.dark .neat-card {
+  background: #0c0c0c !important;
+  border-color: #262626 !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark .neat-card:hover {
+  border-color: #404040 !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8) !important;
+}
+
+html.dark header .bg-white,
+html.dark nav.bg-white,
+html.dark .bg-white {
+  background-color: #0c0c0c !important;
+  border-color: #262626 !important;
+  color: #ffffff !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-50\/50,
+html.dark .bg-slate-50\/60,
+html.dark .bg-slate-50\/70,
+html.dark .bg-slate-50\/80,
+html.dark .bg-slate-50\/90,
+html.dark .bg-slate-100 {
+  background-color: #141414 !important;
+  border-color: #262626 !important;
+  color: #ffffff !important;
+}
+
+html.dark .text-slate-950,
+html.dark .text-slate-900,
+html.dark .text-slate-800 {
+  color: #ffffff !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: #e4e4e7 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: #a1a1aa !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+  border-color: #262626 !important;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+html.dark ::selection {
+  background: #ffffff;
+  color: #000000;
+}
+
+
+
 /* Subtle flat badge */
 .editorial-tag {
   font-family: var(--font-mono), monospace;

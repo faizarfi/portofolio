@@ -18,3 +18,4 @@ export { default as TypewriterRole } from "./TypewriterRole";
 export { default as CommandPalette } from "./CommandPalette";
 export { default as ProjectBlueprint } from "./ProjectBlueprint";
 export { default as LanguageSelector } from "./LanguageSelector";
+export { default as ThemeToggle } from "./ThemeToggle";
