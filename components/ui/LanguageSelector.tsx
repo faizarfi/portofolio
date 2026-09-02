@@ -3,6 +3,7 @@
 /* eslint-disable react-hooks/immutability -- Google Translate requires writing its compatibility cookie. */
 
 import { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGlobe,
@@ -33,7 +34,12 @@ export default function LanguageSelector() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentLang, setCurrentLang] = useState<string>("id");
   const [isTranslating, setIsTranslating] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Initialize Google Translate & detect existing cookie
   useEffect(() => {
@@ -95,6 +101,20 @@ export default function LanguageSelector() {
     };
   }, []);
 
+  // Lock background scroll on mobile & desktop when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const prevOverflow = document.body.style.overflow;
+      const prevTouchAction = document.body.style.touchAction;
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+
+      return () => {
+        document.body.style.overflow = prevOverflow;
+        document.body.style.touchAction = prevTouchAction;
+      };
+    }
+  }, [isOpen]);
 
   // Handle escape key
   useEffect(() => {
@@ -176,7 +196,7 @@ export default function LanguageSelector() {
         onClick={() => setIsOpen(true)}
         type="button"
         title="Pilih Bahasa / Choose Language"
-        className="group relative flex h-8 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-lg border border-slate-300 dark:border-slate-800 bg-white/90 dark:bg-slate-900 px-2 sm:px-2.5 font-mono text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-2xs transition-all hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white shrink-0"
+        className="group relative flex h-8 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-lg border border-slate-200/90 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-2 sm:px-2.5 font-mono text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-2xs transition-all hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white shrink-0"
       >
         <FontAwesomeIcon icon={faGlobe} className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400 group-hover:text-slate-950 dark:group-hover:text-white" />
         <span className="uppercase text-[11px] font-bold tracking-wider text-slate-700 dark:text-slate-300 group-hover:text-slate-950 dark:group-hover:text-white">
@@ -195,37 +215,37 @@ export default function LanguageSelector() {
         )}
       </button>
 
-
-      {/* ── Language Selection Modal ── */}
-      {isOpen && (
+      {/* ── Language Selection Modal (Mounted via Portal to Body to avoid Navbar Stacking Context) ── */}
+      {isOpen && mounted && createPortal(
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 animate-fade-in"
+          className="fixed inset-0 z-[999999] flex items-center justify-center p-3 sm:p-6 overflow-hidden animate-fade-in"
         >
-          {/* Backdrop */}
+          {/* Backdrop (Prevents background click & touch propagation) */}
           <div
             onClick={() => setIsOpen(false)}
+            onTouchMove={(e) => e.preventDefault()}
             className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity"
           />
 
-          {/* Modal Card */}
+          {/* Modal Card (Crisp White in Light Mode, Sleek Slate in Dark Mode) */}
           <div
             ref={modalRef}
-            className="relative z-10 flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-slate-300 bg-white shadow-2xl transition-all"
+            className="relative z-10 flex h-[82vh] max-h-[82vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl transition-all"
           >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50/90 px-5 py-3.5 sm:px-6">
+            {/* Modal Header (Always Visible at Top) */}
+            <div className="flex shrink-0 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-950/90 px-4 py-3 sm:px-6 sm:py-3.5">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-900 text-white shadow-2xs">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 shadow-2xs">
                   <FontAwesomeIcon icon={faGlobe} className="h-3.5 w-3.5" />
                 </div>
                 <div>
-                  <h3 className="font-display text-sm font-extrabold text-slate-950 sm:text-base">
+                  <h3 className="font-display text-sm font-extrabold text-slate-950 dark:text-white sm:text-base">
                     Pilih Bahasa / Select Language
                   </h3>
-                  <p className="text-[11px] text-slate-500 font-mono">
-                    Mendukung 80+ Bahasa Dunia (Auto-Translate)
+                  <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                    Mendukung 80+ Bahasa Dunia
                   </p>
                 </div>
               </div>
@@ -234,25 +254,26 @@ export default function LanguageSelector() {
                 {currentLang !== "id" && (
                   <button
                     onClick={handleResetToOriginal}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-2xs transition-colors hover:bg-slate-100 hover:text-slate-950"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 dark:text-slate-200 shadow-2xs transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-950"
                     title="Kembali ke Bahasa Asli (Indonesia)"
                   >
                     <FontAwesomeIcon icon={faRotateLeft} className="h-2.5 w-2.5 text-slate-500" />
-                    <span>Reset (ID)</span>
+                    <span>Reset</span>
                   </button>
                 )}
 
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-200/80 hover:text-slate-950 transition-colors"
+                  aria-label="Tutup pilihan bahasa"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-200/80 dark:hover:bg-slate-800 hover:text-slate-950 dark:hover:text-white transition-colors"
                 >
                   <FontAwesomeIcon icon={faXmark} className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>
 
-            {/* Search Bar */}
-            <div className="border-b border-slate-200 p-3 sm:p-4 bg-white">
+            {/* Search Bar (Always Visible at Top of list) */}
+            <div className="shrink-0 border-b border-slate-200 dark:border-slate-800 p-3 sm:p-4 bg-white dark:bg-slate-900">
               <div className="relative">
                 <FontAwesomeIcon
                   icon={faMagnifyingGlass}
@@ -260,22 +281,21 @@ export default function LanguageSelector() {
                 />
                 <input
                   type="text"
-                  placeholder="Cari bahasa... (misal: English, Arabic, Japanese, Jawa, Sunda, Deutsch)"
+                  placeholder="Cari bahasa... (English, Arabic, Japanese, Jawa, Sunda, dll)"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  autoFocus
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50/50 py-2.5 pl-10 pr-4 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-hidden"
+                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/70 py-2.5 pl-10 pr-4 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-slate-900 dark:focus:border-white focus:bg-white dark:focus:bg-slate-800 focus:outline-hidden"
                 />
               </div>
             </div>
 
-            {/* Scrollable Language List */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+            {/* ── Scrollable Language List with Strict Touch Containment ── */}
+            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-4 touch-pan-y bg-white dark:bg-slate-900">
               {/* Popular / Fast Select Languages (Shown if not searching) */}
               {!searchQuery && (
                 <div>
-                  <h4 className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">
-                    Bahasa Populer / Quick Languages
+                  <h4 className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                    Bahasa Populer / Quick Select
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {popularLanguages.map((lang) => {
@@ -286,22 +306,22 @@ export default function LanguageSelector() {
                           onClick={() => handleSelectLanguage(lang.code)}
                           className={`flex items-center justify-between rounded-xl border p-2.5 text-left transition-all ${
                             isActive
-                              ? "border-slate-900 bg-slate-900 text-white shadow-2xs"
-                              : "border-slate-200 bg-slate-50/60 text-slate-800 hover:border-slate-400 hover:bg-white"
+                              ? "border-slate-900 bg-slate-900 text-white shadow-2xs dark:border-white dark:bg-white dark:text-slate-950"
+                              : "border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/60 text-slate-800 dark:text-slate-200 hover:border-slate-400 hover:bg-white dark:hover:bg-slate-800 shadow-2xs"
                           }`}
                         >
                           <div className="flex items-center gap-2 overflow-hidden">
                             <span className="text-lg leading-none">{lang.flag}</span>
                             <div className="truncate">
-                              <p className={`text-xs font-bold ${isActive ? "text-white" : "text-slate-950"}`}>
+                              <p className={`text-xs font-bold truncate ${isActive ? "text-white dark:text-slate-950" : "text-slate-950 dark:text-white"}`}>
                                 {lang.nativeName}
                               </p>
-                              <p className={`font-mono text-[10px] ${isActive ? "text-slate-300" : "text-slate-500"}`}>
+                              <p className={`font-mono text-[10px] truncate ${isActive ? "text-slate-300 dark:text-slate-600" : "text-slate-500 dark:text-slate-400"}`}>
                                 {lang.name}
                               </p>
                             </div>
                           </div>
-                          {isActive && <FontAwesomeIcon icon={faCheck} className="h-3 w-3 text-emerald-400 shrink-0" />}
+                          {isActive && <FontAwesomeIcon icon={faCheck} className="h-3 w-3 text-emerald-400 dark:text-emerald-600 shrink-0" />}
                         </button>
                       );
                     })}
@@ -311,7 +331,7 @@ export default function LanguageSelector() {
 
               {/* All / Filtered Languages */}
               <div>
-                <h4 className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">
+                <h4 className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
                   {searchQuery
                     ? `Hasil Pencarian (${filteredLanguages.length})`
                     : `Semua Bahasa Dunia (${LANGUAGES.length})`}
@@ -322,7 +342,7 @@ export default function LanguageSelector() {
                     Bahasa &ldquo;{searchQuery}&rdquo; tidak ditemukan. Coba ketik nama negara atau bahasa dalam bahasa Inggris.
                   </div>
                 ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 pb-2">
                     {filteredLanguages.map((lang) => {
                       const isActive = currentLang === lang.code;
                       return (
@@ -331,22 +351,22 @@ export default function LanguageSelector() {
                           onClick={() => handleSelectLanguage(lang.code)}
                           className={`flex items-center justify-between rounded-lg border px-3 py-2 text-left transition-colors ${
                             isActive
-                              ? "border-slate-900 bg-slate-900 text-white"
-                              : "border-slate-200/80 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50"
+                              ? "border-slate-900 bg-slate-900 text-white dark:border-white dark:bg-white dark:text-slate-950"
+                              : "border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
                           }`}
                         >
                           <div className="flex items-center gap-2 overflow-hidden">
                             <span className="text-base leading-none">{lang.flag}</span>
                             <div className="truncate">
-                              <span className={`text-xs font-medium block truncate ${isActive ? "text-white" : "text-slate-900"}`}>
+                              <span className={`text-xs font-medium block truncate ${isActive ? "text-white dark:text-slate-950" : "text-slate-900 dark:text-white"}`}>
                                 {lang.nativeName}
                               </span>
-                              <span className={`font-mono text-[10px] block truncate ${isActive ? "text-slate-300" : "text-slate-400"}`}>
+                              <span className={`font-mono text-[10px] block truncate ${isActive ? "text-slate-300 dark:text-slate-600" : "text-slate-400"}`}>
                                 {lang.name} ({lang.code})
                               </span>
                             </div>
                           </div>
-                          {isActive && <FontAwesomeIcon icon={faCheck} className="h-2.5 w-2.5 text-emerald-400 shrink-0" />}
+                          {isActive && <FontAwesomeIcon icon={faCheck} className="h-2.5 w-2.5 text-emerald-400 dark:text-emerald-600 shrink-0" />}
                         </button>
                       );
                     })}
@@ -356,11 +376,12 @@ export default function LanguageSelector() {
             </div>
 
             {/* Modal Footer */}
-            <div className="border-t border-slate-200 bg-slate-50/90 px-5 py-3 text-center font-mono text-[11px] text-slate-500">
-              ⚡ Powered by Google Cloud Neural Machine Translation &bull; 80+ Bahasa Dunia
+            <div className="shrink-0 border-t border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-950/90 px-4 py-2.5 sm:px-5 sm:py-3 text-center font-mono text-[10px] sm:text-[11px] text-slate-500">
+              ⚡ Google Cloud Translation &bull; 80+ Bahasa Dunia
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
