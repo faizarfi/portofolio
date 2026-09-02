@@ -13,7 +13,7 @@ import {
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data";
 import { Navbar, Footer } from "@/components";
-import { Reveal, PageBackground, TechBadge, FloatingContact } from "@/components/ui";
+import { Reveal, PageBackground, TechBadge, FloatingContact, ProjectBlueprint } from "@/components/ui";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -145,6 +145,15 @@ export default async function ProjectDetailPage({
                   </div>
                 </div>
               </Reveal>
+
+              {/* System Architecture & ERD Blueprint */}
+              {project.details.architecture && (
+                <Reveal delay={260}>
+                  <div className="mt-8">
+                    <ProjectBlueprint architecture={project.details.architecture} />
+                  </div>
+                </Reveal>
+              )}
 
               {/* Action buttons */}
               <Reveal delay={300}>
