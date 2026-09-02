@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
-import { PageLoader } from "@/components/ui";
+import { PageLoader, CommandPalette } from "@/components/ui";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -142,6 +142,7 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-full flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-500/20 selection:text-blue-900">
         <PageLoader />
+        <CommandPalette />
         {children}
       </body>
     </html>

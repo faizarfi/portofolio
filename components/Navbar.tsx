@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faXmark, faEnvelope, faTerminal } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { NAV_LINKS } from "@/lib/data";
 
@@ -48,6 +48,11 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
+
+  const openTerminal = () => {
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }));
+    setOpen(false);
+  };
 
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return pathname === "/" && scrollActive === href;
@@ -118,6 +123,17 @@ export default function Navbar() {
 
           {/* ── Action Buttons ── */}
           <div className="flex items-center gap-2">
+            {/* Terminal Quick Button */}
+            <button
+              onClick={openTerminal}
+              aria-label="Buka Terminal / Command Palette"
+              title="Buka Terminal (Ctrl+K)"
+              className="hidden h-9 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 text-xs font-mono text-slate-700 shadow-2xs transition-colors hover:border-slate-400 hover:text-slate-950 sm:flex"
+            >
+              <FontAwesomeIcon icon={faTerminal} className="h-3 w-3 text-emerald-600" />
+              <span className="text-[11px] font-semibold text-slate-500">Ctrl K</span>
+            </button>
+
             <a
               href="https://github.com/faizarfi"
               target="_blank"
@@ -186,6 +202,18 @@ export default function Navbar() {
           </div>
 
           <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-4">
+            {/* Mobile Terminal Trigger */}
+            <button
+              onClick={openTerminal}
+              className="flex items-center justify-between rounded-lg border border-slate-300 bg-slate-900 px-4 py-2.5 text-xs font-mono font-bold text-white mb-2 shadow-2xs"
+            >
+              <span className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faTerminal} className="h-3.5 w-3.5 text-emerald-400" />
+                <span>Developer Terminal</span>
+              </span>
+              <span className="text-[10px] text-slate-400">Ctrl K</span>
+            </button>
+
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
               return (
@@ -231,5 +259,6 @@ export default function Navbar() {
     </>
   );
 }
+
 
 

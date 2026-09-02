@@ -15,3 +15,4 @@ export { default as FloatingContact } from "./FloatingContact";
 export { default as AnimatedCounter } from "./AnimatedCounter";
 export { default as InteractivePhotoCard } from "./InteractivePhotoCard";
 export { default as TypewriterRole } from "./TypewriterRole";
+export { default as CommandPalette } from "./CommandPalette";
