@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { PROJECTS } from "@/lib/data/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://faizarfian.id";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://faizarfianilhami.caitlyn.my.id";
 
   const projectPages: MetadataRoute.Sitemap = PROJECTS.map((p) => ({
     url: `${baseUrl}/projects/${p.slug}`,

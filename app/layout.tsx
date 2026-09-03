@@ -26,7 +26,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://faizarfian.id"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://faizarfianilhami.caitlyn.my.id"
+  ),
   title: {
     default: "Faiz Arfian Ilhami — Full Stack Web Developer & IT Helper",
     template: "%s | Faiz Arfian Ilhami",
@@ -57,8 +59,8 @@ export const metadata: Metadata = {
     title: "Faiz Arfian Ilhami | Full Stack Web Developer & IT Helper",
     description:
       "Full Stack Web Developer dan IT Helper Indonesia. Membangun aplikasi web modern dengan Laravel, React, Next.js, PHP, dan solusi digital yang terstruktur.",
-    url: "https://faizarfian.id",
-    siteName: "faizarfian.id",
+    url: "https://faizarfianilhami.caitlyn.my.id",
+    siteName: "faizarfianilhami.caitlyn.my.id",
     locale: "id_ID",
     type: "website",
     images: [
@@ -93,8 +95,8 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Faiz Arfian Ilhami",
-    url: "https://faizarfian.id",
-    image: "https://faizarfian.id/foto.jpeg",
+    url: "https://faizarfianilhami.caitlyn.my.id",
+    image: "https://faizarfianilhami.caitlyn.my.id/foto.jpeg",
     jobTitle: "Full Stack Web Developer & IT Helper",
     worksFor: {
       "@type": "Organization",
