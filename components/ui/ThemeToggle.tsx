@@ -2,38 +2,27 @@
 
 /* eslint-disable react-hooks/set-state-in-effect -- theme state is hydrated from browser preferences. */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon, faLaptop, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 type ThemeMode = "system" | "dark" | "light";
+const emptySubscribe = () => () => {};
 
 export default function ThemeToggle() {
   const [mode, setMode] = useState<ThemeMode>("system");
   const [resolvedTheme, setResolvedTheme] = useState<"dark" | "light">("light");
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   // Read initial preference & set up system media query listener
   useEffect(() => {
-    setMounted(true);
     const stored = localStorage.getItem("theme") as ThemeMode | null;
-    const initialMode: ThemeMode = stored === "dark" || stored === "light" ? stored : "system";
+    const initialMode: ThemeMode = stored === "dark" ? "dark" : "light";
     setMode(initialMode);
 
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-
     const applyTheme = (currentMode: ThemeMode) => {
-      let isDark = false;
-      if (currentMode === "dark") {
-        isDark = true;
-      } else if (currentMode === "light") {
-        isDark = false;
-      } else {
-        // "system" -> follow user phone/OS preference
-        isDark = media.matches;
-      }
-
+      const isDark = currentMode === "dark";
       setResolvedTheme(isDark ? "dark" : "light");
 
       if (isDark) {
@@ -44,17 +33,6 @@ export default function ThemeToggle() {
     };
 
     applyTheme(initialMode);
-
-    // Listen for real-time phone theme changes (e.g. sunset automatic switch)
-    const handleSystemChange = () => {
-      const currentStored = localStorage.getItem("theme") as ThemeMode | null;
-      if (!currentStored || currentStored === "system") {
-        applyTheme("system");
-      }
-    };
-
-    media.addEventListener("change", handleSystemChange);
-    return () => media.removeEventListener("change", handleSystemChange);
   }, []);
 
   const changeTheme = (newMode: ThemeMode) => {
@@ -101,12 +79,12 @@ export default function ThemeToggle() {
         onClick={() => setIsOpen((prev) => !prev)}
         title={`Tema: ${mode === "system" ? "Mengikuti HP (Otomatis)" : mode === "dark" ? "Mode Gelap" : "Mode Terang"}`}
         aria-label="Pilih Tema Tampilan"
-        className="group flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-slate-300 dark:border-slate-800 bg-white/90 dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-2xs transition-all hover:border-slate-400 dark:hover:border-slate-700 hover:text-slate-950 dark:hover:text-white shrink-0"
+        className="group flex h-8 w-8 sm:h-8.5 sm:w-8.5 items-center justify-center rounded-full border border-slate-200/80 dark:border-zinc-700/80 bg-slate-100/80 dark:bg-zinc-800/80 text-slate-700 dark:text-zinc-200 shadow-2xs transition-all hover:border-slate-400 dark:hover:border-zinc-600 hover:bg-white dark:hover:bg-zinc-800 hover:text-slate-950 dark:hover:text-white shrink-0"
       >
         {resolvedTheme === "dark" ? (
-          <FontAwesomeIcon icon={faMoon} className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-blue-400" />
+          <FontAwesomeIcon icon={faMoon} className="h-3.5 w-3.5 text-blue-400" />
         ) : (
-          <FontAwesomeIcon icon={faSun} className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-amber-500" />
+          <FontAwesomeIcon icon={faSun} className="h-3.5 w-3.5 text-amber-500" />
         )}
       </button>
 

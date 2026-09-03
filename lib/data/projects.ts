@@ -26,6 +26,11 @@ export interface ProjectArchitecture {
   highlights: string[];
 }
 
+export interface ImpactMetric {
+  value: string;
+  label: string;
+}
+
 export interface ProjectDetail {
   role: string;
   overview: string;
@@ -33,6 +38,11 @@ export interface ProjectDetail {
   contributionsCount?: number;
   year?: string;
   metric?: string;
+  duration?: string;
+  usersCount?: string;
+  problemBefore?: string;
+  solutionAfter?: string;
+  impactMetrics?: ImpactMetric[];
   architecture?: ProjectArchitecture;
 }
 
@@ -125,7 +135,7 @@ export const PROJECTS: Project[] = [
               { name: "nama_lengkap", type: "VARCHAR(150)", desc: "Nama lengkap alumni" },
               { name: "program_studi_id", type: "INT UNSIGNED", key: "FK", desc: "Relasi ke master prodi" },
               { name: "tahun_lulus", type: "YEAR", key: "IDX", desc: "Tahun kelulusan wisuda" },
-              { name: "no_telepon", type: "VARCHAR(20)", desc: "Nomor kontak WhatsApp aktif" },
+              { name: "no_telepon", type: "VARCHAR(20)", desc: "Nomor kontak telepon aktif" },
             ],
             relations: ["1:1 dengan users", "1:N dengan tracer_responses"],
           },
@@ -275,7 +285,7 @@ export const PROJECTS: Project[] = [
           {
             tier: "03. Notification Gateway",
             title: "Dispatch Service",
-            tech: "WhatsApp Gateway API / Webhook Integration",
+            tech: "Notification Gateway API / Webhook Integration",
             description: "Eksekusi pengiriman notifikasi broadcast jadwal kerja langsung ke nomor kontak karyawan.",
           },
           {
@@ -293,7 +303,7 @@ export const PROJECTS: Project[] = [
               { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "ID karyawan" },
               { name: "nip", type: "VARCHAR(30)", key: "IDX", desc: "Nomor Induk Pegawai unik" },
               { name: "nama", type: "VARCHAR(120)", desc: "Nama lengkap pegawai" },
-              { name: "no_whatsapp", type: "VARCHAR(20)", desc: "Nomor WA tujuan notifikasi" },
+              { name: "no_telepon", type: "VARCHAR(20)", desc: "Nomor telepon tujuan notifikasi" },
               { name: "status_aktif", type: "BOOLEAN", desc: "Status kerja aktif" },
             ],
             relations: ["1:N dengan attendance_logs"],

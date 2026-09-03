@@ -8,8 +8,9 @@ import {
   faCopy,
   faCheck,
   faArrowUpRightFromSquare,
+  faShieldHalved,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { SOCIALS } from "@/lib/data/socials";
 import { SectionHeading, Reveal } from "@/components/ui";
 
@@ -23,6 +24,8 @@ const SUBJECT_OPTIONS = [
 
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
+  const [turnstileStatus, setTurnstileStatus] = useState<"idle" | "verifying" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     contactInfo: "",
@@ -46,17 +49,70 @@ export default function ContactSection() {
     return `${namePart}${contactPart}\n${subjectPart}${messagePart}`;
   };
 
-  const handleSendWhatsApp = (e: React.FormEvent) => {
+  const handleSendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
-    const text = encodeURIComponent(getFormattedMessage());
-    window.open(`https://wa.me/6282327867328?text=${text}`, "_blank");
-  };
 
-  const handleSendEmail = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`[Inquiry Portofolio] ${formData.subject} — ${formData.name || "Klien"}`);
-    const body = encodeURIComponent(getFormattedMessage());
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    // 1. Ambil token dari widget Turnstile
+    const turnstileInput = document.querySelector(
+      'input[name="cf-turnstile-response"]'
+    ) as HTMLInputElement | null;
+    const token =
+      turnstileInput?.value ||
+      (typeof window !== "undefined" &&
+      (window as unknown as { turnstile?: { getResponse?: () => string } }).turnstile?.getResponse?.()
+        ? (window as unknown as { turnstile?: { getResponse?: () => string } }).turnstile!.getResponse!()
+        : "");
+
+    if (!token) {
+      setTurnstileStatus("error");
+      setStatusMessage("Mohon selesaikan verifikasi keamanan Cloudflare Turnstile terlebih dahulu.");
+      return;
+    }
+
+    setTurnstileStatus("verifying");
+    setStatusMessage("Memvalidasi keamanan Turnstile...");
+
+    try {
+      // 2. Kirim validasi ke API Route Backend (/api/contact)
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          "cf-turnstile-response": token,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setTurnstileStatus("error");
+        setStatusMessage(data.message || "Verifikasi bot gagal, silakan coba lagi.");
+        if (typeof window !== "undefined" && (window as unknown as { turnstile?: { reset?: () => void } }).turnstile) {
+          (window as unknown as { turnstile?: { reset?: () => void } }).turnstile!.reset!();
+        }
+        return;
+      }
+
+      // 3. Jika validasi sukses
+      setTurnstileStatus("success");
+      setStatusMessage("Verifikasi berhasil! Membuka aplikasi email...");
+
+      const subject = encodeURIComponent(`[Inquiry Portofolio] ${formData.subject} — ${formData.name || "Klien"}`);
+      const body = encodeURIComponent(getFormattedMessage());
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+
+      // Reset widget untuk pengiriman berikutnya
+      if (typeof window !== "undefined" && (window as unknown as { turnstile?: { reset?: () => void } }).turnstile) {
+        (window as unknown as { turnstile?: { reset?: () => void } }).turnstile!.reset!();
+      }
+    } catch {
+      setTurnstileStatus("error");
+      setStatusMessage("Terjadi kendala jaringan saat memverifikasi keamanan. Silakan coba lagi.");
+      if (typeof window !== "undefined" && (window as unknown as { turnstile?: { reset?: () => void } }).turnstile) {
+        (window as unknown as { turnstile?: { reset?: () => void } }).turnstile!.reset!();
+      }
+    }
   };
 
   return (
@@ -87,7 +143,7 @@ export default function ContactSection() {
                 </h3>
 
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  Kirimkan gambaran ide atau masalah Anda melalui formulir di bawah ini. Pesan akan terformat otomatis dan bisa langsung diteruskan ke WhatsApp atau Email.
+                  Kirimkan gambaran ide atau masalah Anda melalui formulir di bawah ini. Pesan akan terformat otomatis dan bisa langsung diteruskan ke Email.
                 </p>
 
                 {/* ── Interactive Contact Form ── */}
@@ -107,13 +163,13 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1.5 font-mono">
-                        EMAIL / WHATSAPP
+                        EMAIL / KONTAK ANDA
                       </label>
                       <input
                         type="text"
                         value={formData.contactInfo}
                         onChange={(e) => setFormData({ ...formData, contactInfo: e.target.value })}
-                        placeholder="contoh@email.com / 0812..."
+                        placeholder="contoh@email.com"
                         className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 shadow-2xs transition-colors focus:border-slate-900 focus:outline-none"
                       />
                     </div>
@@ -149,55 +205,53 @@ export default function ContactSection() {
                     />
                   </div>
 
-                  {/* Dual Submit Buttons */}
+                  {/* Cloudflare Turnstile Widget */}
+                  <div className="pt-1">
+                    <div
+                      className="cf-turnstile"
+                      data-sitekey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY || "0x4AAAAAAElvKt9_LYYr1Uov"}
+                      data-theme="auto"
+                    />
+                  </div>
+
+                  {/* Status notification banner */}
+                  {statusMessage && (
+                    <div
+                      className={`flex items-center gap-2 rounded-lg p-3 text-xs font-medium ${
+                        turnstileStatus === "error"
+                          ? "border border-red-200 bg-red-50 text-red-700 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-400"
+                          : turnstileStatus === "success"
+                          ? "border border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-300"
+                          : "border border-slate-200 bg-slate-50 text-slate-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300"
+                      }`}
+                    >
+                      <FontAwesomeIcon
+                        icon={turnstileStatus === "verifying" ? faSpinner : faShieldHalved}
+                        className={`h-3.5 w-3.5 ${turnstileStatus === "verifying" ? "animate-spin text-slate-600" : ""}`}
+                      />
+                      <span>{statusMessage}</span>
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
                   <div className="flex flex-wrap items-center gap-3 pt-1">
                     <button
                       type="button"
-                      onClick={handleSendWhatsApp}
-                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-emerald-700 sm:flex-none"
-                    >
-                      <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
-                      <span>Kirim via WhatsApp</span>
-                    </button>
-
-                    <button
-                      type="button"
                       onClick={handleSendEmail}
-                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800 sm:flex-none"
+                      disabled={turnstileStatus === "verifying"}
+                      className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-slate-900 dark:bg-white px-5 py-2.5 text-xs font-semibold text-white dark:text-slate-950 shadow-2xs transition-colors hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
-                      <span>Kirim via Email</span>
+                      <FontAwesomeIcon
+                        icon={turnstileStatus === "verifying" ? faSpinner : faEnvelope}
+                        className={`h-3.5 w-3.5 ${turnstileStatus === "verifying" ? "animate-spin" : ""}`}
+                      />
+                      <span>{turnstileStatus === "verifying" ? "Memverifikasi..." : "Kirim Pesan via Email"}</span>
                     </button>
                   </div>
                 </form>
 
-                {/* Direct WhatsApp Strip */}
-                <div className="mt-6 flex flex-col gap-3 rounded-xl border border-emerald-300 bg-emerald-50/60 p-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-white">
-                      <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className="font-mono text-xs font-bold text-emerald-950 sm:text-sm">
-                        0823-2786-7328
-                      </p>
-                      <p className="text-[11px] text-emerald-800 font-mono">WhatsApp Faiz Arfian</p>
-                    </div>
-                  </div>
-
-                  <a
-                    href="https://wa.me/6282327867328?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-emerald-700"
-                  >
-                    <FontAwesomeIcon icon={faWhatsapp} className="h-3.5 w-3.5" />
-                    <span>Chat Langsung</span>
-                  </a>
-                </div>
-
                 {/* Email Copy Box */}
-                <div className="mt-3 flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-6 flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
                       <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />

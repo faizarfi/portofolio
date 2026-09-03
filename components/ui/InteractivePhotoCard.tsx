@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faLaptopCode } from "@fortawesome/free-solid-svg-icons";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faLocationDot, faLaptopCode, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 export default function InteractivePhotoCard() {
   return (
@@ -19,20 +18,18 @@ export default function InteractivePhotoCard() {
         </div>
       </div>
 
-      {/* Floating Badge Bottom-Right: WhatsApp Action */}
+      {/* Floating Badge Bottom-Right: Contact Action */}
       <a
-        href="https://wa.me/6282327867328?text=Halo%20Faiz%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat WhatsApp Faiz Arfian"
-        className="absolute -bottom-3 -right-3 z-20 flex items-center gap-2.5 rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 py-2 shadow-sm transition-all duration-200 hover:bg-emerald-100 hover:scale-102"
+        href="#contact"
+        aria-label="Hubungi Faiz Arfian"
+        className="absolute -bottom-3 -right-3 z-20 flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 shadow-sm transition-all duration-200 hover:bg-slate-50 hover:scale-102"
       >
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-white">
-          <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-900 text-white">
+          <FontAwesomeIcon icon={faEnvelope} className="h-3.5 w-3.5" />
         </span>
         <div className="text-left">
-          <p className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider font-mono">KONTAK</p>
-          <p className="text-xs font-bold text-emerald-950">Chat WhatsApp</p>
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider font-mono">KONTAK</p>
+          <p className="text-xs font-bold text-slate-900">Hubungi Saya</p>
         </div>
       </a>
 

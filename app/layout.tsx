@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
-import { PageLoader, CommandPalette } from "@/components/ui";
+import { PageLoader, CommandPalette, AccessibilityMenu } from "@/components/ui";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -144,8 +144,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var stored = localStorage.getItem('theme');
-                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  if (stored === 'dark' || (!stored && prefersDark)) {
+                  if (stored === 'dark') {
                     document.documentElement.classList.add('dark');
                   } else {
                     document.documentElement.classList.remove('dark');
@@ -159,10 +158,16 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          async
+          defer
+        />
       </head>
       <body className="flex min-h-full flex-col bg-[#fafaf9] dark:bg-[#090d16] text-slate-800 dark:text-slate-200 transition-colors duration-200 selection:bg-slate-900 dark:selection:bg-slate-100 selection:text-white dark:selection:text-slate-950">
         <PageLoader />
         <CommandPalette />
+        <AccessibilityMenu />
         {children}
       </body>
     </html>

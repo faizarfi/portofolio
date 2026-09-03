@@ -17,8 +17,9 @@ import {
   faCopy,
   faCheck,
   faGlobe,
+  faUniversalAccess,
 } from "@fortawesome/free-solid-svg-icons";
-import { faGithub, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data/projects";
 
 interface CommandItem {
@@ -114,7 +115,6 @@ export default function CommandPalette() {
   }, [terminalLogs, mode]);
 
   const email = "faizarfianilhami020204@gmail.com";
-  const whatsappUrl = "https://wa.me/6282327867328?text=Halo%20Faiz%20Arfian%2C%20saya%20tertarik%20untuk%20diskusi%20proyek%20web";
 
   // Navigation helper
   const navigateTo = (path: string) => {
@@ -220,14 +220,14 @@ export default function CommandPalette() {
       },
     },
     {
-      id: "act-whatsapp",
+      id: "act-a11y",
       category: "Aksi Cepat",
-      title: "Chat Langsung via WhatsApp",
-      subtitle: "Hubungi Faiz Arfian (0823-2786-7328)",
-      icon: faWhatsapp,
+      title: "Menu Aksesibilitas (Ukuran Font, Kontras, Spasi)",
+      subtitle: "Atur ukuran teks, ramah disleksia, kursor besar, & matikan animasi",
+      icon: faUniversalAccess,
       action: () => {
-        window.open(whatsappUrl, "_blank");
         setIsOpen(false);
+        window.dispatchEvent(new CustomEvent("open-a11y-menu"));
       },
     },
     {
@@ -304,9 +304,10 @@ export default function CommandPalette() {
               <div><span className="text-emerald-400 font-bold">skills</span> : Daftar keahlian &amp; tech stack</div>
               <div><span className="text-emerald-400 font-bold">projects</span> : Katalog proyek &amp; studi kasus</div>
               <div><span className="text-emerald-400 font-bold">experience</span> : Pengalaman organisasi &amp; kepemimpinan</div>
-              <div><span className="text-emerald-400 font-bold">contact</span> : Saluran komunikasi &amp; WhatsApp</div>
+              <div><span className="text-emerald-400 font-bold">contact</span> : Saluran komunikasi &amp; kontak</div>
               <div><span className="text-emerald-400 font-bold">github</span> : Buka profil GitHub resmi</div>
               <div><span className="text-emerald-400 font-bold">status</span> : Telemetri kesiapan kerja</div>
+              <div><span className="text-emerald-400 font-bold">a11y</span> : Buka menu aksesibilitas visual &amp; teks</div>
               <div><span className="text-emerald-400 font-bold">sudo hire</span> : Rekrut Faiz untuk proyek/kerja</div>
               <div><span className="text-emerald-400 font-bold">clear</span> : Bersihkan layar terminal</div>
               <div><span className="text-emerald-400 font-bold">exit</span> : Tutup terminal</div>
@@ -314,6 +315,12 @@ export default function CommandPalette() {
           </div>
         );
         break;
+
+      case "a11y":
+      case "accessibility":
+        setIsOpen(false);
+        window.dispatchEvent(new CustomEvent("open-a11y-menu"));
+        return;
 
       case "whoami":
         output = (
@@ -379,13 +386,12 @@ export default function CommandPalette() {
       case "contact":
         output = (
           <div className="space-y-1 text-slate-300">
-            <p><span className="font-bold text-white">WhatsApp:</span> 0823-2786-7328</p>
             <p><span className="font-bold text-white">Email:</span> faizarfianilhami020204@gmail.com</p>
             <p><span className="font-bold text-white">GitHub:</span> https://github.com/faizarfi</p>
-            <p className="mt-2 text-emerald-400">Menghubungkan ke WhatsApp...</p>
+            <p><span className="font-bold text-white">LinkedIn:</span> https://www.linkedin.com/in/faizarfianilhami</p>
+            <p className="mt-2 text-emerald-400">Silakan hubungi melalui email atau formulir kontak.</p>
           </div>
         );
-        setTimeout(() => window.open(whatsappUrl, "_blank"), 600);
         break;
 
       case "github":
@@ -412,10 +418,10 @@ export default function CommandPalette() {
           <div className="space-y-1.5 p-3 rounded-lg border border-emerald-500/40 bg-emerald-950/30 text-emerald-300">
             <p className="font-bold text-white">🎉 ACCESS GRANTED: Rekrutmen Diinisiasi!</p>
             <p>Terima kasih atas ketertarikan Anda! Faiz siap berkontribusi penuh dalam tim teknis Anda.</p>
-            <p className="text-xs text-slate-400">Mengarahkan Anda langsung ke saluran WhatsApp resmi...</p>
+            <p className="text-xs text-slate-400">Mengarahkan Anda ke formulir kontak...</p>
           </div>
         );
-        setTimeout(() => window.open(whatsappUrl, "_blank"), 1000);
+        setTimeout(() => navigateTo("#contact"), 1000);
         break;
 
       case "clear":
@@ -481,19 +487,6 @@ export default function CommandPalette() {
 
   return (
     <>
-      {/* ── Global Floating Trigger Button (Bottom Left) ── */}
-      <button
-        onClick={() => setIsOpen(true)}
-        aria-label="Buka Command Palette & Terminal"
-        className="fixed bottom-5 left-5 z-40 hidden sm:flex items-center gap-2 rounded-lg border border-slate-300 bg-white/95 px-3 py-2 text-xs font-mono font-semibold text-slate-800 shadow-md backdrop-blur-md transition-colors hover:border-slate-900 hover:bg-slate-900 hover:text-white group"
-      >
-        <FontAwesomeIcon icon={faTerminal} className="h-3.5 w-3.5 text-slate-600 group-hover:text-emerald-400" />
-        <span>Terminal</span>
-        <kbd className="rounded border border-slate-300 bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-600 group-hover:border-slate-700 group-hover:bg-slate-800 group-hover:text-slate-300">
-          Ctrl K
-        </kbd>
-      </button>
-
       {/* ── Main Modal Backdrop ── */}
       {isOpen && (
         <div
