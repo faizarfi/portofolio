@@ -11,12 +11,16 @@ import {
   AnimatedCounter,
   Reveal,
   InteractivePhotoCard,
+  HeroInteractiveElements,
 } from "@/components/ui";
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="w-full px-4 pt-4 pb-8 sm:px-6 lg:px-8 lg:pt-6 lg:pb-12">
-      <div className="mx-auto max-w-7xl">
+    <section id="hero" className="relative w-full overflow-hidden px-4 pt-4 pb-8 sm:px-6 lg:px-8 lg:pt-6 lg:pb-12">
+      {/* ── Background Developer Elements (Interactive Cursor Shards, Code Watermark & Corner Mesh) ── */}
+      <HeroInteractiveElements />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         {/* ── 2-Column Full-Width Hero Grid ── */}
         <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
           {/* ── Left Column: Intro, Headline, CTAs, Stats (7 cols) ── */}
@@ -26,7 +30,7 @@ export default function HeroSection() {
               <div className="space-y-3.5">
                 <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/80 px-3 py-1 font-mono text-[11px] font-medium text-slate-600 dark:text-zinc-400">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  <span>Surakarta, Indonesia &bull; Terbuka untuk Proyek &amp; IT Support</span>
+                  <span>Seluruh Indonesia &bull; Terbuka untuk Proyek &amp; IT Support</span>
                 </div>
 
                 <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white leading-[1.14]">
@@ -38,7 +42,15 @@ export default function HeroSection() {
                 </p>
 
                 <p className="max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-zinc-300 sm:text-base">
-                  Berpengalaman merancang sistem informasi institusi, dashboard operasional, serta aplikasi web modern. Berfokus pada keandalan arsitektur basis data <strong className="font-semibold text-slate-900 dark:text-white">Laravel &amp; MySQL</strong> serta antarmuka reaktif <strong className="font-semibold text-slate-900 dark:text-white">React &amp; Next.js</strong> dengan standar kode yang terstruktur.
+                  Berpengalaman merancang sistem informasi institusi, dashboard operasional, serta aplikasi web modern. Berfokus pada keandalan arsitektur basis data{" "}
+                  <span className="inline-flex items-center gap-1 rounded-md border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-2 py-0.5 text-xs font-bold text-slate-900 dark:text-white shadow-2xs mx-1 align-baseline transition-transform hover:scale-105">
+                    Laravel &amp; MySQL
+                  </span>{" "}
+                  serta antarmuka reaktif{" "}
+                  <span className="inline-flex items-center gap-1 rounded-md border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-2 py-0.5 text-xs font-bold text-slate-900 dark:text-white shadow-2xs mx-1 align-baseline transition-transform hover:scale-105">
+                    React &amp; Next.js
+                  </span>{" "}
+                  dengan standar kode yang terstruktur.
                 </p>
               </div>
             </Reveal>
@@ -134,13 +146,14 @@ export default function HeroSection() {
                   <TechBadge label="React" size="sm" />
                   <TechBadge label="Next.js" size="sm" />
                   <TechBadge label="MySQL" size="sm" />
+                  <TechBadge label="Git" size="sm" />
                 </div>
               </div>
             </Reveal>
           </div>
 
-          {/* ── Right Column: Studio Photo Frame (5 cols) ── */}
-          <div className="lg:col-span-5">
+          {/* ── Right Column: Circular Avatar Frame ── */}
+          <div className="lg:col-span-5 flex justify-center">
             <Reveal direction="scale" delay={120}>
               <InteractivePhotoCard />
             </Reveal>

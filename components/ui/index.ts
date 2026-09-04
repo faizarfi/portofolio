@@ -20,3 +20,4 @@ export { default as ProjectBlueprint } from "./ProjectBlueprint";
 export { default as LanguageSelector } from "./LanguageSelector";
 export { default as ThemeToggle } from "./ThemeToggle";
 export { default as AccessibilityMenu } from "./AccessibilityMenu";
+export { default as HeroInteractiveElements } from "./HeroInteractiveElements";

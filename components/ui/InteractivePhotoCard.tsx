@@ -4,44 +4,34 @@ import Image from "next/image";
 
 export default function InteractivePhotoCard() {
   return (
-    <div className="relative mx-auto max-w-sm lg:max-w-none">
-      {/* Studio Portrait Frame */}
-      <div className="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-2 sm:p-2.5 shadow-lg shadow-slate-900/5 dark:shadow-none transition-all">
-        {/* Photo Container */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-zinc-850 border border-slate-200/70 dark:border-zinc-800/80">
+    <div className="flex flex-col items-center justify-center">
+      {/* ── Circular Portrait Frame with Subtle Tech Ring ── */}
+      <div className="group relative">
+        {/* Subtle Outer Dashed Ring Accent */}
+        <div className="absolute -inset-2.5 rounded-full border border-dashed border-slate-300/70 dark:border-zinc-700/60 pointer-events-none transition-all duration-500 group-hover:border-slate-400 dark:group-hover:border-zinc-500 group-hover:scale-105" />
+
+        {/* Circular Avatar Container */}
+        <div className="relative h-44 w-44 sm:h-52 sm:w-52 lg:h-56 lg:w-56 overflow-hidden rounded-full border-2 border-slate-200 dark:border-zinc-800 bg-slate-100 dark:bg-zinc-900 shadow-xl shadow-slate-900/5 dark:shadow-black/60 transition-transform duration-500 group-hover:scale-[1.02]">
           <Image
             src="/foto.jpeg"
             alt="Faiz Arfian Ilhami"
             fill
-            className="object-cover object-top transition-transform duration-700 hover:scale-[1.02]"
+            className="object-cover object-[center_20%] transition-transform duration-700 group-hover:scale-105"
             priority
-            sizes="(max-width: 768px) 100vw, 420px"
+            sizes="(max-width: 640px) 176px, (max-width: 1024px) 208px, 224px"
           />
-
-          {/* Subtle Bottom Shade for Visual Depth */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent" />
         </div>
+      </div>
 
-        {/* Minimalist Editorial Caption */}
-        <div className="mt-2.5 flex items-center justify-between px-2 py-1">
-          <div>
-            <p className="font-display text-xs font-bold text-slate-900 dark:text-white">
-              Faiz Arfian Ilhami
-            </p>
-            <p className="font-mono text-[10px] text-slate-500 dark:text-zinc-400">
-              Informatika &bull; UMS
-            </p>
-          </div>
-
-          <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500 dark:text-zinc-400">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            <span>Surakarta, ID</span>
-          </div>
-        </div>
+      {/* ── Editorial Location / Collaboration Caption ── */}
+      <div className="mt-4 text-center">
+        <p className="font-mono text-[11px] text-slate-500 dark:text-zinc-400">
+          Sekarang berkolaborasi di:
+        </p>
+        <p className="mt-0.5 font-display text-xs sm:text-sm font-semibold text-slate-800 dark:text-zinc-200">
+          Seluruh Indonesia &bull; Terbuka untuk Remote
+        </p>
       </div>
     </div>
   );
 }
-
-
-
