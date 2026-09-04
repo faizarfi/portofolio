@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
-import { CommandPalette, CloudflareGate } from "@/components/ui";
+import { CommandPalette } from "@/components/ui";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -168,7 +168,6 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-full flex-col bg-white dark:bg-black text-slate-900 dark:text-white transition-colors duration-200 selection:bg-slate-900 dark:selection:bg-white selection:text-white dark:selection:text-black">
-        <CloudflareGate />
         <CommandPalette />
         {children}
       </body>
