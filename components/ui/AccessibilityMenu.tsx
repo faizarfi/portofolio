@@ -158,7 +158,7 @@ export default function AccessibilityMenu() {
         type="button"
         title="Menu Aksesibilitas (Ukuran font, kontras, spasi baca)"
         aria-label="Buka Menu Aksesibilitas"
-        className="fixed bottom-5 left-5 z-40 flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 px-3.5 py-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200 shadow-md backdrop-blur-md transition-all hover:border-zinc-900 dark:hover:border-white hover:shadow-lg hover:-translate-y-0.5 group"
+        className="fixed bottom-5 left-5 z-40 flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 px-3.5 py-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200 shadow-md backdrop-blur-md transition-all hover:border-zinc-900 dark:hover:border-white hover:shadow-lg hover:-translate-y-0.5 group cursor-pointer"
       >
         <div className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 shadow-2xs group-hover:scale-105 transition-transform">
           <FontAwesomeIcon icon={faUniversalAccess} className="h-3.5 w-3.5" />

@@ -11,15 +11,14 @@ import { ABOUT_EDUCATION, ABOUT_FOCUS_TAGS } from "@/lib/data/about";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <section id="about" className="w-full px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
-            tag="Tentang Saya"
+            tag="Profil &amp; Filosofi"
             title="Latar Belakang &amp; Rekam Jejak"
-            subtitle="Mengenal perjalanan saya sebagai web developer profesional, dedikasi pada kode yang rapi, dan komitmen memberikan dukungan teknis IT yang solutif ke seluruh Indonesia."
+            subtitle="Mengenal perjalanan saya dalam rekayasa perangkat lunak, dedikasi terhadap struktur kode yang bersih, serta pengalaman menangani infrastruktur teknologi secara langsung."
           />
-
         </Reveal>
 
         {/* ── 2-Column Full-Width Grid ── */}

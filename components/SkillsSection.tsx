@@ -131,16 +131,15 @@ const CORE_TECH_STACK: TechCategory[] = [
         ),
       },
       {
-        name: "Lucide Icons",
-        version: "v1.7",
-        desc: "Ikon vektor modern & konsistensi antarmuka",
-        url: "https://lucide.dev",
+        name: "REST API & Postman",
+        desc: "Perancangan endpoint, validasi JSON & pengujian API",
+        url: "https://www.postman.com",
         iconSvg: (
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-800 dark:text-zinc-200">
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12" />
-              <path d="M12 6a6 6 0 0 1 6 6c0 3.314-2.686 6-6 6s-6-2.686-6-6" />
-              <path d="M12 10a2 2 0 0 1 2 2" />
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 16l4-4-4-4" />
+              <path d="M8 8l-4 4 4 4" />
+              <path d="M14 4l-4 16" />
             </svg>
           </div>
         ),
@@ -164,7 +163,7 @@ const CORE_TECH_STACK: TechCategory[] = [
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <section id="skills" className="w-full px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading

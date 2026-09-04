@@ -4,7 +4,7 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data";
 import { Navbar, Footer } from "@/components";
-import { SectionHeading, Reveal, PageBackground, ProjectCard, FloatingContact } from "@/components/ui";
+import { SectionHeading, Reveal, PageBackground, ProjectCard } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Semua Proyek — Faiz Arfian Ilhami",
@@ -66,7 +66,6 @@ export default function ProjectsPage() {
       </main>
 
       <Footer />
-      <FloatingContact />
     </div>
   );
 }

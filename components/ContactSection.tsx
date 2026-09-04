@@ -116,13 +116,13 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <section id="contact" className="w-full px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
-            tag="Kontak &amp; Diskusi"
-            title="Mari Terhubung &amp; Berkolaborasi"
-            subtitle="Saya terbuka untuk peluang kerja sama pembuatan website, perancangan sistem informasi instansi, maupun dukungan teknis IT ke seluruh wilayah Indonesia (Remote &amp; On-Site)."
+            tag="Kontak &amp; Kolaborasi"
+            title="Mari Terhubung &amp; Berdiskusi"
+            subtitle="Saya terbuka untuk peluang kerja sama rekayasa perangkat lunak, pengembangan sistem informasi instansi, maupun konsultasi teknis IT."
           />
         </Reveal>
 
@@ -134,7 +134,7 @@ export default function ContactSection() {
               <div>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-2.5 py-1 text-xs font-mono font-medium text-slate-700 dark:text-zinc-200 shadow-2xs">
                   <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  <span>Indonesia &bull; Tersedia Kerja Sama Proyek (Remote &amp; On-Site)</span>
+                  <span>Surakarta / Remote &bull; Terbuka untuk Diskusi &amp; Proyek Baru</span>
                 </div>
 
 

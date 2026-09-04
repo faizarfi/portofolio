@@ -4,12 +4,13 @@ import {
   AboutSection,
   SkillsSection,
   ProjectsSection,
+  WorkflowSection,
   SpeakingSection,
   GitHubSection,
   ContactSection,
   Footer,
 } from "@/components";
-import { PageBackground, FloatingContact } from "@/components/ui";
+import { PageBackground } from "@/components/ui";
 
 export default function Home() {
   return (
@@ -25,12 +26,12 @@ export default function Home() {
           <AboutSection />
           <SkillsSection />
           <ProjectsSection />
+          <WorkflowSection />
           <SpeakingSection />
           <GitHubSection />
           <ContactSection />
         </main>
         <Footer />
-        <FloatingContact />
       </div>
     </div>
   );

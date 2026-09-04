@@ -135,13 +135,13 @@ export default async function GitHubSection() {
   const monthLabels = getMonthLabels(weeks);
 
   return (
-    <section id="github" className="w-full min-w-0 max-w-full overflow-hidden px-3.5 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <section id="github" className="w-full min-w-0 max-w-full overflow-hidden px-3.5 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl min-w-0 w-full">
         <Reveal direction="up">
           <SectionHeading
-            tag="Aktivitas Koding"
-            title="Aktivitas Open Source &amp; GitHub"
-            subtitle="Pantauan repositori, riwayat commit berkala, dan kontribusi kode publik saya di GitHub (@faizarfi)."
+            tag="Aktivitas Open Source"
+            title="Produktivitas &amp; Repositori Publik"
+            subtitle="Konsistensi ritme penulisan kode, pemeliharaan repositori terbuka, dan kontribusi proyek di GitHub (@faizarfi)."
           />
         </Reveal>
 

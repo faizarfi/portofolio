@@ -40,13 +40,13 @@ export default function ProjectsSection() {
   }, [activeTab, searchQuery]);
 
   return (
-    <section id="projects" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <section id="projects" className="w-full px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
             tag="Koleksi Karya"
             title="Proyek Pilihan &amp; Studi Kasus"
-            subtitle="Sistem informasi instansi, aplikasi live scoring turnamen, chatbot AI, dan utilitas web yang telah saya selesaikan dan rilis publik."
+            subtitle="Sistem informasi terintegrasi, antarmuka web modern, asisten AI, dan utilitas perangkat lunak yang dirancang untuk keandalan dan efisiensi pengguna."
           />
         </Reveal>
 

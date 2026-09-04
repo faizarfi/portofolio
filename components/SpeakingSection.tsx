@@ -21,13 +21,13 @@ export default function SpeakingSection() {
   const hasMore = SPEAKING.length > INITIAL_SHOW;
 
   return (
-    <section id="organizational-experience" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <section id="organizational-experience" className="w-full px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
-            tag="Bukti Kegiatan Nyata"
-            title="Dipercaya untuk Memimpin &amp; Berkolaborasi"
-            subtitle="Dokumentasi publik kegiatan organisasi, kepemimpinan, dan kolaborasi saya. Setiap kartu terhubung ke sumber kegiatan aslinya."
+            tag="Pengalaman &amp; Organisasi"
+            title="Kepemimpinan &amp; Kolaborasi Tim"
+            subtitle="Rekam jejak kontribusi dalam organisasi kampus, kepanitiaan teknis, dan forum kolaboratif yang mengasah kemampuan komunikasi serta pemecahan masalah."
           />
         </Reveal>
 

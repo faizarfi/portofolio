@@ -12,44 +12,44 @@ const PRINCIPLES = [
   {
     icon: faComments,
     number: "01",
-    title: "Pahami Kebutuhan Nyata",
-    description: "Mendiskusikan alur kerja asli dan kendala pengguna secara langsung sebelum mulai menulis kode.",
+    title: "Eksplorasi Kebutuhan",
+    description: "Menganalisis proses bisnis pengguna dan merumuskan spesifikasi teknis yang realistis.",
   },
   {
     icon: faDatabase,
     number: "02",
-    title: "Skema Database Rapi",
-    description: "Menata struktur tabel MySQL dan relasi Eloquent yang bersih agar sistem efisien dan mudah dirawat.",
+    title: "Arsitektur Basis Data",
+    description: "Menyusun skema database terindeks dan relasi entitas yang terstruktur untuk stabilitas jangka panjang.",
   },
   {
     icon: faCode,
     number: "03",
-    title: "Bangun Cepat & Iteratif",
-    description: "Implementasi fitur utama dengan Laravel / Next.js agar prototype sistem bisa segera diuji coba.",
+    title: "Pengembangan Modular",
+    description: "Membangun logika inti aplikasi secara bertahap dengan struktur kode yang bersih dan mudah dirawat.",
   },
   {
     icon: faShieldHalved,
     number: "04",
-    title: "Validasi & Uji Responsif",
-    description: "Memastikan keamanan autentikasi, sanitasi input, dan tampilan nyaman digunakan di layar HP maupun laptop.",
+    title: "Pengujian & Validasi",
+    description: "Memastikan keamanan autentikasi, sanitasi input, performa responsif, dan kenyamanan pengguna.",
   },
   {
     icon: faHeadset,
     number: "05",
-    title: "Dukungan IT & Support",
-    description: "Membantu setup server, panduan penggunaan sistem, dan siap mendampingi jika ada kendala teknis.",
+    title: "Implementasi & Support",
+    description: "Konfigurasi server produksi, penyusunan dokumentasi teknis, serta pendampingan operasional pengguna.",
   },
 ];
 
 export default function WorkflowSection() {
   return (
-    <section id="workflow" className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <section id="workflow" className="w-full px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <Reveal direction="up">
           <SectionHeading
-            tag="Prinsip &amp; Alur Kerja"
-            title="Pendekatan Kerja &amp; Kolaborasi"
-            subtitle="Cara saya bekerja untuk memastikan setiap sistem yang dibangun benar-benar solutif, mudah dipahami pengguna, dan siap digunakan jangka panjang."
+            tag="Alur Kerja &amp; Metodologi"
+            title="Pendekatan Rekayasa Sistem"
+            subtitle="Standar proses yang saya terapkan mulai dari pemetaan kebutuhan bisnis, perancangan skema data, hingga implementasi dan pendampingan teknis."
           />
         </Reveal>
 
