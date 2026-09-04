@@ -13,7 +13,7 @@ import { PageBackground, FloatingContact } from "@/components/ui";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#fafaf9] text-slate-800">
+    <div className="relative min-h-screen bg-white dark:bg-black text-slate-900 dark:text-white transition-colors duration-200">
       {/* Global decorative background (fixed mesh + ambient glow) */}
       <PageBackground />
 

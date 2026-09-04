@@ -5,11 +5,11 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 export const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "rounded-xl bg-slate-900 text-white font-semibold shadow-xs transition-all duration-150 hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0",
+    "rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-semibold shadow-xs transition-all duration-150 hover:bg-slate-800 dark:hover:bg-slate-100 hover:-translate-y-0.5 active:translate-y-0",
   outline:
-    "rounded-xl border border-slate-300 bg-white text-slate-800 font-semibold shadow-2xs transition-all duration-150 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-950 hover:-translate-y-0.5 active:translate-y-0",
+    "rounded-xl border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-100 font-semibold shadow-2xs transition-all duration-150 hover:border-slate-400 dark:hover:border-zinc-500 hover:bg-slate-50 dark:hover:bg-zinc-800 hover:text-slate-950 dark:hover:text-white hover:-translate-y-0.5 active:translate-y-0",
   ghost:
-    "rounded-xl border border-transparent bg-slate-100 text-slate-700 font-medium transition-all duration-150 hover:bg-slate-200 hover:text-slate-950",
+    "rounded-xl border border-transparent bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 font-medium transition-all duration-150 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-950 dark:hover:text-white",
 };
 
 export const BUTTON_SIZES: Record<ButtonSize, string> = {
@@ -34,7 +34,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <a
-      className={`group inline-flex items-center justify-center gap-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${BUTTON_VARIANTS[variant]} ${BUTTON_SIZES[size]} ${className}`}
+      className={`group inline-flex items-center justify-center gap-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 dark:focus-visible:outline-white ${BUTTON_VARIANTS[variant]} ${BUTTON_SIZES[size]} ${className}`}
       {...props}
     >
       {children}

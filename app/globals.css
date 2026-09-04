@@ -1,12 +1,15 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #fafaf9; /* Crisp warm paper canvas */
-  --foreground: #18181b; /* Neutral dark charcoal */
+  --background: #ffffff; /* Crisp pure white canvas */
+  --foreground: #09090b; /* True neutral dark */
   --card-bg: #ffffff;
   --card-border: #e4e4e7;
   --navy: #1e3a5f;
   --navy-dark: #0f172a;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -91,13 +94,13 @@ body {
 
 /* Crisp text selection */
 ::selection {
-  background: #18181b;
+  background: #09090b;
   color: #ffffff;
 }
 
 html.dark ::selection {
   background: #ffffff;
-  color: #18181b;
+  color: #000000;
 }
 
 /* ── Crisp Architectural Card (Solid & Tactile) ── */
@@ -116,16 +119,29 @@ html.dark ::selection {
 }
 
 html.dark {
-  --background: #090d16;
-  --foreground: #f8fafc;
-  --card-bg: #0f172a;
-  --card-border: #1e293b;
+  --background: #000000; /* Pure black */
+  --foreground: #ffffff; /* Crisp white */
+  --card-bg: #09090b; /* Solid deep card */
+  --card-border: #27272a;
   color-scheme: dark;
 }
 
 html.dark .neat-card {
-  background: #0f172a;
-  border-color: #1e293b;
+  background: #09090b;
+  border-color: #27272a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .neat-card:hover {
+  border-color: #3f3f46;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
 
 /* Subtle flat badge */

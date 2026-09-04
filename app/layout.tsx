@@ -146,7 +146,8 @@ export default function RootLayout({
               (function() {
                 try {
                   var stored = localStorage.getItem('theme');
-                  if (stored === 'dark') {
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (stored === 'dark' || (!stored && prefersDark)) {
                     document.documentElement.classList.add('dark');
                   } else {
                     document.documentElement.classList.remove('dark');
@@ -166,7 +167,7 @@ export default function RootLayout({
           defer
         />
       </head>
-      <body className="flex min-h-full flex-col bg-[#fafaf9] dark:bg-[#090d16] text-slate-800 dark:text-slate-200 transition-colors duration-200 selection:bg-slate-900 dark:selection:bg-slate-100 selection:text-white dark:selection:text-slate-950">
+      <body className="flex min-h-full flex-col bg-white dark:bg-black text-slate-900 dark:text-white transition-colors duration-200 selection:bg-slate-900 dark:selection:bg-white selection:text-white dark:selection:text-black">
         <CommandPalette />
         <AccessibilityMenu />
         {children}

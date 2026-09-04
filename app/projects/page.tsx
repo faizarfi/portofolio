@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="relative min-h-screen bg-[#fafaf9] text-slate-800">
+    <div className="relative min-h-screen bg-white dark:bg-black text-slate-900 dark:text-white transition-colors duration-200">
       <PageBackground />
       <Navbar />
 
@@ -42,11 +42,11 @@ export default function ProjectsPage() {
           {/* ── GitHub CTA ── */}
           <Reveal delay={PROJECTS.length * 60 + 100}>
             <div className="neat-card mt-16 flex flex-col items-center justify-center p-8 text-center sm:p-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-800 mb-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 dark:bg-zinc-850 text-slate-800 dark:text-white mb-3">
                 <FontAwesomeIcon icon={faGithub} className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900">Ingin melihat lebih banyak kode?</h3>
-              <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-600 sm:text-sm">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Ingin melihat lebih banyak kode?</h3>
+              <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-600 dark:text-zinc-300 sm:text-sm">
                 Seluruh repositori open-source, skrip utilitas, dan proyek eksperimental saya
                 tersedia secara terbuka di GitHub.
               </p>
@@ -54,11 +54,11 @@ export default function ProjectsPage() {
                 href="https://github.com/faizarfi"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800"
+                className="mt-5 inline-flex items-center gap-2 rounded-lg bg-slate-900 dark:bg-white px-6 py-2.5 text-xs font-semibold text-white dark:text-black shadow-2xs transition-colors hover:bg-slate-800 dark:hover:bg-zinc-200"
               >
                 <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />
                 Kunjungi Profil GitHub @faizarfi
-                <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3 text-slate-400" />
+                <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="h-3 w-3 text-slate-400 dark:text-zinc-500" />
               </a>
             </div>
           </Reveal>

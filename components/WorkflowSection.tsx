@@ -61,26 +61,26 @@ export default function WorkflowSection() {
                 {/* Step Top Bar */}
                 <div>
                   <div className="mb-3.5 flex items-center justify-between">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950">
                       <FontAwesomeIcon icon={step.icon} className="h-3.5 w-3.5" />
                     </div>
-                    <span className="font-mono text-xs font-bold text-slate-400">
+                    <span className="font-mono text-xs font-bold text-slate-400 dark:text-zinc-500">
                       {step.number}
                     </span>
                   </div>
 
-                  <h3 className="font-display mb-2 text-sm font-bold text-slate-900 sm:text-base">
+                  <h3 className="font-display mb-2 text-sm font-bold text-slate-900 dark:text-white sm:text-base">
                     {step.title}
                   </h3>
-                  <p className="text-xs leading-relaxed text-slate-600">
+                  <p className="text-xs leading-relaxed text-slate-600 dark:text-zinc-300">
                     {step.description}
                   </p>
                 </div>
 
                 {/* Bottom Step Indicator Bar */}
-                <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono font-medium text-slate-400">
+                <div className="mt-5 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-[11px] font-mono font-medium text-slate-400 dark:text-zinc-500">
                   <span>Tahap {i + 1}</span>
-                  <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-slate-400 dark:bg-zinc-600" />
                 </div>
               </div>
             </Reveal>
