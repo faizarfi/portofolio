@@ -55,7 +55,7 @@ export interface Project {
   github?: string;
   image?: string;
   featured?: boolean;
-  category?: "Laravel / PHP" | "React / Next.js" | "Full Stack" | "AI & Tools";
+  category?: "Laravel / PHP" | "React / Next.js" | "Backend & API" | "AI & Otomasi" | "Full Stack" | "AI & Tools";
   details: ProjectDetail;
 }
 
@@ -172,7 +172,7 @@ export const PROJECTS: Project[] = [
     url: "https://github.com/faizarfi/aichatbotbps",
     github: "https://github.com/faizarfi/aichatbotbps",
     featured: true,
-    category: "AI & Tools",
+    category: "AI & Otomasi",
     details: {
       role: "Full Stack Developer",
       metric: "Kode sumber publik",
@@ -412,7 +412,7 @@ export const PROJECTS: Project[] = [
     url: "https://api9router.vercel.app",
     github: "https://github.com/faizarfi/api9router",
     featured: true,
-    category: "AI & Tools",
+    category: "Backend & API",
     details: {
       role: "Backend Developer",
       metric: "Demo live tersedia",
@@ -451,6 +451,212 @@ export const PROJECTS: Project[] = [
           "Arsitektur Serverless Modular Tanpa Overhead Server Fisik",
           "Penanganan Terpusat Header CORS dan Standarisasi Struktur Response API",
           "Error Handling Komprehensif dengan Pesan Diagnostik yang Jelas",
+        ],
+      },
+    },
+  },
+  {
+    name: "Universal TV Remote Pro",
+    slug: "universal-tv-remote",
+    description:
+      "Aplikasi remote TV universal pintar berbasis React/Next.js dan PWA dengan haptic vibration, synthesizer audio klik tombol (Web Audio API), layar OLED digital interaktif, dan simulator layar TV 16:9 langsung di browser.",
+    tech: ["Next.js", "React", "TypeScript", "PWA", "Web Audio API", "Tailwind CSS"],
+    url: "https://remote-eta-lyart.vercel.app",
+    github: "https://github.com/faizarfi/remote",
+    featured: true,
+    category: "React / Next.js",
+    details: {
+      role: "Frontend Developer",
+      metric: "PWA siap pakai",
+      overview:
+        "Dibuat sebagai solusi praktis ketika remote TV fisik rusak atau hilang. Aplikasi ini mensimulasikan remote fisik genggam kelas atas dengan efek tekan 3D, getaran taktil nyata (navigator.vibrate), dan efek suara mekanikal menggunakan Web Audio API. Mendukung berbagai merek TV termasuk Roku, Android TV, Samsung Tizen, LG webOS, dan bahkan TV analog via ESP32 IR Blaster.",
+      contributions: [
+        "Mengembangkan antarmuka remote fisik obsidian ergonomis dengan efek tekan 3D, lekukan bertekstur, dan LED pemancar infra-merah yang menyala saat sinyal dikirim.",
+        "Mengimplementasikan haptic vibration feedback (navigator.vibrate) dan synthesizer suara klik tombol menggunakan Web Audio API murni tanpa aset audio eksternal.",
+        "Membangun layar OLED digital interaktif dan simulator TV 16:9 menampilkan status real-time, volume bar, channel aktif, serta pratinjau monitor.",
+        "Menyediakan dukungan multi-merek TV (Roku via HTTP ECP, Android TV, Samsung Tizen, LG webOS, dan TV analog via ESP32/ESP8266 IR Blaster).",
+        "Mengonfigurasi Progressive Web App (PWA) agar dapat dipasang langsung di layar utama smartphone tanpa unduhan dari App Store.",
+      ],
+      contributionsCount: 5,
+      architecture: {
+        summary: "Arsitektur PWA Mobile-First dengan Web Audio API Synthesizer, Haptic Feedback Engine, dan Multi-Protocol TV Control Bridge.",
+        layers: [
+          {
+            tier: "01. Remote UI Layer",
+            title: "Physical Remote Simulation",
+            tech: "Next.js App Router + React 19 + Tailwind CSS",
+            description: "Antarmuka remote fisik obsidian dengan D-Pad 5 arah, rocker volume/channel, numeric keypad lipat, tombol streaming, dan virtual trackpad/keyboard.",
+          },
+          {
+            tier: "02. Sensory Feedback Engine",
+            title: "Haptic & Audio Synthesizer",
+            tech: "Navigator.vibrate API + Web Audio API (OscillatorNode)",
+            description: "Getaran taktil untuk setiap penekanan tombol dan efek suara klik mekanikal serta nada power chime yang disintesis langsung di browser.",
+          },
+          {
+            tier: "03. TV Control Bridge",
+            title: "Multi-Protocol Device Controller",
+            tech: "HTTP ECP (Roku) + REST Bridge (Android TV) + WebSocket (Samsung/LG)",
+            description: "Adaptor protokol untuk mengirim perintah ke berbagai merek TV melalui jaringan lokal Wi-Fi.",
+          },
+          {
+            tier: "04. PWA & Edge Hosting",
+            title: "Installable Progressive Web App",
+            tech: "Service Worker + Web App Manifest + Vercel Edge",
+            description: "Aplikasi dapat diinstal langsung di home screen smartphone, bekerja offline untuk UI dasar, dan di-host di edge network global.",
+          },
+        ],
+        tables: [
+          {
+            name: "RemoteState (Client State)",
+            description: "State reaktif yang menampung kondisi remote dan TV target.",
+            columns: [
+              { name: "power_on", type: "BOOLEAN", desc: "Status power TV aktif/mati" },
+              { name: "current_channel", type: "INTEGER", desc: "Nomor channel aktif yang ditampilkan" },
+              { name: "volume_level", type: "INTEGER (0-100)", desc: "Level volume TV saat ini" },
+              { name: "active_input", type: "STRING", desc: "Sumber input aktif (HDMI, AV, dll)" },
+              { name: "tv_brand", type: "ENUM", desc: "Merek TV yang terhubung (Roku, Android TV, dll)" },
+              { name: "connection_ip", type: "STRING", desc: "Alamat IP target TV di jaringan lokal" },
+            ],
+            relations: ["Tersimpan di React state & disinkronkan ke localStorage"],
+          },
+        ],
+        highlights: [
+          "Simulasi Remote Fisik Premium dengan Efek Tekan 3D dan LED Inframerah Aktif",
+          "Haptic Vibration & Audio Synthesizer Tanpa Aset Eksternal (Pure Web Audio API)",
+          "Dukungan Multi-Merek TV dari Smart TV hingga TV Analog via ESP32 IR Blaster",
+          "Progressive Web App (PWA) Installable Langsung dari Browser",
+        ],
+      },
+    },
+  },
+  {
+    name: "Google Maps Enterprise Scraper",
+    slug: "gmaps-scraper",
+    description:
+      "Platform web scraping dan business intelligence berbasis Django dan Playwright untuk ekstraksi data bisnis dari Google Maps secara massal dengan deduplikasi cerdas dan ekspor multi-sheet Excel.",
+    tech: ["Python", "Django", "Playwright", "Pandas", "OpenPyXL", "Docker"],
+    url: "https://github.com/faizarfi/scraping",
+    github: "https://github.com/faizarfi/scraping",
+    featured: true,
+    category: "AI & Otomasi",
+    details: {
+      role: "Full Stack Developer",
+      metric: "Kode sumber publik",
+      overview:
+        "Platform scraping kelas produksi yang dirancang untuk mengumpulkan, memvalidasi, dan menstrukturkan data bisnis dari Google Maps dalam skala besar. Sistem ini mengatasi tantangan ekstraksi web standar termasuk infinite-scroll rendering, virtualisasi DOM dinamis, penanganan anti-scraping, dan ambiguitas multi-cabang bisnis. Menyediakan dual interface: dashboard web modern dengan telemetri real-time dan CLI untuk headless server dan data pipeline.",
+      contributions: [
+        "Membangun engine scraping headless Playwright yang mensimulasikan trajectory mouse-wheel realistis untuk melewati proteksi anti-scraping Google Maps.",
+        "Mengembangkan algoritma deduplikasi Branch-Aware yang menggunakan compound identity hashing (nama + koordinat geografis) untuk membedakan cabang bisnis berbeda dari entitas duplikat.",
+        "Merancang generator workbook Excel multi-sheet otomatis dengan Master Sheet, sub-sheet per kategori, dan tab agregasi untuk micro-categories.",
+        "Mengimplementasikan fitur Graceful Interruption dengan thread-safe signal flags untuk terminasi browser bersih tanpa mengorbankan data yang sudah dikumpulkan.",
+        "Menyiapkan containerisasi Docker untuk deployment produksi dan integrasi dengan cron jobs serta pipeline orkestra data.",
+      ],
+      contributionsCount: 5,
+      architecture: {
+        summary: "Arsitektur Multi-Layer Scraping Platform dengan Headless Browser Automation, Smart Deduplication Engine, dan Multi-Format Export Pipeline.",
+        layers: [
+          {
+            tier: "01. Client Interface Layer",
+            title: "Web Dashboard & CLI Client",
+            tech: "Django Templates + Bootstrap + Management Commands",
+            description: "Dashboard web modern dengan telemetri real-time, progress polling asinkron, dan antarmuka CLI untuk operasi headless server.",
+          },
+          {
+            tier: "02. Scraping Orchestration Layer",
+            title: "Async Playwright Worker Engine",
+            tech: "Playwright (Headless Chromium) + Threading",
+            description: "Worker thread asinkron yang mengontrol browser headless, mensimulasikan scroll realistis, dan mengekstrak data dari DOM dinamis Google Maps.",
+          },
+          {
+            tier: "03. Data Processing Layer",
+            title: "Deduplication & Validation Pipeline",
+            tech: "Pandas + Custom Hashing Algorithm",
+            description: "Engine deduplikasi cerdas berbasis koordinat geografis dan validasi data dengan normalisasi nama, filtering noise, dan enrichment metadata.",
+          },
+          {
+            tier: "04. Export & Persistence Layer",
+            title: "Multi-Format Export Engine",
+            tech: "OpenPyXL + CSV (UTF-8 BOM) + SQLite/PostgreSQL",
+            description: "Generator workbook Excel multi-sheet dengan styling eksekutif, auto-adjusted columns, clickable map links, dan ekspor CSV universal.",
+          },
+        ],
+        tables: [
+          {
+            name: "scraped_businesses",
+            description: "Tabel utama penyimpanan data bisnis hasil ekstraksi Google Maps.",
+            columns: [
+              { name: "id", type: "BIGINT", key: "PK", desc: "Primary key record bisnis" },
+              { name: "place_name", type: "VARCHAR(255)", key: "IDX", desc: "Nama resmi tempat usaha" },
+              { name: "category", type: "VARCHAR(100)", key: "IDX", desc: "Klasifikasi kategori bisnis" },
+              { name: "latitude", type: "DECIMAL(10,8)", desc: "Koordinat lintang geografis" },
+              { name: "longitude", type: "DECIMAL(11,8)", desc: "Koordinat bujur geografis" },
+              { name: "rating", type: "DECIMAL(2,1)", desc: "Rating bintang Google Maps (0.0-5.0)" },
+              { name: "review_count", type: "INTEGER", desc: "Jumlah ulasan pengguna" },
+              { name: "address", type: "TEXT", desc: "Alamat lengkap tempat usaha" },
+              { name: "phone", type: "VARCHAR(20)", desc: "Nomor telepon bisnis" },
+            ],
+            relations: ["N:1 dengan scrape_sessions (FK: session_id)"],
+          },
+        ],
+        highlights: [
+          "Headless Browser Automation dengan Simulasi Mouse Trajectory Realistis",
+          "Algoritma Deduplikasi Branch-Aware Berbasis Compound Identity Hashing",
+          "Multi-Sheet Excel Workbook Generator dengan Styling Eksekutif Otomatis",
+          "Graceful Interruption Engine untuk Terminasi Bersih Tanpa Kehilangan Data",
+        ],
+      },
+    },
+  },
+  {
+    name: "Express.js REST API Backend",
+    slug: "express-api-backend",
+    description:
+      "REST API backend serverless yang dibangun dengan Express.js untuk manajemen autentikasi dan pengguna, siap di-deploy ke Vercel sebagai serverless function dengan standarisasi CORS dan environment variables.",
+    tech: ["JavaScript", "Node.js", "Express.js", "REST API", "Vercel"],
+    url: "https://github.com/faizarfi/api",
+    github: "https://github.com/faizarfi/api",
+    featured: true,
+    category: "Backend & API",
+    details: {
+      role: "Backend Developer",
+      metric: "Kode sumber publik",
+      overview:
+        "Backend API ringan dan modular yang menyediakan endpoint autentikasi (login & register) serta manajemen pengguna melalui arsitektur REST. Dirancang untuk deployment serverless di Vercel dengan konfigurasi CORS dan environment variables yang aman.",
+      contributions: [
+        "Merancang arsitektur modular Express.js dengan pemisahan routes (auth, users) agar mudah di-scale dan di-maintenance.",
+        "Mengimplementasikan endpoint autentikasi (login & register) dengan validasi input dan penanganan error yang informatif.",
+        "Mengonfigurasi CORS middleware dan dotenv untuk manajemen environment variables yang aman di environment serverless.",
+        "Men-deploy ke Vercel sebagai serverless function dengan konfigurasi vercel.json untuk routing otomatis.",
+      ],
+      contributionsCount: 4,
+      architecture: {
+        summary: "Arsitektur REST API Serverless berbasis Express.js dengan Modular Routing, CORS Middleware, dan Vercel Deployment.",
+        layers: [
+          {
+            tier: "01. API Gateway & Middleware",
+            title: "Request Handler & CORS",
+            tech: "Express.js + CORS Middleware + dotenv",
+            description: "Entry point API yang menangani parsing request, konfigurasi CORS, dan injeksi environment variables.",
+          },
+          {
+            tier: "02. Route Controller Layer",
+            title: "Modular Endpoint Router",
+            tech: "Express Router (auth.js + users.js)",
+            description: "Pemisahan routing modular untuk autentikasi (login/register) dan operasi manajemen pengguna (CRUD).",
+          },
+          {
+            tier: "03. Serverless Deployment",
+            title: "Edge Function Runtime",
+            tech: "Vercel Serverless Functions",
+            description: "Deployment otomatis sebagai serverless function dengan cold start minimal dan scaling elastis.",
+          },
+        ],
+        tables: [],
+        highlights: [
+          "Arsitektur Modular Express.js dengan Pemisahan Route yang Bersih",
+          "Deployment Serverless di Vercel Tanpa Overhead Server Management",
+          "Konfigurasi CORS dan Environment Variables yang Aman",
         ],
       },
     },

@@ -33,10 +33,42 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-slate-50 dark:bg-zinc-900">
-            <span className="font-display text-4xl font-black text-slate-300 dark:text-zinc-700 select-none">
-              {project.name.charAt(0)}
-            </span>
+          <div className="relative flex h-full w-full flex-col justify-between overflow-hidden p-4 bg-gradient-to-br from-slate-100 via-slate-50 to-slate-200/80 dark:from-zinc-900 dark:via-zinc-900/90 dark:to-zinc-850">
+            {/* Ambient pattern */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
+              style={{
+                backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+                backgroundSize: "16px 16px",
+              }}
+            />
+            {/* Top info row */}
+            <div className="relative z-1 flex items-center justify-between">
+              <span className="font-mono text-[10px] font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
+                {project.category || "Proyek"}
+              </span>
+              <span className="font-mono text-[10px] font-medium text-slate-400 dark:text-zinc-500">
+                {project.tech[0] || ""}
+              </span>
+            </div>
+            {/* Centered stylized brand badge */}
+            <div className="relative z-1 flex flex-col items-center justify-center my-auto py-2">
+              <div className="flex h-13 w-13 items-center justify-center rounded-2xl bg-white dark:bg-zinc-800 shadow-sm border border-slate-200/80 dark:border-zinc-700/80">
+                <span className="font-display text-xl font-black text-slate-800 dark:text-white select-none">
+                  {project.name.slice(0, 2).toUpperCase()}
+                </span>
+              </div>
+              <span className="mt-2 text-[11px] font-semibold text-slate-600 dark:text-zinc-300 truncate max-w-[85%] text-center">
+                {project.name}
+              </span>
+            </div>
+            {/* Bottom repo badge */}
+            <div className="relative z-1 flex items-center gap-1.5 opacity-70">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span className="font-mono text-[9px] text-slate-500 dark:text-zinc-400 truncate">
+                {project.github ? project.github.replace("https://github.com/", "@") : project.slug}
+              </span>
+            </div>
           </div>
         )}
 
@@ -45,7 +77,7 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
           <button
             onClick={() => onQuickView(project)}
             aria-label={`Lihat ringkasan proyek ${project.name}`}
-            className="absolute inset-0 flex items-center justify-center bg-slate-950/30 opacity-0 backdrop-blur-[1px] transition-all duration-200 hover:opacity-100"
+            className="absolute inset-0 z-2 flex items-center justify-center bg-slate-950/30 opacity-0 backdrop-blur-[1px] transition-all duration-200 hover:opacity-100"
           >
             <span className="inline-flex items-center gap-2 rounded-md bg-white dark:bg-zinc-900 px-3.5 py-1.5 text-xs font-bold text-slate-900 dark:text-white shadow-sm">
               <FontAwesomeIcon icon={faEye} className="h-3 w-3 text-slate-600 dark:text-zinc-400" />
@@ -56,7 +88,7 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
 
         {/* Metric badge top-right */}
         {project.details.metric && (
-          <div className="absolute top-2.5 right-2.5 pointer-events-none">
+          <div className="absolute top-2.5 right-2.5 z-2 pointer-events-none">
             <span className="inline-flex items-center gap-1 rounded-md bg-slate-950/80 px-2 py-0.5 text-[10px] font-mono font-medium text-white shadow-2xs">
               <FontAwesomeIcon icon={faChartLine} className="h-2.5 w-2.5 text-emerald-400" />
               {project.details.metric}
@@ -128,12 +160,13 @@ export default function ProjectCard({ project, onQuickView }: ProjectCardProps) 
             </a>
           )}
 
-          {project.github && !project.url?.includes("vercel") && !project.url?.includes("pribumics") && (
+          {project.github && (
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub Repository"
+              aria-label={`GitHub repository ${project.name}`}
+              title="Lihat Source Code di GitHub"
               className="inline-flex items-center justify-center rounded-lg border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-zinc-200 shadow-2xs transition-colors hover:bg-slate-50 dark:hover:bg-zinc-700 hover:text-slate-950 dark:hover:text-white"
             >
               <FontAwesomeIcon icon={faGithub} className="h-3.5 w-3.5" />
