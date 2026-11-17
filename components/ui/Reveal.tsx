@@ -7,13 +7,9 @@ type RevealDirection = "up" | "down" | "left" | "right" | "scale" | "fade";
 
 interface RevealProps {
   children: ReactNode;
-  /** Stagger delay in milliseconds */
   delay?: number;
-  /** Animation direction: up (default), down, left, right, scale, fade */
   direction?: RevealDirection;
-  /** Offset distance in pixels (default 24) */
   distance?: number;
-  /** Duration in seconds (default 0.7) */
   duration?: number;
   className?: string;
 }
@@ -22,11 +18,11 @@ export default function Reveal({
   children,
   delay = 0,
   direction = "up",
-  distance = 24,
-  duration = 0.7,
+  distance = 20,
+  duration = 0.55,
   className = "",
 }: RevealProps) {
-  const { ref, inView } = useInView(0.1);
+  const { ref, inView } = useInView(0.08);
 
   const getInitialTransform = () => {
     switch (direction) {
@@ -39,7 +35,7 @@ export default function Reveal({
       case "right":
         return `translateX(-${distance}px)`;
       case "scale":
-        return "scale(0.94)";
+        return "scale(0.96)";
       case "fade":
       default:
         return "none";
@@ -60,12 +56,11 @@ export default function Reveal({
   return (
     <div
       ref={ref}
-      className={`min-w-0 max-w-full ${className}`}
+      className={`min-w-0 max-w-full motion-reduce:transform-none! motion-reduce:opacity-100! motion-reduce:transition-none! ${className}`}
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? getActiveTransform() : getInitialTransform(),
         transition: `opacity ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-        willChange: "opacity, transform",
       }}
     >
       {children}

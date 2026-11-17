@@ -242,7 +242,7 @@ export default function PageLoader() {
         </h2>
         <div className="mt-1 mb-4 flex items-center gap-1.5 font-mono text-xs text-slate-600">
           <FontAwesomeIcon icon={faMicrochip} className="h-3 w-3 text-emerald-600" />
-          <span>Full Stack Web Developer &bull; IT Support</span>
+          <span>Full Stack Web Developer &bull; Software Engineer</span>
         </div>
 
         {/* ── Dual-Layer Laser Progress Bar (Cerah & Kontras) ── */}

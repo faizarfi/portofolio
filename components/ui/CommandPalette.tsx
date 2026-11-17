@@ -13,11 +13,9 @@ import {
   faCode,
   faEnvelope,
   faBriefcase,
-  faDiagramProject,
   faCopy,
   faCheck,
   faGlobe,
-  faUniversalAccess,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { PROJECTS } from "@/lib/data/projects";
@@ -29,7 +27,6 @@ interface CommandItem {
   subtitle?: string;
   icon: import("@fortawesome/fontawesome-svg-core").IconDefinition;
   action: () => void;
-  shortcut?: string;
 }
 
 interface TerminalLog {
@@ -44,8 +41,7 @@ export default function CommandPalette() {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copied, setCopied] = useState(false);
-  
-  // Terminal state
+
   const [terminalInput, setTerminalInput] = useState("");
   const [terminalHistory, setTerminalHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -56,10 +52,10 @@ export default function CommandPalette() {
       output: (
         <div className="space-y-1 text-slate-300">
           <p className="font-bold text-white">
-            Faiz Arfian Ilhami — Developer Interactive Shell [v2026.04]
+            Faiz Arfian Ilhami: Quick Navigation &amp; Commands
           </p>
           <p className="text-slate-400">
-            Ketik <span className="text-emerald-400 font-bold">help</span> untuk melihat daftar perintah, atau klik chip saran di bawah.
+            Ketik <span className="text-emerald-400 font-bold">help</span> untuk melihat daftar perintah, atau gunakan pencarian untuk melompat langsung.
           </p>
         </div>
       ),
@@ -67,47 +63,44 @@ export default function CommandPalette() {
   ]);
 
   const router = useRouter();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const terminalInputRef = useRef<HTMLInputElement>(null);
   const terminalBottomRef = useRef<HTMLDivElement>(null);
+  const pressedOutsideRef = useRef(false);
 
-  // Global hotkeys listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ctrl+K or Cmd+K
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setIsOpen((prev) => !prev);
       }
-
-      // Escape to close
-      if (e.key === "Escape" && isOpen) {
-        e.preventDefault();
-        setIsOpen(false);
-      }
     };
-
+    const handleOpenEvent = () => setIsOpen(true);
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+    window.addEventListener("open-command-palette", handleOpenEvent);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("open-command-palette", handleOpenEvent);
+    };
+  }, []);
 
-  // Focus management
   useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
     if (isOpen) {
-      document.body.style.overflow = "hidden";
-      setTimeout(() => {
-        if (mode === "search") {
-          searchInputRef.current?.focus();
-        } else {
-          terminalInputRef.current?.focus();
-        }
-      }, 60);
-    } else {
-      document.body.style.overflow = "";
+      if (!dialog.open) dialog.showModal();
+      if (mode === "search") {
+        searchInputRef.current?.focus();
+      } else {
+        terminalInputRef.current?.focus();
+      }
+    } else if (dialog.open) {
+      dialog.close();
     }
   }, [isOpen, mode]);
 
-  // Auto-scroll terminal
   useEffect(() => {
     if (mode === "terminal") {
       terminalBottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -116,20 +109,11 @@ export default function CommandPalette() {
 
   const email = "faizarfianilhami020204@gmail.com";
 
-  // Navigation helper
   const navigateTo = (path: string) => {
     setIsOpen(false);
-    if (path.startsWith("#")) {
-      const el = document.querySelector(path);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      router.push(path);
-    }
+    router.push(path);
   };
 
-  // Commands definition
   const commands: CommandItem[] = [
     {
       id: "mode-terminal",
@@ -137,14 +121,13 @@ export default function CommandPalette() {
       title: "Buka Interactive Shell / Terminal Mode",
       subtitle: "Jalankan perintah CLI langsung di browser",
       icon: faTerminal,
-      shortcut: "CLI",
       action: () => setMode("terminal"),
     },
     {
       id: "nav-about",
       category: "Navigasi",
       title: "Tentang Saya & Latar Belakang",
-      subtitle: "Profil, edukasi Teknik Informatika UMS, & kapabilitas",
+      subtitle: "Profil, edukasi Teknik Informatika UMS, dan kapabilitas",
       icon: faUser,
       action: () => navigateTo("/#about"),
     },
@@ -152,7 +135,7 @@ export default function CommandPalette() {
       id: "nav-skills",
       category: "Navigasi",
       title: "Keahlian & Tech Stack",
-      subtitle: "Laravel, Next.js, MySQL, Networking, & IT Tools",
+      subtitle: "Laravel, PHP, MySQL, React, Next.js, TypeScript, Python",
       icon: faCode,
       action: () => navigateTo("/#skills"),
     },
@@ -165,21 +148,12 @@ export default function CommandPalette() {
       action: () => navigateTo("/#projects"),
     },
     {
-      id: "nav-workflow",
+      id: "nav-experience",
       category: "Navigasi",
-      title: "Workflow & Metodologi Kerja",
-      subtitle: "Tahapan analisis, development, hingga deployment",
-      icon: faDiagramProject,
-      action: () => navigateTo("/#workflow"),
-    },
-    {
-      id: "nav-org",
-      category: "Navigasi",
-      title: "Pengalaman Organisasi & BEM",
-      subtitle: "Rekam jejak kepemimpinan & organisasi UMS",
+      title: "Pengalaman Organisasi & Kepemimpinan",
+      subtitle: "Rekam jejak organisasi BEM FKI & HIMATIF UMS",
       icon: faBriefcase,
-      action: () => navigateTo("/#organizational-experience"),
-
+      action: () => navigateTo("/#experience"),
     },
     {
       id: "nav-github",
@@ -193,11 +167,10 @@ export default function CommandPalette() {
       id: "nav-contact",
       category: "Navigasi",
       title: "Formulir Kontak & Diskusi",
-      subtitle: "Kirim pesan kolaborasi atau bantuan IT",
+      subtitle: "Kirim pesan kolaborasi atau diskusi teknis",
       icon: faEnvelope,
       action: () => navigateTo("/#contact"),
     },
-    // Dynamic Project links
     ...PROJECTS.map((p) => ({
       id: `proj-${p.slug}`,
       category: "Proyek" as const,
@@ -206,28 +179,15 @@ export default function CommandPalette() {
       icon: faFolderOpen,
       action: () => navigateTo(`/projects/${p.slug}`),
     })),
-    // Actions
     {
       id: "act-change-lang",
       category: "Aksi Cepat",
-      title: "Pilih Bahasa / Change Language (80+ Bahasa Dunia)",
-      subtitle: "Terjemahkan seluruh web ke English, العربية, 日本語, Deutsch, Español, dll.",
+      title: "Pilih Bahasa / Change Language",
+      subtitle: "Terjemahkan seluruh halaman ke English, العربية, 日本語, dll.",
       icon: faGlobe,
       action: () => {
         setIsOpen(false);
-        const btn = document.querySelector('button[title="Pilih Bahasa / Choose Language"]') as HTMLButtonElement;
-        if (btn) btn.click();
-      },
-    },
-    {
-      id: "act-a11y",
-      category: "Aksi Cepat",
-      title: "Menu Aksesibilitas (Ukuran Font, Kontras, Spasi)",
-      subtitle: "Atur ukuran teks, ramah disleksia, kursor besar, & matikan animasi",
-      icon: faUniversalAccess,
-      action: () => {
-        setIsOpen(false);
-        window.dispatchEvent(new CustomEvent("open-a11y-menu"));
+        window.dispatchEvent(new CustomEvent("open-language-modal"));
       },
     },
     {
@@ -249,13 +209,12 @@ export default function CommandPalette() {
       subtitle: "github.com/faizarfi",
       icon: faGithub,
       action: () => {
-        window.open("https://github.com/faizarfi", "_blank");
+        window.open("https://github.com/faizarfi", "_blank", "noopener,noreferrer");
         setIsOpen(false);
       },
     },
   ];
 
-  // Filter commands
   const filteredCommands = query.trim()
     ? commands.filter(
         (c) =>
@@ -265,8 +224,8 @@ export default function CommandPalette() {
       )
     : commands;
 
-  // Handle key navigation in search mode
   const handleSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (filteredCommands.length === 0) return;
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelectedIndex((prev) => (prev + 1) % filteredCommands.length);
@@ -275,19 +234,16 @@ export default function CommandPalette() {
       setSelectedIndex((prev) => (prev - 1 + filteredCommands.length) % filteredCommands.length);
     } else if (e.key === "Enter") {
       e.preventDefault();
-      if (filteredCommands[selectedIndex]) {
-        filteredCommands[selectedIndex].action();
-      }
+      const target = filteredCommands[selectedIndex] ?? filteredCommands[0];
+      target?.action();
     }
   };
 
-  // Terminal command executor
   const handleTerminalSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const cmd = terminalInput.trim().toLowerCase();
     if (!cmd) return;
 
-    // Add to history
     setTerminalHistory((prev) => [...prev, terminalInput]);
     setHistoryIndex(-1);
 
@@ -303,12 +259,11 @@ export default function CommandPalette() {
               <div><span className="text-emerald-400 font-bold">whoami</span> : Ringkasan biodata &amp; profil</div>
               <div><span className="text-emerald-400 font-bold">skills</span> : Daftar keahlian &amp; tech stack</div>
               <div><span className="text-emerald-400 font-bold">projects</span> : Katalog proyek &amp; studi kasus</div>
-              <div><span className="text-emerald-400 font-bold">experience</span> : Pengalaman organisasi &amp; kepemimpinan</div>
+              <div><span className="text-emerald-400 font-bold">experience</span> : Pengalaman organisasi</div>
               <div><span className="text-emerald-400 font-bold">contact</span> : Saluran komunikasi &amp; kontak</div>
               <div><span className="text-emerald-400 font-bold">github</span> : Buka profil GitHub resmi</div>
-              <div><span className="text-emerald-400 font-bold">status</span> : Telemetri kesiapan kerja</div>
-              <div><span className="text-emerald-400 font-bold">a11y</span> : Buka menu aksesibilitas visual &amp; teks</div>
-              <div><span className="text-emerald-400 font-bold">sudo hire</span> : Rekrut Faiz untuk proyek/kerja</div>
+              <div><span className="text-emerald-400 font-bold">status</span> : Ketersediaan kerja</div>
+              <div><span className="text-emerald-400 font-bold">sudo hire</span> : Menuju formulir kontak</div>
               <div><span className="text-emerald-400 font-bold">clear</span> : Bersihkan layar terminal</div>
               <div><span className="text-emerald-400 font-bold">exit</span> : Tutup terminal</div>
             </div>
@@ -316,19 +271,13 @@ export default function CommandPalette() {
         );
         break;
 
-      case "a11y":
-      case "accessibility":
-        setIsOpen(false);
-        window.dispatchEvent(new CustomEvent("open-a11y-menu"));
-        return;
-
       case "whoami":
         output = (
           <div className="space-y-1 text-slate-300">
             <p><span className="font-bold text-white">Nama:</span> Faiz Arfian Ilhami</p>
-            <p><span className="font-bold text-white">Pendidikan:</span> S1 Teknik Informatika — Universitas Muhammadiyah Surakarta (Lulus 2026, IPK 3.3)</p>
-            <p><span className="font-bold text-white">Fokus:</span> Full Stack Web Developer &amp; IT Support (Troubleshooting LAN/Hardware)</p>
-            <p><span className="font-bold text-white">Lokasi:</span> Indonesia (Terbuka untuk Remote &amp; On-Site ke Mana Saja)</p>
+            <p><span className="font-bold text-white">Pendidikan:</span> S1 Teknik Informatika, Universitas Muhammadiyah Surakarta (Lulus 2026, IPK 3.3)</p>
+            <p><span className="font-bold text-white">Fokus:</span> Software Engineer &amp; Full Stack Web Developer (Laravel, React, Next.js, MySQL)</p>
+            <p><span className="font-bold text-white">Lokasi:</span> Indonesia (Terbuka untuk Remote &amp; On-Site)</p>
           </div>
         );
         break;
@@ -338,15 +287,15 @@ export default function CommandPalette() {
           <div className="space-y-2 text-slate-300">
             <div>
               <p className="font-bold text-emerald-400">Backend &amp; Database:</p>
-              <p>PHP 8.2+, Laravel 11 (Blade, Eloquent, Authentication), MySQL 8.0, PostgreSQL, RESTful API</p>
+              <p>PHP 8.2+, Laravel 11/12 (Blade, Eloquent, Authentication, Scheduler), MySQL 8.0, RESTful API</p>
             </div>
             <div>
               <p className="font-bold text-emerald-400">Frontend &amp; UI:</p>
               <p>Next.js 16 (App Router), React 19, TypeScript, JavaScript (ES6+), Tailwind CSS</p>
             </div>
             <div>
-              <p className="font-bold text-emerald-400">IT Support &amp; Networking:</p>
-              <p>LAN Crimping &amp; Subnetting, Mikrotik Router, Hardware Diagnostics, Windows/Linux Server OS</p>
+              <p className="font-bold text-emerald-400">Tooling &amp; Otomasi:</p>
+              <p>Git &amp; GitHub, Postman API Testing, Python (Django &amp; Playwright), Node.js</p>
             </div>
           </div>
         );
@@ -355,15 +304,16 @@ export default function CommandPalette() {
       case "projects":
         output = (
           <div className="space-y-1.5 text-slate-300">
-            <p className="font-bold text-white">Daftar Proyek Unggulan:</p>
+            <p className="font-bold text-white">Daftar Proyek Pilihan ({PROJECTS.length}):</p>
             {PROJECTS.map((p, idx) => (
               <div key={p.slug} className="flex items-center justify-between gap-2 border-b border-slate-800 pb-1">
                 <span>
                   {idx + 1}. <span className="font-bold text-white">{p.name}</span> ({p.category || "Full Stack"})
                 </span>
                 <button
+                  type="button"
                   onClick={() => navigateTo(`/projects/${p.slug}`)}
-                  className="text-emerald-400 hover:underline font-mono text-xs"
+                  className="text-emerald-400 hover:underline font-mono text-xs shrink-0"
                 >
                   [Buka Detail]
                 </button>
@@ -377,8 +327,8 @@ export default function CommandPalette() {
         output = (
           <div className="space-y-1 text-slate-300">
             <p className="font-bold text-white">Rekam Jejak Organisasi:</p>
-            <p>&bull; <span className="font-bold text-white">BEM FKI UMS:</span> Koordinator Hubungan Masyarakat &amp; Komunikasi (2024–2025)</p>
-            <p>&bull; <span className="font-bold text-white">HIMATIF UMS:</span> Anggota Divisi Pengembangan Sumber Daya Manusia (2023–2024)</p>
+            <p>&bull; <span className="font-bold text-white">BEM FKI UMS:</span> Kepala Departemen IPO (2025) &amp; Anggota (2023)</p>
+            <p>&bull; <span className="font-bold text-white">HIMATIF UMS:</span> Penanggung Jawab Humas PARTI (2024) &amp; Anggota Sosial Masyarakat (2022 - 2024)</p>
           </div>
         );
         break;
@@ -386,7 +336,7 @@ export default function CommandPalette() {
       case "contact":
         output = (
           <div className="space-y-1 text-slate-300">
-            <p><span className="font-bold text-white">Email:</span> faizarfianilhami020204@gmail.com</p>
+            <p><span className="font-bold text-white">Email:</span> {email}</p>
             <p><span className="font-bold text-white">GitHub:</span> https://github.com/faizarfi</p>
             <p><span className="font-bold text-white">LinkedIn:</span> https://www.linkedin.com/in/faizarfianilhami</p>
             <p className="mt-2 text-emerald-400">Silakan hubungi melalui email atau formulir kontak.</p>
@@ -396,32 +346,29 @@ export default function CommandPalette() {
 
       case "github":
         output = <p className="text-emerald-400">Membuka profil GitHub @faizarfi...</p>;
-        setTimeout(() => window.open("https://github.com/faizarfi", "_blank"), 400);
+        setTimeout(() => window.open("https://github.com/faizarfi", "_blank", "noopener,noreferrer"), 400);
         break;
 
       case "status":
         output = (
           <div className="space-y-1 text-slate-300 font-mono text-xs">
-            <p className="text-emerald-400 font-bold">[SYSTEM TELEMETRY]</p>
-            <p>Availability: <span className="text-white font-bold">READY FOR HIRE / PROJECT COLLAB</span></p>
-            <p>Preferred Work: Full-time Web Developer / IT Support (Seluruh Indonesia &amp; Remote)</p>
-            <p>Workstation: Windows 11 Pro &amp; Ubuntu WSL2 Environment</p>
-            <p>Latency: &lt;15ms (Indonesia Cloud)</p>
+            <p className="text-emerald-400 font-bold">[STATUS KETERSEDIAAN]</p>
+            <p>Status: <span className="text-white font-bold">Terbuka untuk Pekerjaan &amp; Proyek Web</span></p>
+            <p>Posisi: Full-time Software Engineer / Web Developer (Remote &amp; On-Site)</p>
+            <p>Spesialisasi: Laravel, React, Next.js, TypeScript, MySQL</p>
           </div>
         );
         break;
-
 
       case "sudo hire":
       case "hire":
         output = (
           <div className="space-y-1.5 p-3 rounded-lg border border-emerald-500/40 bg-emerald-950/30 text-emerald-300">
-            <p className="font-bold text-white">🎉 ACCESS GRANTED: Rekrutmen Diinisiasi!</p>
-            <p>Terima kasih atas ketertarikan Anda! Faiz siap berkontribusi penuh dalam tim teknis Anda.</p>
-            <p className="text-xs text-slate-400">Mengarahkan Anda ke formulir kontak...</p>
+            <p className="font-bold text-white">Hubungi Faiz Arfian Ilhami</p>
+            <p>Mengarahkan Anda ke bagian formulir kontak...</p>
           </div>
         );
-        setTimeout(() => navigateTo("#contact"), 1000);
+        setTimeout(() => navigateTo("/#contact"), 600);
         break;
 
       case "clear":
@@ -454,7 +401,6 @@ export default function CommandPalette() {
     setTerminalInput("");
   };
 
-  // History navigation in terminal
   const handleTerminalKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowUp") {
       e.preventDefault();
@@ -480,218 +426,225 @@ export default function CommandPalette() {
 
   const executeChipCommand = (cmd: string) => {
     setTerminalInput(cmd);
-    setTimeout(() => {
-      terminalInputRef.current?.focus();
-    }, 10);
+    terminalInputRef.current?.focus();
+  };
+
+  const isOutsideDialog = (e: React.PointerEvent<HTMLDialogElement>) => {
+    const dialog = dialogRef.current;
+    if (!dialog) return false;
+    const r = dialog.getBoundingClientRect();
+    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
   };
 
   return (
-    <>
-      {/* ── Main Modal Backdrop ── */}
-      {isOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-[99999] flex items-start justify-center p-3 sm:p-6 md:p-12 overflow-y-auto"
-        >
-          {/* Overlay */}
-          <div
+    <dialog
+      ref={dialogRef}
+      aria-labelledby="command-palette-title"
+      onClose={() => setIsOpen(false)}
+      onPointerDown={(e) => {
+        pressedOutsideRef.current = isOutsideDialog(e);
+      }}
+      onPointerUp={(e) => {
+        if (pressedOutsideRef.current && isOutsideDialog(e)) {
+          setIsOpen(false);
+        }
+        pressedOutsideRef.current = false;
+      }}
+      {...({ closedby: "any" } as Record<string, string>)}
+      className="m-auto w-[calc(100%-1.5rem)] max-w-2xl overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 p-0 text-slate-100 shadow-2xl backdrop:bg-slate-950/60 backdrop:backdrop-blur-xs"
+    >
+      <h2 id="command-palette-title" className="sr-only">
+        Navigasi Cepat dan Terminal Interaktif
+      </h2>
+
+      <div className="flex items-center justify-between border-b border-slate-800 bg-slate-950 px-4 py-3">
+        <div className="flex items-center gap-2 font-mono text-xs">
+          <button
+            type="button"
+            onClick={() => setMode("search")}
+            className={`flex min-h-[36px] items-center gap-1.5 rounded-md px-3 py-1.5 font-bold transition-colors ${
+              mode === "search"
+                ? "bg-slate-800 text-white"
+                : "text-slate-300 hover:text-white"
+            }`}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} aria-hidden="true" className="h-3 w-3" />
+            <span>Spotlight Search</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMode("terminal")}
+            className={`flex min-h-[36px] items-center gap-1.5 rounded-md px-3 py-1.5 font-bold transition-colors ${
+              mode === "terminal"
+                ? "bg-slate-800 text-emerald-400"
+                : "text-slate-300 hover:text-white"
+            }`}
+          >
+            <FontAwesomeIcon icon={faTerminal} aria-hidden="true" className="h-3 w-3" />
+            <span>CLI Terminal</span>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <kbd className="hidden sm:inline-block rounded border border-slate-700 bg-slate-800 px-1.5 py-0.5 font-mono text-[10px] text-slate-300">
+            ESC untuk tutup
+          </kbd>
+          <button
+            type="button"
             onClick={() => setIsOpen(false)}
-            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity"
-          />
+            aria-label="Tutup navigasi cepat"
+            className="flex h-8 w-8 items-center justify-center rounded-md text-slate-300 hover:bg-slate-800 hover:text-white"
+          >
+            <FontAwesomeIcon icon={faXmark} aria-hidden="true" className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
 
-          {/* Dialog Container */}
-          <div className="relative z-10 w-full max-w-2xl rounded-2xl border border-slate-700 bg-slate-900 text-slate-100 shadow-2xl overflow-hidden transition-all my-auto">
-            
-            {/* ── Modal Header Tabs ── */}
-            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-950/80 px-4 py-3">
-              <div className="flex items-center gap-2 font-mono text-xs">
-                <button
-                  onClick={() => setMode("search")}
-                  className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 font-bold transition-colors ${
-                    mode === "search"
-                      ? "bg-slate-800 text-white"
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  <FontAwesomeIcon icon={faMagnifyingGlass} className="h-3 w-3" />
-                  <span>Spotlight Search</span>
-                </button>
+      {mode === "search" && (
+        <div>
+          <div className="flex items-center gap-3 border-b border-slate-800 px-4 py-3.5">
+            <FontAwesomeIcon icon={faMagnifyingGlass} aria-hidden="true" className="h-4 w-4 text-slate-400" />
+            <label htmlFor="command-search-input" className="sr-only">
+              Cari halaman, proyek, atau aksi
+            </label>
+            <input
+              ref={searchInputRef}
+              id="command-search-input"
+              type="text"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setSelectedIndex(0);
+              }}
+              onKeyDown={handleSearchKeyDown}
+              placeholder="Cari halaman, proyek, keahlian, atau aksi cepat..."
+              className="w-full bg-transparent text-sm text-white placeholder-slate-400 focus:outline-none"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="text-xs text-slate-300 hover:text-white"
+              >
+                Clear
+              </button>
+            )}
+          </div>
 
-                <button
-                  onClick={() => setMode("terminal")}
-                  className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 font-bold transition-colors ${
-                    mode === "terminal"
-                      ? "bg-slate-800 text-emerald-400"
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  <FontAwesomeIcon icon={faTerminal} className="h-3 w-3" />
-                  <span>CLI Terminal</span>
-                </button>
+          <div className="max-h-[380px] overflow-y-auto p-2 divide-y divide-slate-800/40">
+            {filteredCommands.length === 0 ? (
+              <div className="py-10 text-center font-mono text-xs text-slate-400">
+                Tidak ada hasil yang cocok dengan &quot;{query}&quot;.
               </div>
+            ) : (
+              filteredCommands.map((item, idx) => {
+                const isSelected = idx === selectedIndex;
+                return (
+                  <button
+                    type="button"
+                    key={item.id}
+                    onClick={() => item.action()}
+                    onMouseEnter={() => setSelectedIndex(idx)}
+                    className={`flex w-full items-center justify-between rounded-xl px-3.5 py-2.5 text-left transition-colors ${
+                      isSelected
+                        ? "bg-slate-800 text-white"
+                        : "text-slate-300 hover:bg-slate-800/60"
+                    }`}
+                  >
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-950 text-slate-300 border border-slate-800">
+                        <FontAwesomeIcon icon={item.icon} aria-hidden="true" className="h-3.5 w-3.5" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-white truncate">{item.title}</p>
+                        {item.subtitle && (
+                          <p className="text-[11px] text-slate-400 truncate max-w-sm">
+                            {item.subtitle}
+                          </p>
+                        )}
+                      </div>
+                    </div>
 
-              <div className="flex items-center gap-2">
-                <kbd className="hidden sm:inline-block rounded border border-slate-700 bg-slate-800 px-1.5 py-0.5 font-mono text-[10px] text-slate-400">
-                  ESC to close
-                </kbd>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Tutup"
-                  className="rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white"
-                >
-                  <FontAwesomeIcon icon={faXmark} className="h-3.5 w-3.5" />
-                </button>
-              </div>
+                    <div className="flex shrink-0 items-center gap-2 ml-2">
+                      <span className="font-mono text-[10px] uppercase text-slate-300 border border-slate-700 px-1.5 py-0.5 rounded">
+                        {item.category}
+                      </span>
+                      {isSelected && (
+                        <FontAwesomeIcon icon={faArrowRight} aria-hidden="true" className="h-3 w-3 text-slate-300" />
+                      )}
+                    </div>
+                  </button>
+                );
+              })
+            )}
+          </div>
+
+          <div className="border-t border-slate-800 bg-slate-950 px-4 py-2.5 flex items-center justify-between font-mono text-[10px] text-slate-400">
+            <div className="flex items-center gap-3">
+              <span>Panah Atas/Bawah Navigasi</span>
+              <span>Enter Pilih</span>
+              <span>ESC Tutup</span>
             </div>
-
-            {/* ── MODE 1: Spotlight Search ── */}
-            {mode === "search" && (
-              <div>
-                {/* Search Input Bar */}
-                <div className="flex items-center gap-3 border-b border-slate-800 px-4 py-3.5">
-                  <FontAwesomeIcon icon={faMagnifyingGlass} className="h-4 w-4 text-slate-400" />
-                  <input
-                    ref={searchInputRef}
-                    type="text"
-                    value={query}
-                    onChange={(e) => {
-                      setQuery(e.target.value);
-                      setSelectedIndex(0);
-                    }}
-                    onKeyDown={handleSearchKeyDown}
-                    placeholder="Cari halaman, proyek, keahlian, atau ketik perintah..."
-                    className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none"
-                  />
-                  {query && (
-                    <button
-                      onClick={() => setQuery("")}
-                      className="text-xs text-slate-400 hover:text-white"
-                    >
-                      Clear
-                    </button>
-                  )}
-                </div>
-
-                {/* Results List */}
-                <div className="max-h-[380px] overflow-y-auto p-2 divide-y divide-slate-800/40">
-                  {filteredCommands.length === 0 ? (
-                    <div className="py-10 text-center font-mono text-xs text-slate-400">
-                      Tidak ada hasil yang cocok dengan &quot;{query}&quot;.
-                    </div>
-                  ) : (
-                    filteredCommands.map((item, idx) => {
-                      const isSelected = idx === selectedIndex;
-                      return (
-                        <div
-                          key={item.id}
-                          onClick={() => item.action()}
-                          onMouseEnter={() => setSelectedIndex(idx)}
-                          className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 cursor-pointer transition-colors ${
-                            isSelected
-                              ? "bg-slate-800 text-white"
-                              : "text-slate-300 hover:bg-slate-800/60"
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-950 text-slate-400 border border-slate-800">
-                              <FontAwesomeIcon icon={item.icon} className="h-3.5 w-3.5" />
-                            </div>
-                            <div>
-                              <p className="text-xs font-bold text-white">{item.title}</p>
-                              {item.subtitle && (
-                                <p className="text-[11px] text-slate-400 truncate max-w-sm">
-                                  {item.subtitle}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono text-[10px] uppercase text-slate-500 border border-slate-800 px-1.5 py-0.5 rounded">
-                              {item.category}
-                            </span>
-                            {isSelected && (
-                              <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3 text-slate-400" />
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-
-                {/* Footer hints */}
-                <div className="border-t border-slate-800 bg-slate-950/60 px-4 py-2.5 flex items-center justify-between font-mono text-[10px] text-slate-500">
-                  <div className="flex items-center gap-3">
-                    <span>↑↓ Navigasi</span>
-                    <span>↵ Pilih</span>
-                    <span>ESC Tutup</span>
-                  </div>
-                  <div>
-                    Tip: Ketik <span className="text-emerald-400">CLI</span> untuk masuk ke shell
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ── MODE 2: Interactive Terminal ── */}
-            {mode === "terminal" && (
-              <div className="font-mono text-xs">
-                {/* Terminal logs viewport */}
-                <div className="h-[340px] overflow-y-auto p-4 space-y-3.5 bg-slate-950/90 select-text">
-                  {terminalLogs.map((log, i) => (
-                    <div key={i} className="space-y-1.5">
-                      <div className="flex items-center gap-2 text-slate-400">
-                        <span className="text-emerald-400 font-bold">faiz@portfolio:~$</span>
-                        <span className="text-white font-bold">{log.command}</span>
-                        <span className="text-[10px] text-slate-600 ml-auto">{log.time}</span>
-                      </div>
-                      <div className="pl-4 text-slate-300 leading-relaxed border-l-2 border-slate-800">
-                        {log.output}
-                      </div>
-                    </div>
-                  ))}
-                  <div ref={terminalBottomRef} />
-                </div>
-
-                {/* Terminal prompt input */}
-                <form
-                  onSubmit={handleTerminalSubmit}
-                  className="flex items-center gap-2 border-t border-slate-800 bg-slate-900 px-4 py-3"
-                >
-                  <span className="text-emerald-400 font-bold shrink-0">faiz@portfolio:~$</span>
-                  <input
-                    ref={terminalInputRef}
-                    type="text"
-                    value={terminalInput}
-                    onChange={(e) => setTerminalInput(e.target.value)}
-                    onKeyDown={handleTerminalKeyDown}
-                    placeholder="ketik help, projects, skills, whoami, atau sudo hire..."
-                    className="w-full bg-transparent text-white placeholder-slate-600 focus:outline-none font-mono text-xs"
-                    autoFocus
-                  />
-                </form>
-
-                {/* Quick Chips Suggestions */}
-                <div className="flex flex-wrap items-center gap-1.5 border-t border-slate-800/80 bg-slate-950/80 px-4 py-2.5">
-                  <span className="text-[10px] text-slate-500 mr-1">Saran:</span>
-                  {["help", "whoami", "skills", "projects", "status", "sudo hire", "clear"].map((cmd) => (
-                    <button
-                      key={cmd}
-                      type="button"
-                      onClick={() => executeChipCommand(cmd)}
-                      className="rounded border border-slate-800 bg-slate-900 px-2 py-0.5 text-[10px] font-mono text-slate-300 transition-colors hover:border-slate-600 hover:text-white"
-                    >
-                      {cmd}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+            <div>
+              Pintasan: <span className="text-emerald-400">Ctrl+K</span>
+            </div>
           </div>
         </div>
       )}
-    </>
+
+      {mode === "terminal" && (
+        <div className="font-mono text-xs">
+          <div className="h-[340px] overflow-y-auto p-4 space-y-3.5 bg-slate-950 select-text">
+            {terminalLogs.map((log, i) => (
+              <div key={i} className="space-y-1.5">
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="text-emerald-400 font-bold">faiz@portfolio:~$</span>
+                  <span className="text-white font-bold">{log.command}</span>
+                  <span className="text-[10px] text-slate-400 ml-auto">{log.time}</span>
+                </div>
+                <div className="pl-4 text-slate-300 leading-relaxed border-l-2 border-slate-800">
+                  {log.output}
+                </div>
+              </div>
+            ))}
+            <div ref={terminalBottomRef} />
+          </div>
+
+          <form
+            onSubmit={handleTerminalSubmit}
+            className="flex items-center gap-2 border-t border-slate-800 bg-slate-900 px-4 py-3"
+          >
+            <label htmlFor="terminal-command-input" className="text-emerald-400 font-bold shrink-0">
+              faiz@portfolio:~$
+            </label>
+            <input
+              ref={terminalInputRef}
+              id="terminal-command-input"
+              type="text"
+              value={terminalInput}
+              onChange={(e) => setTerminalInput(e.target.value)}
+              onKeyDown={handleTerminalKeyDown}
+              placeholder="ketik help, projects, skills, whoami, atau sudo hire..."
+              className="w-full bg-transparent text-white placeholder-slate-400 focus:outline-none font-mono text-xs"
+            />
+          </form>
+
+          <div className="flex flex-wrap items-center gap-1.5 border-t border-slate-800 bg-slate-950 px-4 py-2.5">
+            <span className="text-[10px] text-slate-400 mr-1">Saran:</span>
+            {["help", "whoami", "skills", "projects", "status", "sudo hire", "clear"].map((cmd) => (
+              <button
+                key={cmd}
+                type="button"
+                onClick={() => executeChipCommand(cmd)}
+                className="rounded border border-slate-700 bg-slate-900 px-2 py-1 text-[10px] font-mono text-slate-300 transition-colors hover:border-slate-500 hover:text-white"
+              >
+                {cmd}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </dialog>
   );
 }

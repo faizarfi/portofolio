@@ -3,12 +3,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff; /* Crisp pure white canvas */
-  --foreground: #09090b; /* True neutral dark */
+  --background: #ffffff;
+  --foreground: #09090b;
   --card-bg: #ffffff;
   --card-border: #e4e4e7;
-  --navy: #1e3a5f;
-  --navy-dark: #0f172a;
   color-scheme: light;
 }
 
@@ -18,6 +16,25 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-syne);
+}
+
+@layer base {
+  a[href],
+  button:not(:disabled),
+  summary,
+  select:not(:disabled),
+  label[for],
+  [role="button"]:not([aria-disabled="true"]),
+  [role="tab"]:not([aria-disabled="true"]),
+  [role="switch"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
 }
 
 html {
@@ -40,7 +57,17 @@ body {
   position: static !important;
 }
 
-/* ── Clean Google Translate Integration (Completely Suppress Default Banners) ── */
+/* Native <dialog> scroll containment (prevents scroll chaining to the background page) */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Suppress Google Translate injected banner & body offset */
 .goog-te-banner-frame,
 .goog-te-banner-frame.skiptranslate,
 iframe.goog-te-banner-frame,
@@ -66,17 +93,12 @@ body > .skiptranslate,
   z-index: -99999 !important;
 }
 
-body {
-  top: 0px !important;
-  position: static !important;
-}
-
 .goog-text-highlight {
   background-color: transparent !important;
   box-shadow: none !important;
 }
 
-/* Minimalist crisp scrollbar */
+/* Minimalist scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -92,7 +114,6 @@ body {
   background: #a1a1aa;
 }
 
-/* Crisp text selection */
 ::selection {
   background: #09090b;
   color: #ffffff;
@@ -103,13 +124,15 @@ html.dark ::selection {
   color: #000000;
 }
 
-/* ── Crisp Architectural Card (Solid & Tactile) ── */
+/* Crisp Architectural Card */
 .neat-card {
   background: #ffffff;
   border: 1px solid #e4e4e7;
   border-radius: 1rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .neat-card:hover {
@@ -119,9 +142,9 @@ html.dark ::selection {
 }
 
 html.dark {
-  --background: #000000; /* Pure black */
-  --foreground: #ffffff; /* Crisp white */
-  --card-bg: #09090b; /* Solid deep card */
+  --background: #000000;
+  --foreground: #ffffff;
+  --card-bg: #09090b;
   --card-border: #27272a;
   color-scheme: dark;
 }
@@ -133,7 +156,7 @@ html.dark .neat-card {
 }
 
 html.dark .neat-card:hover {
-  border-color: #3f3f46;
+  border-color: #52525b;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
 }
 
@@ -144,17 +167,6 @@ html.dark ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
 
-/* Subtle flat badge */
-.editorial-tag {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #52525b;
-}
-
-/* Clean, crisp fade-in */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -165,68 +177,30 @@ html.dark ::-webkit-scrollbar-thumb:hover {
     transform: scale(1);
   }
 }
+
 .animate-fade-in {
-  animation: fade-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: fade-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 }
 
-/* Keyboard focus ring */
+/* High-contrast keyboard focus ring across light and dark modes */
 :focus-visible {
   outline: 2px solid #18181b;
   outline-offset: 2px;
   border-radius: 6px;
 }
 
-/* ── Accessibility (A11y) Feature Classes ── */
-html.a11y-readable-text,
-html.a11y-readable-text * {
-  letter-spacing: 0.04em !important;
-  word-spacing: 0.06em !important;
-  line-height: 1.75 !important;
-}
-
-html.a11y-high-contrast {
-  filter: contrast(125%) !important;
-}
-
-html.a11y-grayscale {
-  filter: grayscale(100%) !important;
-}
-
-html.a11y-high-contrast.a11y-grayscale {
-  filter: contrast(130%) grayscale(100%) !important;
-}
-
-html.a11y-underline-links a {
-  text-decoration: underline !important;
-  text-underline-offset: 4px !important;
-  text-decoration-thickness: 2px !important;
-}
-
-html.a11y-reduce-motion *,
-html.a11y-reduce-motion *::before,
-html.a11y-reduce-motion *::after {
-  animation-duration: 0.001ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.001ms !important;
-  scroll-behavior: auto !important;
-}
-
-html.a11y-big-cursor,
-html.a11y-big-cursor * {
-  cursor: default !important;
-}
-
-html.a11y-big-cursor a,
-html.a11y-big-cursor button,
-html.a11y-big-cursor [role="button"] {
-  cursor: pointer !important;
+html.dark :focus-visible {
+  outline-color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  html {
+    scroll-behavior: auto;
+  }
+
+  .neat-card:hover {
+    transform: none;
   }
 }

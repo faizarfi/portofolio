@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
-import { CommandPalette, PageLoader } from "@/components/ui";
+import { CommandPalette } from "@/components/ui";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,23 +30,22 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "https://faizarfianilhami.caitlyn.my.id"
   ),
   title: {
-    default: "Faiz Arfian Ilhami — Full Stack Web Developer & IT Helper",
+    default: "Faiz Arfian Ilhami | Software Engineer & Full Stack Web Developer",
     template: "%s | Faiz Arfian Ilhami",
   },
   description:
-    "Portofolio Faiz Arfian Ilhami — Full Stack Web Developer & IT Helper Indonesia. Mengembangkan sistem informasi berbasis Laravel, React, Next.js, PHP, dan solusi teknologi informasi yang andal.",
+    "Portofolio Faiz Arfian Ilhami, Software Engineer dan Full Stack Web Developer. Berfokus pada pengembangan sistem web berbasis Laravel, React, Next.js, PHP, dan basis data terstruktur.",
   keywords: [
     "Faiz Arfian Ilhami",
+    "Software Engineer",
     "Full Stack Web Developer",
     "Web Developer Indonesia",
-    "Web Developer Remote",
     "Laravel Developer",
     "Next.js Developer",
     "React Developer",
     "PHP Developer",
-    "IT Helper",
-    "IT Support Indonesia",
-    "Jasa Pembuatan Website",
+    "Backend Developer",
+    "Frontend Developer",
   ],
   icons: {
     icon: "/iconweb.png",
@@ -56,27 +55,19 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Faiz Arfian Ilhami | Full Stack Web Developer & IT Helper",
+    title: "Faiz Arfian Ilhami | Software Engineer & Full Stack Web Developer",
     description:
-      "Full Stack Web Developer dan IT Helper Indonesia. Membangun aplikasi web modern dengan Laravel, React, Next.js, PHP, dan solusi digital yang terstruktur.",
+      "Software Engineer dan Full Stack Web Developer Indonesia. Mengembangkan aplikasi web modern dengan Laravel, React, Next.js, TypeScript, PHP, dan MySQL.",
     url: "https://faizarfianilhami.caitlyn.my.id",
     siteName: "faizarfianilhami.caitlyn.my.id",
     locale: "id_ID",
     type: "website",
-    images: [
-      {
-        url: "/foto.jpeg",
-        width: 512,
-        height: 512,
-        alt: "Faiz Arfian Ilhami — Full Stack Web Developer & IT Helper",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Faiz Arfian Ilhami | Full Stack Web Developer & IT Helper",
+    title: "Faiz Arfian Ilhami | Software Engineer & Full Stack Web Developer",
     description:
-      "Full Stack Web Developer dan IT Helper Indonesia. Membangun aplikasi web modern dengan Laravel, React, Next.js, PHP, dan solusi digital terstruktur.",
+      "Software Engineer dan Full Stack Web Developer. Mengembangkan aplikasi web modern dengan Laravel, React, Next.js, TypeScript, dan MySQL.",
   },
   verification: {
     google: [
@@ -97,7 +88,7 @@ export default function RootLayout({
     name: "Faiz Arfian Ilhami",
     url: "https://faizarfianilhami.caitlyn.my.id",
     image: "https://faizarfianilhami.caitlyn.my.id/foto.jpeg",
-    jobTitle: "Full Stack Web Developer & IT Helper",
+    jobTitle: "Software Engineer & Full Stack Web Developer",
     worksFor: {
       "@type": "Organization",
       name: "Freelance",
@@ -112,7 +103,6 @@ export default function RootLayout({
       addressRegion: "Indonesia",
       addressCountry: "ID",
     },
-
     sameAs: [
       "https://github.com/faizarfi",
       "https://www.linkedin.com/in/faizarfianilhami",
@@ -120,6 +110,7 @@ export default function RootLayout({
       "https://www.tiktok.com/@caitlyn.faiz",
     ],
     knowsAbout: [
+      "Software Engineering",
       "Full Stack Web Development",
       "Laravel Framework",
       "React",
@@ -129,7 +120,8 @@ export default function RootLayout({
       "TypeScript",
       "Tailwind CSS",
       "MySQL",
-      "IT Support & Troubleshooting",
+      "RESTful API Architecture",
+      "Database Design",
     ],
   };
 
@@ -161,18 +153,14 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-          async
-          defer
-        />
       </head>
-      <body className="flex min-h-full flex-col bg-white dark:bg-black text-slate-900 dark:text-white transition-colors duration-200 selection:bg-slate-900 dark:selection:bg-white selection:text-white dark:selection:text-black">
-        <PageLoader />
+      <body
+        id="top"
+        className="flex min-h-full flex-col bg-white dark:bg-black text-slate-900 dark:text-white transition-colors duration-200 selection:bg-slate-900 dark:selection:bg-white selection:text-white dark:selection:text-black"
+      >
         <CommandPalette />
         {children}
       </body>
     </html>
-
   );
 }

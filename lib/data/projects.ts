@@ -26,23 +26,11 @@ export interface ProjectArchitecture {
   highlights: string[];
 }
 
-export interface ImpactMetric {
-  value: string;
-  label: string;
-}
-
 export interface ProjectDetail {
   role: string;
   overview: string;
   contributions: string[];
-  contributionsCount?: number;
-  year?: string;
   metric?: string;
-  duration?: string;
-  usersCount?: string;
-  problemBefore?: string;
-  solutionAfter?: string;
-  impactMetrics?: ImpactMetric[];
   architecture?: ProjectArchitecture;
 }
 
@@ -55,16 +43,422 @@ export interface Project {
   github?: string;
   image?: string;
   featured?: boolean;
-  category?: "Laravel / PHP" | "React / Next.js" | "Backend & API" | "AI & Otomasi" | "Full Stack" | "AI & Tools";
+  category?: "Laravel / PHP" | "React / Next.js" | "Otomasi & Tooling" | "Full Stack";
   details: ProjectDetail;
 }
 
 export const PROJECTS: Project[] = [
   {
-    name: "Said Connect — Tracer Study Alumni",
+    name: "Sistem Presensi Magang BPS (Geofencing Haversine)",
+    slug: "presensi-magang",
+    description:
+      "Sistem informasi presensi dan verifikasi logbook magang berbasis Geofencing Haversine (radius 150m kantor BPS Karanganyar), dilengkapi RBAC multi-role, verifikasi bulk ACC, unggah berkas dispensasi terproteksi, dan ekspor matriks horizontal bulanan PDF.",
+    tech: ["Laravel", "PHP", "MySQL", "Tailwind CSS", "Haversine Formula", "DomPDF"],
+    url: "https://github.com/faizarfi/presensi-magang",
+    github: "https://github.com/faizarfi/presensi-magang",
+    featured: true,
+    category: "Laravel / PHP",
+    details: {
+      role: "Full Stack Developer",
+      metric: "Diimplementasikan di BPS",
+      overview:
+        "Sistem Presensi Magang BPS Karanganyar dikembangkan untuk mengotomasi pencatatan kehadiran dan jurnal harian peserta magang secara terpusat dan akurat. Sistem ini mengintegrasikan rumus Haversine untuk memvalidasi koordinat GPS peserta secara real-time agar presensi hanya dapat dilakukan di dalam radius 150 meter kantor BPS Karanganyar (-7.5978, 110.9505). Dilengkapi alur verifikasi admin (single dan bulk ACC), deteksi hari libur dan akhir pekan otomatis, pengunggahan berkas bukti surat dokter atau dispensasi ke storage terproteksi, serta ekspor rekapitulasi matriks kehadiran horizontal bulanan siap cetak dalam format PDF.",
+      contributions: [
+        "Mengimplementasikan algoritma rumus Haversine untuk kalkulasi jarak GPS real-time dan pembatasan radius presensi 150 meter dari kantor BPS Karanganyar.",
+        "Membangun Role-Based Access Control (RBAC) memisahkan hak akses Admin BPS dan Peserta Magang dengan keamanan sesi Laravel 12.",
+        "Merancang fitur single dan bulk approval (ACC massal) bagi admin untuk verifikasi status kehadiran serta jurnal logbook harian peserta.",
+        "Mengembangkan generator laporan rekapitulasi kehadiran matriks horizontal bulanan menggunakan DomPDF yang siap cetak.",
+        "Mengintegrasikan modul unggah berkas bukti surat sakit dan izin dispensasi dengan validasi tipe mime serta penyimpanan aman di storage disk.",
+        "Menulis suite automated feature test mencakup validasi radius kantor, deteksi tanggal merah atau libur, evaluasi absensi otomatis, dan pembaruan kata sandi.",
+      ],
+      architecture: {
+        summary:
+          "Arsitektur Monolitik MVC berbasis Laravel 12 dengan Relational Database MySQL, Service Haversine Geofencing, dan Automated Feature Tests.",
+        layers: [
+          {
+            tier: "01. Presentation Layer",
+            title: "Responsive Blade Client UI",
+            tech: "Blade Templates + Tailwind CSS + HTML5 Geolocation API",
+            description:
+              "Antarmuka presensi interaktif dengan deteksi koordinat browser real-time, status badge kehadiran dinamis, dan dashboard monitoring admin.",
+          },
+          {
+            tier: "02. Geofencing & Security Layer",
+            title: "Haversine Distance & Radius Validator",
+            tech: "Laravel Service Class + Auth Guards + CSRF Shield",
+            description:
+              "Pemeriksaan koordinat presensi dengan toleransi radius 150m, proteksi brute-force login, dan pembatasan hak akses berbasis role.",
+          },
+          {
+            tier: "03. Business Logic & Workflow Engine",
+            title: "Admin Approval & Holiday Evaluator",
+            tech: "AttendanceService + Eloquent Transaction Engine",
+            description:
+              "Pengecekan otomatis hari libur atau akhir pekan, penentuan status terlambat dan tepat waktu, serta workflow bulk verification admin.",
+          },
+          {
+            tier: "04. Data & Export Layer",
+            title: "Persistence & PDF Reporting Engine",
+            tech: "MySQL 8.0 + Barryvdh DomPDF + Storage Disk",
+            description:
+              "Skema database relasional ternormalisasi untuk log absensi dan profil magang, serta render dokumen rekapitulasi matriks horizontal.",
+          },
+        ],
+        tables: [
+          {
+            name: "attendances",
+            description: "Penyimpanan riwayat presensi harian, koordinat jarak GPS, dan status verifikasi admin.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Auto-increment primary key" },
+              { name: "user_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke tabel users.id" },
+              { name: "date", type: "DATE", key: "IDX", desc: "Tanggal absensi" },
+              { name: "check_in_time", type: "TIME", desc: "Waktu presensi masuk" },
+              { name: "check_out_time", type: "TIME", desc: "Waktu presensi pulang" },
+              { name: "status", type: "ENUM('hadir','tidak_hadir_keterangan','alpa')", desc: "Status kehadiran umum" },
+              { name: "sub_status", type: "ENUM('tepat_waktu','terlambat','sakit','izin')", desc: "Rincian status presensi" },
+              { name: "distance_meters", type: "DECIMAL(8,2)", desc: "Jarak koordinat ke kantor BPS dalam meter" },
+              { name: "attachment_file", type: "VARCHAR(255)", desc: "Path berkas surat bukti dokter atau izin" },
+              { name: "is_confirmed", type: "BOOLEAN", key: "IDX", desc: "Status verifikasi admin BPS" },
+            ],
+            relations: ["N:1 dengan users"],
+          },
+          {
+            name: "intern_profiles",
+            description: "Biodata peserta magang, asal perguruan tinggi, dan durasi penugasan di BPS.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key profil magang" },
+              { name: "user_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke tabel users.id" },
+              { name: "university_name", type: "VARCHAR(150)", desc: "Nama asal kampus atau perguruan tinggi" },
+              { name: "major", type: "VARCHAR(100)", desc: "Program studi atau jurusan" },
+              { name: "start_date", type: "DATE", desc: "Tanggal mulai magang" },
+              { name: "end_date", type: "DATE", desc: "Tanggal selesai magang" },
+              { name: "duration_months", type: "INT", desc: "Durasi magang dalam hitungan bulan" },
+              { name: "phone_number", type: "VARCHAR(20)", desc: "Nomor kontak WhatsApp aktif" },
+            ],
+            relations: ["1:1 dengan users"],
+          },
+          {
+            name: "settings",
+            description: "Konfigurasi titik koordinat GPS kantor BPS Karanganyar dan batasan radius absensi.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key setting" },
+              { name: "office_latitude", type: "DECIMAL(10,7)", desc: "Garis lintang kantor BPS (-7.5978)" },
+              { name: "office_longitude", type: "DECIMAL(10,7)", desc: "Garis bujur kantor BPS (110.9505)" },
+              { name: "allowed_radius_meters", type: "INT", desc: "Batas maksimal radius presensi (150m)" },
+              { name: "work_start_time", type: "TIME", desc: "Batas jam masuk kantor" },
+              { name: "work_end_time", type: "TIME", desc: "Batas jam pulang kantor" },
+            ],
+            relations: ["Konfigurasi global sistem"],
+          },
+        ],
+        highlights: [
+          "Validasi Radius Presensi 150m Kantor BPS Menggunakan Rumus Haversine Akurat",
+          "Alur Verifikasi Cepat Single & Bulk Approval (ACC Massal) Bagi Administrator",
+          "Pencegahan Manipulasi Jam Melalui Deteksi Hari Libur & Validasi Server-Side",
+          "Ekspor Rekapitulasi Matriks Presensi Bulanan Siap Cetak ke Format Dokumen PDF",
+          "Automated Feature Testing dengan Coverage Endpoint Kunci",
+        ],
+      },
+    },
+  },
+  {
+    name: "Sistem Antrean Digital PST BPS Karanganyar",
+    slug: "antrian-pst-bps",
+    description:
+      "Sistem antrean terpadu Pelayanan Statistik Terpadu (PST) di jaringan LAN kantor dengan tiket mandiri paperless berbasis QR Code, layar panggil TV 16:9 berkontras tinggi, sintesis audio two-tone dan suara id-ID, serta Survei Kepuasan Masyarakat (SKM).",
+    tech: ["Laravel", "PHP", "MySQL", "Tailwind CSS", "Web Speech API", "QR Code"],
+    url: "https://github.com/faizarfi/antrian",
+    github: "https://github.com/faizarfi/antrian",
+    featured: true,
+    category: "Laravel / PHP",
+    details: {
+      role: "Full Stack Developer",
+      metric: "Sistem PST BPS Karanganyar",
+      overview:
+        "Sistem Antrean Digital PST BPS Kabupaten Karanganyar dirancang untuk menggantikan pengambilan nomor antrean manual sekaligus beroperasi penuh pada jaringan LAN atau Wi-Fi internal kantor tanpa ketergantungan internet pihak ketiga. Pengunjung cukup memindai QR Code meja untuk memperoleh e-Tiket dinamis di browser smartphone, memantau giliran secara langsung, lalu mengisi Survei Kepuasan Masyarakat (SKM) setelah layanan di Loket 1 selesai. Dari meja front office, petugas mengendalikan panggilan antrean melalui pintasan papan ketik sementara layar TV ruang tunggu memutar nada lonceng two-tone dan pengumuman suara Bahasa Indonesia.",
+      contributions: [
+        "Merancang arsitektur antrean 1 Loket Terpadu untuk 3 kategori layanan resmi BPS (A: Perpustakaan, B: Konsultasi Statistik, C: Rekomendasi Kegiatan Statistik) dengan reset nomor harian otomatis.",
+        "Mengembangkan sistem e-Tiket paperless berbasis QR Code dinamis dan halaman pelacakan real-time (/tiket/{token}) lengkap dengan formulir Survei Kepuasan Masyarakat (SKM).",
+        "Membangun layar TV display 16:9 berkontras tinggi dengan sintesis audio multi-tone (659.25 Hz dan 880 Hz) serta suara pengumuman otomatis id-ID melalui Web Speech API.",
+        "Menyediakan konsol operator berbasis pintasan papan ketik (Space/F2 panggil berikutnya, R panggil ulang, S lewati, Enter/C selesaikan) untuk mempercepat alur kerja petugas loket.",
+        "Menambahkan modul pelaporan harian hingga tahunan dengan ekspor CSV/Excel dan dokumen PDF berformat cetak resmi, serta tampilan cetak standee QR meja (/cetak-qr).",
+      ],
+      architecture: {
+        summary:
+          "Arsitektur Multi-Device LAN Laravel dengan Engine Penomoran Harian Terindeks, Layar Display TV Audio Synthesizer, dan Pelacakan e-Tiket Tokenized.",
+        layers: [
+          {
+            tier: "01. Multi-Device Client Interfaces",
+            title: "Kiosk, Mobile e-Ticket, TV Display & Operator Console",
+            tech: "Blade Templates + Tailwind CSS + Keyboard Shortcuts",
+            description:
+              "Empat antarmuka khusus dalam satu aplikasi: registrasi mandiri QR/kiosk, pemantauan tiket di ponsel pengunjung, layar TV ruang tunggu 16:9, dan meja petugas.",
+          },
+          {
+            tier: "02. Audio & Announcement Synthesizer",
+            title: "Two-Tone Chime & Indonesian Speech Engine",
+            tech: "Web Audio API (659.25 Hz / 880 Hz) + SpeechSynthesis (id-ID)",
+            description:
+              "Sintesis nada lonceng panggilan dan pelafalan nomor tiket menuju loket langsung di browser TV tanpa bergantung pada file audio eksternal.",
+          },
+          {
+            tier: "03. Queue Concurrency & Reporting",
+            title: "FIFO / Category Dispatch & SKM Evaluator",
+            tech: "Laravel Controllers + Database Unique Constraints + Print/Export",
+            description:
+              "Penjaminan nomor urut unik per layanan dan tanggal layanan melalui composite index, pencatatan call_histories, serta rekapitulasi performa pelayanan.",
+          },
+          {
+            tier: "04. Database Persistence",
+            title: "Normalized Queue & Feedback Schema",
+            tech: "MySQL 8.0 / MariaDB / SQLite",
+            description:
+              "Penyimpanan master layanan, loket, tiket antrean dengan tracking_token unik, riwayat pemanggilan, pengumuman berjalan, dan skor SKM.",
+          },
+        ],
+        tables: [
+          {
+            name: "tickets",
+            description: "Menyimpan tiket antrean harian per layanan, status panggilan, token pelacakan, dan rating SKM.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Auto-increment primary key" },
+              { name: "service_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke tabel services.id" },
+              { name: "counter_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke tabel counters.id" },
+              { name: "ticket_number", type: "VARCHAR(20)", key: "IDX", desc: "Nomor tiket (A-001, B-001, C-001)" },
+              { name: "service_date", type: "DATE", key: "IDX", desc: "Tanggal operasional layanan" },
+              { name: "status", type: "ENUM('waiting','called','completed','skipped')", key: "IDX", desc: "Status antrean saat ini" },
+              { name: "tracking_token", type: "VARCHAR(64)", key: "IDX", desc: "Token unik halaman e-Tiket pengunjung" },
+              { name: "feedback_rating", type: "TINYINT", desc: "Nilai Survei Kepuasan Masyarakat (1 sampai 4)" },
+            ],
+            relations: ["N:1 dengan services", "N:1 dengan counters", "1:N dengan call_histories"],
+          },
+          {
+            name: "services",
+            description: "Master kategori layanan PST (A, B, C) beserta kode huruf dan urutan tampilan.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key layanan" },
+              { name: "code", type: "VARCHAR(5)", key: "IDX", desc: "Kode prefix antrean (A, B, C)" },
+              { name: "name", type: "VARCHAR(255)", desc: "Nama layanan resmi PST" },
+              { name: "is_active", type: "BOOLEAN", desc: "Status aktif layanan" },
+            ],
+            relations: ["1:N dengan tickets"],
+          },
+          {
+            name: "call_histories",
+            description: "Log audit setiap pemanggilan dan pemanggilan ulang (recall) oleh petugas loket.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key riwayat panggilan" },
+              { name: "ticket_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke tickets.id" },
+              { name: "user_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Petugas yang memanggil antrean" },
+              { name: "call_type", type: "ENUM('call','recall')", desc: "Jenis aksi pemanggilan" },
+              { name: "called_at", type: "TIMESTAMP", key: "IDX", desc: "Waktu pemanggilan tercatat" },
+            ],
+            relations: ["N:1 dengan tickets", "N:1 dengan users"],
+          },
+        ],
+        highlights: [
+          "Operasional Penuh di Jaringan LAN Kantor Tanpa Ketergantungan Internet Eksternal",
+          "e-Tiket QR Code Paperless + Pelacakan Antrean & Survei SKM Real-Time di Smartphone",
+          "Sintesis Nada Two-Tone (659.25Hz/880Hz) dan Suara Pengumuman Bahasa Indonesia",
+          "Pintasan Papan Ketik Lengkap untuk Operasional Front Office Berkecepatan Tinggi",
+        ],
+      },
+    },
+  },
+  {
+    name: "Portal PST & KARTA AI BPS Karanganyar",
+    slug: "aichatbot-bps",
+    description:
+      "Platform layanan statistik publik BPS Karanganyar berbasis Laravel 12 dengan asisten RAG KARTA AI (Gemini SSE streaming), sinkronisasi 464 publikasi resmi via BPS Web API, peta spasial 3D 17 kecamatan, PII redactor, dan handoff petugas live chat.",
+    tech: ["Laravel", "PHP", "Gemini AI API", "MySQL", "Chart.js", "Tailwind CSS"],
+    url: "https://github.com/faizarfi/aichatbotbps",
+    github: "https://github.com/faizarfi/aichatbotbps",
+    featured: true,
+    category: "Otomasi & Tooling",
+    details: {
+      role: "Full Stack Developer",
+      metric: "464 Publikasi & Peta 17 Kecamatan",
+      overview:
+        "Portal Layanan Statistik Terpadu (PST) & KARTA AI (Konsultan AI Riset & Terpadu Angka) dibangun untuk membantu masyarakat mengakses data statistik resmi Kabupaten Karanganyar tanpa harus menelusuri laporan tebal secara manual. Sistem menggabungkan mesin Retrieval-Augmented Generation (RAG) yang terhubung ke katalog 464 publikasi resmi BPS dengan streaming token Server-Sent Events (SSE), visualisasi Chart.js otomatis, peta spasial 3D 17 kecamatan, kalkulator statistik terapan, layanan aduan terenkripsi AES-256, serta fitur Human-in-the-Loop agar sesi chat dapat diambil alih petugas PST secara langsung.",
+      contributions: [
+        "Mengembangkan mesin RAG KARTA AI (KnowledgeSearchService & ChatService) dengan Server-Sent Events (SSE) token streaming dan dukungan fallback gateway AI.",
+        "Mengintegrasikan sinkronisasi otomatis 464 publikasi resmi BPS Kabupaten Karanganyar via BPS Web API (php artisan bps:sync-publications).",
+        "Membangun PersonalDataRedactor untuk menyamarkan otomatis NIK (16 digit), nomor telepon, dan email sebelum payload dikirim ke API eksternal.",
+        "Merancang kanal pengaduan publik dengan enkripsi database AES-256 pada kontak pelapor, tiket pelacakan ADU-YYYY-XXXXXX, dan isolasi lampiran di direktori privat.",
+        "Mengimplementasikan alur Human-in-the-Loop (takeover sesi oleh petugas PST), peta spasial 3D isometrik 17 kecamatan, serta kalkulator Slovin, proyeksi penduduk, dan inflasi.",
+      ],
+      architecture: {
+        summary:
+          "Arsitektur Clean Layered Service di atas Laravel 12 dengan Mesin RAG Publikasi BPS, PII Redactor Middleware, SSE Streaming, dan Live Agent Handoff.",
+        layers: [
+          {
+            tier: "01. Public Portal & Interactive UI",
+            title: "KARTA Chat, 3D Spatial Map & Stat Calculators",
+            tech: "Blade + Tailwind CSS + Chart.js + Web Speech",
+            description:
+              "Antarmuka chat streaming SSE dengan render grafik Chart.js otomatis, peta 17 kecamatan Karanganyar, serta ekspor rangkuman konsultasi PDF ber-KOP resmi.",
+          },
+          {
+            tier: "02. Security & Privacy Guard",
+            title: "PII Redactor & XSS/File Isolation",
+            tech: "PersonalDataRedactor + AES-256 Eloquent Cast + Security Headers",
+            description:
+              "Penyaringan otomatis NIK/telepon/email sebelum inferensi LLM, sanitasi Markdown ketat, dan isolasi lampiran di luar document root.",
+          },
+          {
+            tier: "03. RAG & AI Gateway Service",
+            title: "Knowledge Indexing & SSE LLM Pipeline",
+            tech: "KnowledgeSearchService + AiLlmService (Gemini / OpenAI Gateway)",
+            description:
+              "Pencarian metadata publikasi dan basis pengetahuan statistik BPS (IPM, PDRB, Kemiskinan, Inflasi) untuk grounding jawaban AI secara faktual.",
+          },
+          {
+            tier: "04. Data Sync & Persistence",
+            title: "BPS Publication Store & Complaint Logs",
+            tech: "MySQL 8.0 + BPS Web API Sync + DomPDF",
+            description:
+              "Penyimpanan katalog 464 publikasi, statistik per kecamatan, log percakapan, serta status aduan warga dengan jejak audit.",
+          },
+        ],
+        tables: [
+          {
+            name: "publications",
+            description: "Katalog publikasi resmi BPS Karanganyar yang disinkronisasi melalui BPS Web API.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key publikasi" },
+              { name: "title", type: "VARCHAR(255)", key: "IDX", desc: "Judul publikasi resmi BPS" },
+              { name: "release_date", type: "DATE", key: "IDX", desc: "Tanggal rilis dokumen" },
+              { name: "abstract", type: "TEXT", desc: "Abstrak untuk indeks pencarian RAG" },
+              { name: "pdf_url", type: "VARCHAR(500)", desc: "Tautan unduh dokumen resmi" },
+            ],
+            relations: ["Diindeks ke KnowledgeSearchService"],
+          },
+          {
+            name: "conversations & messages",
+            description: "Sesi percakapan publik dengan KARTA AI maupun sesi handoff petugas PST.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key sesi atau pesan" },
+              { name: "conversation_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi pesan ke sesi percakapan" },
+              { name: "sender_role", type: "ENUM('user','assistant','officer')", desc: "Aktor pengirim pesan" },
+              { name: "message_body", type: "TEXT", desc: "Isi pertanyaan, jawaban RAG, atau catatan petugas" },
+            ],
+            relations: ["1:N conversations ke messages"],
+          },
+          {
+            name: "complaints",
+            description: "Kanal aspirasi dan aduan warga dengan enkripsi AES-256 pada kontak pelapor.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key aduan" },
+              { name: "ticket_code", type: "VARCHAR(30)", key: "IDX", desc: "Kode pelacakan ADU-YYYY-XXXXXX" },
+              { name: "reporter_contact", type: "TEXT", desc: "Kontak pelapor terenkripsi AES-256" },
+              { name: "status", type: "VARCHAR(50)", key: "IDX", desc: "Status penanganan aduan" },
+            ],
+            relations: ["1:N ke complaint_attachments & complaint_status_logs"],
+          },
+        ],
+        highlights: [
+          "Grounding Jawaban AI pada 464 Publikasi Resmi BPS via KnowledgeSearchService",
+          "Penyensoran Otomatis PII (NIK, Telepon, Email) Sebelum Request Dikirim ke LLM",
+          "Human-in-the-Loop Live Handoff agar Petugas PST Dapat Mengambil Alih Sesi Chat",
+          "Enkripsi AES-256 dan Isolasi Storage Privat untuk Keamanan Data Pelapor Aduan",
+        ],
+      },
+    },
+  },
+  {
+    name: "BPS Smart Attendance Reminder v3.0",
+    slug: "pengingat-absen",
+    description:
+      "Sistem otomasi pengingat absensi pegawai BPS berbasis Laravel 11, Node.js headless WhatsApp agent (whatsapp-web.js + Puppeteer), dan Bot Telegram Admin dengan anti-ban jitter engine serta sinkronisasi hari libur nasional.",
+    tech: ["Laravel", "PHP", "Node.js", "Puppeteer", "MySQL", "Telegram API"],
+    url: "https://github.com/faizarfi/pengingat-absen",
+    github: "https://github.com/faizarfi/pengingat-absen",
+    featured: true,
+    category: "Otomasi & Tooling",
+    details: {
+      role: "Backend & Automation Developer",
+      metric: "Hybrid Laravel + Headless WA Agent",
+      overview:
+        "BPS Smart Attendance Reminder v3.0 mengotomasi pengiriman pengingat absensi masuk dan pulang pegawai BPS secara mandiri tanpa biaya gateway pihak ketiga. Backend Laravel 11 mengatur penjadwalan, sinkronisasi API hari libur nasional, manajemen template dinamis, dan outbox pengiriman, sementara service Node.js terpisah (wa-desktop-agent) menjalankan whatsapp-web.js secara headless dengan mekanisme anti-ban komprehensif dan kendali jarak jauh melalui Bot Telegram Admin.",
+      contributions: [
+        "Membangun arsitektur hybrid backend Laravel 11 dengan Node.js headless WhatsApp Web agent (whatsapp-web.js & Puppeteer Core) yang diautentikasi via Bearer Token.",
+        "Mengembangkan anti-ban engine: human-like jitter delay (10 sampai 18 detik), simulasi mengetik, batch cooldown, daily throttling, business hours guard, dan auto-pause saat gagal beruntun.",
+        "Mengintegrasikan Bot Telegram Admin interaktif (webhook & polling) untuk memicu pengiriman massal, memilih pegawai via inline keyboard, dan memantau alert koneksi terputus.",
+        "Menyediakan panel Koneksi WhatsApp langsung di web dashboard (scan QR di browser, status live, putus/ganti nomor) tanpa menyentuh terminal SSH.",
+        "Mengotomasi sinkronisasi API hari libur nasional dan jadwal kerja fleksibel (termasuk Ramadan), lengkap dengan suite pengujian PHPUnit.",
+      ],
+      architecture: {
+        summary:
+          "Arsitektur Hybrid Scheduler Laravel 11, REST-Bridged Node.js Headless WhatsApp Agent, dan Webhook/Polling Telegram Bot Remote Control.",
+        layers: [
+          {
+            tier: "01. Admin Web & Bot Control",
+            title: "Dashboard Manajemen & Telegram Admin Bot",
+            tech: "Laravel Blade + Tailwind CSS v4 + Telegram Bot API",
+            description:
+              "Dashboard pemantauan live outbox, editor template variabel dinamis, scan QR WhatsApp di browser, serta kendali jarak jauh via Telegram.",
+          },
+          {
+            tier: "02. Scheduler & Queue Core",
+            title: "Holiday-Aware Scheduler & Outbox Guard",
+            tech: "Laravel 11 Scheduler + Rate Limiter + Holiday API Sync",
+            description:
+              "Penangguhan otomatis di akhir pekan dan hari libur nasional, normalisasi nomor internasional (62), serta recovery otomatis antrean macet.",
+          },
+          {
+            tier: "03. Headless WhatsApp Agent",
+            title: "Anti-Ban Delivery & Persistent Session Runner",
+            tech: "Node.js + whatsapp-web.js + Puppeteer Core + LocalAuth",
+            description:
+              "Eksekusi pengiriman di latar belakang dengan jeda acak manusiawi, injeksi entropi zero-width, batch cooldown, dan auto-reconnect.",
+          },
+          {
+            tier: "04. Persistence & Audit",
+            title: "Employee, Schedule & Transmission Logs",
+            tech: "MySQL 8.0 / MariaDB + CSV Export + PHPUnit",
+            description:
+              "Penyimpanan daftar pegawai unik, konfigurasi jam kerja, status outbox riil, dan laporan CSV riwayat transmisi.",
+          },
+        ],
+        tables: [
+          {
+            name: "employees",
+            description: "Data master pegawai dengan nomor WhatsApp ternormalisasi dan status keaktifan pengingat.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "ID pegawai" },
+              { name: "name", type: "VARCHAR(120)", desc: "Nama lengkap pegawai" },
+              { name: "phone", type: "VARCHAR(20)", key: "IDX", desc: "Nomor WhatsApp unik format 62" },
+              { name: "is_active", type: "BOOLEAN", desc: "Status keaktifan jadwal pengingat" },
+            ],
+            relations: ["1:N dengan outbox_messages"],
+          },
+          {
+            name: "outbox_messages",
+            description: "Antrean pesan terjadwal dan status keterkiriman riil dari WhatsApp Agent.",
+            columns: [
+              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "ID antrean pesan" },
+              { name: "employee_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke employees.id" },
+              { name: "status", type: "ENUM('pending','processing','sent','failed')", key: "IDX", desc: "Status transmisi outbox" },
+              { name: "scheduled_at", type: "TIMESTAMP", key: "IDX", desc: "Waktu target pengiriman" },
+              { name: "sent_at", type: "TIMESTAMP", desc: "Waktu pesan berhasil terkirim" },
+            ],
+            relations: ["N:1 dengan employees"],
+          },
+        ],
+        highlights: [
+          "Mode Hybrid Fleksibel: Laravel di Hosting/VPS Terhubung Aman ke WA Agent via Bearer Token",
+          "Anti-Ban Engine dengan Jitter Delay, Batch Cooldown, dan Auto-Pause Kegagalan Beruntun",
+          "Scan QR & Kontrol Putus/Ganti Nomor WhatsApp Langsung dari Web Dashboard",
+          "Terintegrasi Bot Telegram Admin dan Sinkronisasi Otomatis Hari Libur Nasional Indonesia",
+        ],
+      },
+    },
+  },
+  {
+    name: "Said Connect: Tracer Study Alumni",
     slug: "said-connect",
     description:
-      "Sistem informasi pelacakan dan survei karier alumni UIN Raden Mas Said Surakarta untuk mendata lulusan, keselarasan studi, dan statistik dunia kerja secara terpusat.",
+      "Sistem informasi pelacakan dan survei karier alumni UIN Raden Mas Said Surakarta untuk mendata lulusan, keselarasan studi, masa tunggu kerja, dan statistik dunia kerja secara terpusat.",
     tech: ["Laravel", "PHP", "MySQL", "JavaScript", "Tailwind CSS", "Git"],
     url: "https://saidconnect.pribumics.my.id/",
     github: "https://github.com/faizarfi/tracer-alumni",
@@ -73,17 +467,16 @@ export const PROJECTS: Project[] = [
     category: "Laravel / PHP",
     details: {
       role: "Full Stack Developer",
-      metric: "Demo dan kode tersedia",
+      metric: "Demo Langsung Tersedia",
       overview:
-        "Said Connect dibangun untuk mengatasi kendala pengumpulan data alumni yang sebelumnya masih tersebar dan manual. Dengan aplikasi ini, alumni kampus UIN Raden Mas Said Surakarta dapat mengisi kuesioner pelacakan karier secara mandiri, sementara pihak universitas memperoleh dashboard visual real-time mengenai sebaran profesi dan relevansi kurikulum perkuliahan.",
+        "Said Connect dibangun untuk mengatasi kendala pengumpulan data alumni yang sebelumnya tersebar dan manual. Alumni UIN Raden Mas Said Surakarta dapat mengisi kuesioner pelacakan karier secara mandiri, sementara pihak universitas memperoleh dashboard visual mengenai sebaran profesi, masa tunggu kerja, dan relevansi kurikulum perkuliahan.",
       contributions: [
-        "Merancang struktur basis data relasional MySQL untuk menampung ratusan respons survei dan profil alumni secara terstruktur.",
-        "Mengembangkan formulir tracer study dinamis dengan validasi input yang ketat agar data yang masuk valid dan tidak ganda.",
-        "Membangun dashboard admin untuk rekapitulasi data pekerjaan, keselarasan bidang studi, dan sebaran domisili alumni.",
+        "Merancang struktur basis data relasional MySQL untuk menampung respons survei dan profil alumni secara terstruktur.",
+        "Mengembangkan formulir tracer study dinamis dengan validasi input ketat agar data valid dan tidak duplikat.",
+        "Membangun dashboard admin untuk rekapitulasi pekerjaan, keselarasan bidang studi, dan sebaran domisili alumni.",
         "Menerapkan sistem autentikasi multi-peran (admin kampus dan akun alumni) dengan perlindungan keamanan standar Laravel.",
-        "Mendesain antarmuka yang bersih dan responsif agar alumni nyaman mengisi survei langsung dari ponsel cerdas mereka.",
+        "Mendesain antarmuka responsif agar alumni nyaman mengisi survei langsung melalui perangkat seluler maupun desktop.",
       ],
-      contributionsCount: 5,
       architecture: {
         summary: "Arsitektur Monolitik MVC berbasis Laravel 11 dengan Relational Database MySQL 8.0 & Role-Based Access Control (RBAC).",
         layers: [
@@ -103,7 +496,7 @@ export const PROJECTS: Project[] = [
             tier: "03. Business Logic & Export Layer",
             title: "Service & Reporting Engine",
             tech: "Eloquent ORM + DomPDF / Maatwebsite Excel",
-            description: "Pengolahan agregasi data tracer, perhitungan persentase keselarasan studi, serta export rekapitulasi laporan.",
+            description: "Pengolahan agregasi data tracer, perhitungan persentase keselarasan studi, serta ekspor rekapitulasi laporan.",
           },
           {
             tier: "04. Data Persistence Layer",
@@ -118,7 +511,7 @@ export const PROJECTS: Project[] = [
             description: "Tabel kredensial autentikasi utama dan penentuan hak akses pengguna.",
             columns: [
               { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Auto-increment primary key" },
-              { name: "email", type: "VARCHAR(255)", key: "IDX", desc: "Unique email alumni / admin" },
+              { name: "email", type: "VARCHAR(255)", key: "IDX", desc: "Unique email alumni atau admin" },
               { name: "password", type: "VARCHAR(255)", desc: "Bcrypt hashed password" },
               { name: "role", type: "ENUM('admin','alumni')", desc: "Hak akses sistem" },
               { name: "created_at", type: "TIMESTAMP", desc: "Waktu pembuatan akun" },
@@ -146,7 +539,7 @@ export const PROJECTS: Project[] = [
               { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key kuesioner" },
               { name: "alumni_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke alumni_profiles.id" },
               { name: "status_pekerjaan", type: "VARCHAR(50)", desc: "Bekerja, Wirausaha, atau Studi Lanjut" },
-              { name: "nama_instansi", type: "VARCHAR(150)", desc: "Nama perusahaan / kantor tempat kerja" },
+              { name: "nama_instansi", type: "VARCHAR(150)", desc: "Nama perusahaan atau kantor tempat kerja" },
               { name: "keselarasan_bidang", type: "ENUM('Sangat Selaras','Selaras','Kurang Selaras')", desc: "Kesesuaian kurikulum" },
               { name: "masa_tunggu_bulan", type: "INT", desc: "Waktu tunggu hingga memperoleh kerja pertama" },
               { name: "submitted_at", type: "TIMESTAMP", desc: "Waktu submit survei" },
@@ -164,421 +557,53 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    name: "AI Chatbot Layanan Informasi",
-    slug: "aichatbot-bps",
-    description:
-      "Asisten virtual cerdas berbasis AI untuk mempermudah masyarakat dan instansi menemukan data statistik serta informasi layanan publik secara cepat lewat tanya jawab natural.",
-    tech: ["Laravel", "PHP", "Blade", "Gemini AI API", "MySQL", "Tailwind CSS"],
-    url: "https://github.com/faizarfi/aichatbotbps",
-    github: "https://github.com/faizarfi/aichatbotbps",
-    featured: true,
-    category: "AI & Otomasi",
-    details: {
-      role: "Full Stack Developer",
-      metric: "Kode sumber publik",
-      overview:
-        "Proyek asisten chatbot ini dirancang untuk menjawab pertanyaan seputar indikator statistik publik tanpa pengguna harus membaca dokumen laporan tebal secara manual. Sistem mengintegrasikan API kecerdasan buatan dengan basis pengetahuan lokal agar dapat memberikan jawaban yang tepat dan relevan.",
-      contributions: [
-        "Mengintegrasikan Gemini AI API ke dalam backend Laravel dengan prompt engineering terarah agar respon tetap akurat dan faktual.",
-        "Membuat panel manajemen riwayat percakapan dan feedback pengguna untuk evaluasi kepuasan layanan secara berkala.",
-        "Mendesain antarmuka obrolan (*chat UI*) interaktif yang ringan, dilengkapi animasi indikator mengetik dan respons real-time.",
-        "Menyiapkan filter keamanan input percakapan untuk mencegah eksploitasi prompt injection.",
-      ],
-      contributionsCount: 4,
-      architecture: {
-        summary: "Arsitektur Hybrid RAG & LLM Gateway yang menghubungkan User Chat Interface dengan API Kecerdasan Buatan dan Logging Database.",
-        layers: [
-          {
-            tier: "01. Conversational Client UI",
-            title: "Interactive Chat Interface",
-            tech: "Blade Components + AJAX / Fetch API + Tailwind CSS",
-            description: "Antarmuka obrolan percakapan dengan auto-scroll, indikator pengetikan cerdas, dan form pengaduan masyarakat.",
-          },
-          {
-            tier: "02. AI Gateway & Prompt Middleware",
-            title: "LLM Pipeline & Context Injector",
-            tech: "Laravel HTTP Client + Gemini / LLaMA API Wrapper",
-            description: "Injeksi basis pengetahuan statistik instansi, penyaringan prompt injection, dan penanganan timeout request.",
-          },
-          {
-            tier: "03. Analytics & Logging Backend",
-            title: "Session & Ticket Management",
-            tech: "Laravel Controller & Eloquent Models",
-            description: "Penyimpanan otomatis riwayat dialog, kategorisasi topik pertanyaan, dan pembuatan tiket layanan publik.",
-          },
-          {
-            tier: "04. Database Persistence",
-            title: "Conversation & Feedback Store",
-            tech: "MySQL 8.0 / SQLite",
-            description: "Penyimpanan terindeks untuk sesi percakapan, pesan tanya-jawab, dan data rekapitulasi pengaduan publik.",
-          },
-        ],
-        tables: [
-          {
-            name: "conversations",
-            description: "Sesi percakapan antara pengunjung publik dan asisten AI.",
-            columns: [
-              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key session" },
-              { name: "session_token", type: "VARCHAR(64)", key: "IDX", desc: "Token unik sesi obrolan" },
-              { name: "user_ip", type: "VARCHAR(45)", desc: "IP address pengunjung" },
-              { name: "created_at", type: "TIMESTAMP", desc: "Waktu percakapan dimulai" },
-            ],
-            relations: ["1:N dengan messages"],
-          },
-          {
-            name: "messages",
-            description: "Log pesan tanya jawab antara pengguna (user) dan respons bot (assistant).",
-            columns: [
-              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "Primary key pesan" },
-              { name: "conversation_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke conversations.id" },
-              { name: "sender_role", type: "ENUM('user','assistant')", desc: "Pengirim pesan" },
-              { name: "message_body", type: "TEXT", desc: "Konten teks pertanyaan/jawaban" },
-              { name: "tokens_used", type: "INT", desc: "Jumlah token inferensi AI" },
-            ],
-            relations: ["N:1 dengan conversations"],
-          },
-        ],
-        highlights: [
-          "Prompt Engineering Terstruktur untuk Akurasi Data Pelayanan Publik",
-          "Mekanisme Keamanan Input dari Percobaan Eksploitasi Prompt Injection",
-          "Logging Lengkap Dialog Percakapan untuk Audit & Evaluasi Kinerja Layanan",
-        ],
-      },
-    },
-  },
-  {
-    name: "Sistem Pengingat & Rekap Absen",
-    slug: "pengingat-absen",
-    description:
-      "Aplikasi otomasi jadwal dan notifikasi pengingat presensi kerja dengan fitur rekapitulasi kehadiran berkala untuk membantu kelancaran operasional tim.",
-    tech: ["Laravel", "PHP", "MySQL", "Cron Jobs", "Tailwind CSS", "JavaScript"],
-    url: "https://github.com/faizarfi/pengingat-absen",
-    github: "https://github.com/faizarfi/pengingat-absen",
-    featured: true,
-    category: "Laravel / PHP",
-    details: {
-      role: "Backend & Full Stack Developer",
-      metric: "Kode sumber publik",
-      overview:
-        "Aplikasi ini lahir dari kebutuhan nyata untuk mengurangi keterlambatan presensi kerja dan menyederhanakan penyusunan laporan kehadiran bulanan yang memakan waktu jika dikerjakan manual.",
-      contributions: [
-        "Mengonfigurasi Laravel Scheduler dan Cron Jobs server untuk otomatisasi pengiriman pesan pengingat jadwal kerja tepat waktu.",
-        "Menulis algoritma rekapitulasi absensi otomatis yang menghitung kehadiran, izin, dan jam lembur menjadi laporan siap pakai.",
-        "Menyusun skema database log harian presensi yang efisien dan cepat saat diproses untuk periode panjang.",
-      ],
-      contributionsCount: 3,
-      architecture: {
-        summary: "Arsitektur Otomasi Background Scheduler & Job Queue dengan Database Log Kehadiran.",
-        layers: [
-          {
-            tier: "01. Dashboard Client UI",
-            title: "Monitoring & Presensi View",
-            tech: "Blade Templates + Tailwind CSS",
-            description: "Antarmuka manajemen jadwal kerja, input status izin/cuti, dan rekapitulasi kehadiran tim.",
-          },
-          {
-            tier: "02. Task Scheduler & Worker",
-            title: "Cron Automation Engine",
-            tech: "Laravel Scheduler + Background Daemon",
-            description: "Pemicu otomatis pengingat presensi pada jam masuk/pulang serta pengelompokan antrean notifikasi.",
-          },
-          {
-            tier: "03. Notification Gateway",
-            title: "Dispatch Service",
-            tech: "Notification Gateway API / Webhook Integration",
-            description: "Eksekusi pengiriman notifikasi broadcast jadwal kerja langsung ke nomor kontak karyawan.",
-          },
-          {
-            tier: "04. Database Storage",
-            title: "Attendance & Employee Schema",
-            tech: "MySQL 8.0",
-            description: "Penyimpanan data pegawai, jadwal shift kerja, dan riwayat presensi harian.",
-          },
-        ],
-        tables: [
-          {
-            name: "employees",
-            description: "Data master identitas karyawan dan nomor kontak notifikasi.",
-            columns: [
-              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "ID karyawan" },
-              { name: "nip", type: "VARCHAR(30)", key: "IDX", desc: "Nomor Induk Pegawai unik" },
-              { name: "nama", type: "VARCHAR(120)", desc: "Nama lengkap pegawai" },
-              { name: "no_telepon", type: "VARCHAR(20)", desc: "Nomor telepon tujuan notifikasi" },
-              { name: "status_aktif", type: "BOOLEAN", desc: "Status kerja aktif" },
-            ],
-            relations: ["1:N dengan attendance_logs"],
-          },
-          {
-            name: "attendance_logs",
-            description: "Catatan presensi masuk, pulang, dan perhitungan keterlambatan.",
-            columns: [
-              { name: "id", type: "BIGINT UNSIGNED", key: "PK", desc: "ID log presensi" },
-              { name: "employee_id", type: "BIGINT UNSIGNED", key: "FK", desc: "Relasi ke employees.id" },
-              { name: "tanggal", type: "DATE", key: "IDX", desc: "Tanggal presensi" },
-              { name: "jam_masuk", type: "TIME", desc: "Waktu check-in" },
-              { name: "jam_pulang", type: "TIME", desc: "Waktu check-out" },
-              { name: "status", type: "ENUM('Hadir','Terlambat','Izin','Sakit')", desc: "Status kehadiran" },
-            ],
-            relations: ["N:1 dengan employees"],
-          },
-        ],
-        highlights: [
-          "Otomasi Penuh Pengingat Jadwal melalui Laravel Scheduler & Cron Jobs",
-          "Algoritma Rekapitulasi Otomatis Jam Kerja dan Perhitungan Keterlambatan",
-          "Struktur Database Efisien untuk Menampung Riwayat Presensi Jangka Panjang",
-        ],
-      },
-    },
-  },
-  {
-    name: "Pordes Jomblang Scoring System",
-    slug: "score-pordes-jomblang",
-    description:
-      "Papan skor digital dan live scoring turnamen olahraga desa real-time untuk mencatat skor pertandingan, klasemen grup, dan statistik laga secara instan.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-    url: "https://pordesjomblang.vercel.app",
-    github: "https://github.com/faizarfi/score",
-    featured: true,
-    category: "React / Next.js",
-    details: {
-      role: "Frontend Developer",
-      metric: "Digunakan pada Pordes",
-      overview:
-        "Sistem live score ini dibuat dan digunakan langsung di lapangan pada ajang turnamen Pekan Olahraga Desa (Pordes). Penonton di tribun dan panitia pertandingan dapat memantau perkembangan skor secara langsung di browser tanpa perlu me-refresh halaman.",
-      contributions: [
-        "Membangun mesin penghitung poin dan manajemen state dinamis menggunakan React dan TypeScript.",
-        "Merancang tampilan papan skor bergaya scoreboard modern dengan visibilitas tinggi saat diproyeksikan ke layar monitor besar.",
-        "Menyediakan bagan fase gugur (*tournament bracket*) dan tabel klasemen otomatis yang update saat pertandingan selesai.",
-        "Mengoptimalkan loading website via Vercel agar sangat ringan dibuka ratusan penonton dengan jaringan internet seluler lapangan.",
-      ],
-      contributionsCount: 4,
-      architecture: {
-        summary: "Arsitektur Single Page Application (SPA) Reaktif dengan State Management Terpusat & Sinkronisasi Skor Instan.",
-        layers: [
-          {
-            tier: "01. Spectator & Scoreboard View",
-            title: "High-Visibility Display UI",
-            tech: "Next.js + React 19 + Tailwind CSS",
-            description: "Papan skor kontras tinggi dengan tipografi jumbo untuk layar proyektor lapangan dan layar smartphone.",
-          },
-          {
-            tier: "02. Match Controller & Engine",
-            title: "Game Rules & State Engine",
-            tech: "TypeScript State Reducer + Local Storage Sync",
-            description: "Logika reli poin bulutangkis/olahraga, sistem deuce otomatis, perpindahan servis, dan riwayat set.",
-          },
-          {
-            tier: "03. Bracket & Standings Engine",
-            title: "Tournament Group Stage Calculator",
-            tech: "Array Transformation Algorithms",
-            description: "Kalkulasi agregat kemenangan, selisih poin, dan penentuan juara grup otomatis.",
-          },
-          {
-            tier: "04. Edge CDN Hosting",
-            title: "Global Edge Network",
-            tech: "Vercel Edge Network",
-            description: "Penyajian aset statis berkecepatan tinggi dengan TTFB rendah di jaringan internet lapangan.",
-          },
-        ],
-        tables: [
-          {
-            name: "MatchState Schema (Client State)",
-            description: "Struktur data state reaktif yang menampung jalannya pertandingan aktif.",
-            columns: [
-              { name: "match_id", type: "STRING", key: "PK", desc: "Pengenal unik partai tanding" },
-              { name: "player_a_score", type: "INTEGER", desc: "Poin pemain/tim A" },
-              { name: "player_b_score", type: "INTEGER", desc: "Poin pemain/tim B" },
-              { name: "current_set", type: "INTEGER (1-3)", desc: "Babak set yang sedang berjalan" },
-              { name: "is_deuce", type: "BOOLEAN", desc: "Status deuce perpanjangan poin" },
-              { name: "server_pos", type: "ENUM('A_LEFT','A_RIGHT','B_LEFT','B_RIGHT')", desc: "Posisi servis" },
-            ],
-            relations: ["Tersimpan di memory state & disinkronkan ke local cache"],
-          },
-        ],
-        highlights: [
-          "Logika State Management Presisi untuk Penghitungan Skor & Perpindahan Servis Otomatis",
-          "Desain High-Visibility Scoreboard yang Terbaca Jelas di Layar Monitor Lapangan",
-          "Kinerja Ringan & Instan di Akses via Smartphone Tanpa Beban Kuota Berlebih",
-        ],
-      },
-    },
-  },
-  {
-    name: "API 9 Router Gateway",
-    slug: "api9router",
-    description:
-      "Gateway perutean API serverless ringan untuk mengelola rute endpoint, standarisasi response JSON, dan penanganan CORS antarlayanan web.",
-    tech: ["JavaScript", "Node.js", "REST API", "Vercel"],
-    url: "https://api9router.vercel.app",
-    github: "https://github.com/faizarfi/api9router",
-    featured: true,
-    category: "Backend & API",
-    details: {
-      role: "Backend Developer",
-      metric: "Demo live tersedia",
-      overview:
-        "Micro-service utilitas yang dibuat untuk menghubungkan beberapa frontend dengan service pihak ketiga secara aman, menyediakan format respon JSON yang seragam dan menangani izin header CORS.",
-      contributions: [
-        "Merancang arsitektur router modular untuk mempermudah penambahan endpoint baru tanpa mengganggu service lain.",
-        "Menerapkan middleware validasi parameter request dan error handling terpusat yang informatif.",
-        "Men-deploy ke environment serverless Vercel Edge untuk respon berkecepatan tinggi dengan biaya infrastruktur minimal.",
-      ],
-      contributionsCount: 3,
-      architecture: {
-        summary: "Arsitektur Serverless API Gateway berbasis Node.js dengan Standarisasi CORS & JSON Payload.",
-        layers: [
-          {
-            tier: "01. Request Gateway & CORS Handler",
-            title: "Incoming Request Interceptor",
-            tech: "Node.js HTTP Router + Custom Middleware",
-            description: "Validasi header origin, pre-flight OPTIONS request, dan otorisasi API key.",
-          },
-          {
-            tier: "02. Route Dispatcher & Validator",
-            title: "Endpoint Route Resolver",
-            tech: "Modular Path Matcher",
-            description: "Penerusan request ke downstream service yang sesuai dengan validasi payload parameter.",
-          },
-          {
-            tier: "03. Response Transformer",
-            title: "Standardized JSON Formatter",
-            tech: "JSON Envelope Pattern",
-            description: "Standarisasi format respon: { status, data, error, timestamp }.",
-          },
-        ],
-        tables: [],
-        highlights: [
-          "Arsitektur Serverless Modular Tanpa Overhead Server Fisik",
-          "Penanganan Terpusat Header CORS dan Standarisasi Struktur Response API",
-          "Error Handling Komprehensif dengan Pesan Diagnostik yang Jelas",
-        ],
-      },
-    },
-  },
-  {
-    name: "Universal TV Remote Pro",
-    slug: "universal-tv-remote",
-    description:
-      "Aplikasi remote TV universal pintar berbasis React/Next.js dan PWA dengan haptic vibration, synthesizer audio klik tombol (Web Audio API), layar OLED digital interaktif, dan simulator layar TV 16:9 langsung di browser.",
-    tech: ["Next.js", "React", "TypeScript", "PWA", "Web Audio API", "Tailwind CSS"],
-    url: "https://remote-eta-lyart.vercel.app",
-    github: "https://github.com/faizarfi/remote",
-    featured: true,
-    category: "React / Next.js",
-    details: {
-      role: "Frontend Developer",
-      metric: "PWA siap pakai",
-      overview:
-        "Dibuat sebagai solusi praktis ketika remote TV fisik rusak atau hilang. Aplikasi ini mensimulasikan remote fisik genggam kelas atas dengan efek tekan 3D, getaran taktil nyata (navigator.vibrate), dan efek suara mekanikal menggunakan Web Audio API. Mendukung berbagai merek TV termasuk Roku, Android TV, Samsung Tizen, LG webOS, dan bahkan TV analog via ESP32 IR Blaster.",
-      contributions: [
-        "Mengembangkan antarmuka remote fisik obsidian ergonomis dengan efek tekan 3D, lekukan bertekstur, dan LED pemancar infra-merah yang menyala saat sinyal dikirim.",
-        "Mengimplementasikan haptic vibration feedback (navigator.vibrate) dan synthesizer suara klik tombol menggunakan Web Audio API murni tanpa aset audio eksternal.",
-        "Membangun layar OLED digital interaktif dan simulator TV 16:9 menampilkan status real-time, volume bar, channel aktif, serta pratinjau monitor.",
-        "Menyediakan dukungan multi-merek TV (Roku via HTTP ECP, Android TV, Samsung Tizen, LG webOS, dan TV analog via ESP32/ESP8266 IR Blaster).",
-        "Mengonfigurasi Progressive Web App (PWA) agar dapat dipasang langsung di layar utama smartphone tanpa unduhan dari App Store.",
-      ],
-      contributionsCount: 5,
-      architecture: {
-        summary: "Arsitektur PWA Mobile-First dengan Web Audio API Synthesizer, Haptic Feedback Engine, dan Multi-Protocol TV Control Bridge.",
-        layers: [
-          {
-            tier: "01. Remote UI Layer",
-            title: "Physical Remote Simulation",
-            tech: "Next.js App Router + React 19 + Tailwind CSS",
-            description: "Antarmuka remote fisik obsidian dengan D-Pad 5 arah, rocker volume/channel, numeric keypad lipat, tombol streaming, dan virtual trackpad/keyboard.",
-          },
-          {
-            tier: "02. Sensory Feedback Engine",
-            title: "Haptic & Audio Synthesizer",
-            tech: "Navigator.vibrate API + Web Audio API (OscillatorNode)",
-            description: "Getaran taktil untuk setiap penekanan tombol dan efek suara klik mekanikal serta nada power chime yang disintesis langsung di browser.",
-          },
-          {
-            tier: "03. TV Control Bridge",
-            title: "Multi-Protocol Device Controller",
-            tech: "HTTP ECP (Roku) + REST Bridge (Android TV) + WebSocket (Samsung/LG)",
-            description: "Adaptor protokol untuk mengirim perintah ke berbagai merek TV melalui jaringan lokal Wi-Fi.",
-          },
-          {
-            tier: "04. PWA & Edge Hosting",
-            title: "Installable Progressive Web App",
-            tech: "Service Worker + Web App Manifest + Vercel Edge",
-            description: "Aplikasi dapat diinstal langsung di home screen smartphone, bekerja offline untuk UI dasar, dan di-host di edge network global.",
-          },
-        ],
-        tables: [
-          {
-            name: "RemoteState (Client State)",
-            description: "State reaktif yang menampung kondisi remote dan TV target.",
-            columns: [
-              { name: "power_on", type: "BOOLEAN", desc: "Status power TV aktif/mati" },
-              { name: "current_channel", type: "INTEGER", desc: "Nomor channel aktif yang ditampilkan" },
-              { name: "volume_level", type: "INTEGER (0-100)", desc: "Level volume TV saat ini" },
-              { name: "active_input", type: "STRING", desc: "Sumber input aktif (HDMI, AV, dll)" },
-              { name: "tv_brand", type: "ENUM", desc: "Merek TV yang terhubung (Roku, Android TV, dll)" },
-              { name: "connection_ip", type: "STRING", desc: "Alamat IP target TV di jaringan lokal" },
-            ],
-            relations: ["Tersimpan di React state & disinkronkan ke localStorage"],
-          },
-        ],
-        highlights: [
-          "Simulasi Remote Fisik Premium dengan Efek Tekan 3D dan LED Inframerah Aktif",
-          "Haptic Vibration & Audio Synthesizer Tanpa Aset Eksternal (Pure Web Audio API)",
-          "Dukungan Multi-Merek TV dari Smart TV hingga TV Analog via ESP32 IR Blaster",
-          "Progressive Web App (PWA) Installable Langsung dari Browser",
-        ],
-      },
-    },
-  },
-  {
     name: "Google Maps Enterprise Scraper",
     slug: "gmaps-scraper",
     description:
-      "Platform web scraping dan business intelligence berbasis Django dan Playwright untuk ekstraksi data bisnis dari Google Maps secara massal dengan deduplikasi cerdas dan ekspor multi-sheet Excel.",
+      "Platform web scraping dan business intelligence berbasis Django dan Playwright untuk ekstraksi data bisnis dari Google Maps secara massal dengan deduplikasi branch-aware dan ekspor multi-sheet Excel.",
     tech: ["Python", "Django", "Playwright", "Pandas", "OpenPyXL", "Docker"],
     url: "https://github.com/faizarfi/scraping",
     github: "https://github.com/faizarfi/scraping",
     featured: true,
-    category: "AI & Otomasi",
+    category: "Otomasi & Tooling",
     details: {
       role: "Full Stack Developer",
-      metric: "Kode sumber publik",
+      metric: "Web Dashboard + Headless CLI",
       overview:
-        "Platform scraping kelas produksi yang dirancang untuk mengumpulkan, memvalidasi, dan menstrukturkan data bisnis dari Google Maps dalam skala besar. Sistem ini mengatasi tantangan ekstraksi web standar termasuk infinite-scroll rendering, virtualisasi DOM dinamis, penanganan anti-scraping, dan ambiguitas multi-cabang bisnis. Menyediakan dual interface: dashboard web modern dengan telemetri real-time dan CLI untuk headless server dan data pipeline.",
+        "Platform scraping yang dirancang untuk mengumpulkan, memvalidasi, dan menstrukturkan data bisnis dari Google Maps dalam skala besar. Sistem ini menangani tantangan infinite-scroll rendering, virtualisasi DOM dinamis, serta ambiguitas multi-cabang bisnis, dengan antarmuka ganda berupa dashboard web telemetri real-time dan CLI headless untuk otomasi server.",
       contributions: [
-        "Membangun engine scraping headless Playwright yang mensimulasikan trajectory mouse-wheel realistis untuk melewati proteksi anti-scraping Google Maps.",
-        "Mengembangkan algoritma deduplikasi Branch-Aware yang menggunakan compound identity hashing (nama + koordinat geografis) untuk membedakan cabang bisnis berbeda dari entitas duplikat.",
-        "Merancang generator workbook Excel multi-sheet otomatis dengan Master Sheet, sub-sheet per kategori, dan tab agregasi untuk micro-categories.",
-        "Mengimplementasikan fitur Graceful Interruption dengan thread-safe signal flags untuk terminasi browser bersih tanpa mengorbankan data yang sudah dikumpulkan.",
-        "Menyiapkan containerisasi Docker untuk deployment produksi dan integrasi dengan cron jobs serta pipeline orkestra data.",
+        "Membangun engine scraping headless Playwright dengan simulasi trajectory mouse-wheel untuk mengekstrak daftar entitas dari DOM dinamis Google Maps.",
+        "Mengembangkan algoritma deduplikasi Branch-Aware menggunakan compound identity hashing (nama + koordinat geografis) agar cabang bisnis berbeda tidak terhapus.",
+        "Merancang generator workbook Excel multi-sheet otomatis dengan Master Sheet, sub-sheet per kategori, dan tab agregasi via OpenPyXL dan Pandas.",
+        "Mengimplementasikan Graceful Interruption dengan thread-safe signal flags untuk terminasi browser bersih tanpa mengorbankan data yang sudah terkumpul.",
+        "Menyiapkan containerisasi Docker untuk deployment dan eksekusi terisolasi pada server.",
       ],
-      contributionsCount: 5,
       architecture: {
         summary: "Arsitektur Multi-Layer Scraping Platform dengan Headless Browser Automation, Smart Deduplication Engine, dan Multi-Format Export Pipeline.",
         layers: [
           {
             tier: "01. Client Interface Layer",
             title: "Web Dashboard & CLI Client",
-            tech: "Django Templates + Bootstrap + Management Commands",
-            description: "Dashboard web modern dengan telemetri real-time, progress polling asinkron, dan antarmuka CLI untuk operasi headless server.",
+            tech: "Django Templates + Management Commands",
+            description: "Dashboard web dengan pemantauan progres asinkron dan antarmuka CLI (cli_scraper.py) untuk operasi headless server.",
           },
           {
             tier: "02. Scraping Orchestration Layer",
             title: "Async Playwright Worker Engine",
             tech: "Playwright (Headless Chromium) + Threading",
-            description: "Worker thread asinkron yang mengontrol browser headless, mensimulasikan scroll realistis, dan mengekstrak data dari DOM dinamis Google Maps.",
+            description: "Worker thread yang mengontrol browser headless, melakukan scrolling daftar hasil, dan mengekstrak atribut tempat usaha.",
           },
           {
             tier: "03. Data Processing Layer",
             title: "Deduplication & Validation Pipeline",
-            tech: "Pandas + Custom Hashing Algorithm",
-            description: "Engine deduplikasi cerdas berbasis koordinat geografis dan validasi data dengan normalisasi nama, filtering noise, dan enrichment metadata.",
+            tech: "Pandas + Compound Identity Hashing",
+            description: "Engine deduplikasi berbasis koordinat geografis dan normalisasi nama tempat usaha serta metadata lokasi.",
           },
           {
             tier: "04. Export & Persistence Layer",
             title: "Multi-Format Export Engine",
             tech: "OpenPyXL + CSV (UTF-8 BOM) + SQLite/PostgreSQL",
-            description: "Generator workbook Excel multi-sheet dengan styling eksekutif, auto-adjusted columns, clickable map links, dan ekspor CSV universal.",
+            description: "Generator workbook Excel multi-sheet dengan auto-adjusted columns, clickable map links, dan ekspor CSV.",
           },
         ],
         tables: [
@@ -591,7 +616,7 @@ export const PROJECTS: Project[] = [
               { name: "category", type: "VARCHAR(100)", key: "IDX", desc: "Klasifikasi kategori bisnis" },
               { name: "latitude", type: "DECIMAL(10,8)", desc: "Koordinat lintang geografis" },
               { name: "longitude", type: "DECIMAL(11,8)", desc: "Koordinat bujur geografis" },
-              { name: "rating", type: "DECIMAL(2,1)", desc: "Rating bintang Google Maps (0.0-5.0)" },
+              { name: "rating", type: "DECIMAL(2,1)", desc: "Rating bintang Google Maps" },
               { name: "review_count", type: "INTEGER", desc: "Jumlah ulasan pengguna" },
               { name: "address", type: "TEXT", desc: "Alamat lengkap tempat usaha" },
               { name: "phone", type: "VARCHAR(20)", desc: "Nomor telepon bisnis" },
@@ -600,63 +625,82 @@ export const PROJECTS: Project[] = [
           },
         ],
         highlights: [
-          "Headless Browser Automation dengan Simulasi Mouse Trajectory Realistis",
+          "Headless Browser Automation dengan Simulasi Scroll Dinamis",
           "Algoritma Deduplikasi Branch-Aware Berbasis Compound Identity Hashing",
-          "Multi-Sheet Excel Workbook Generator dengan Styling Eksekutif Otomatis",
+          "Multi-Sheet Excel Workbook Generator dengan Auto-Adjusted Formatting",
           "Graceful Interruption Engine untuk Terminasi Bersih Tanpa Kehilangan Data",
         ],
       },
     },
   },
   {
-    name: "Express.js REST API Backend",
-    slug: "express-api-backend",
+    name: "Universal TV Remote Pro (PWA)",
+    slug: "universal-tv-remote",
     description:
-      "REST API backend serverless yang dibangun dengan Express.js untuk manajemen autentikasi dan pengguna, siap di-deploy ke Vercel sebagai serverless function dengan standarisasi CORS dan environment variables.",
-    tech: ["JavaScript", "Node.js", "Express.js", "REST API", "Vercel"],
-    url: "https://github.com/faizarfi/api",
-    github: "https://github.com/faizarfi/api",
+      "Aplikasi remote TV universal berbasis Next.js dan PWA dengan haptic vibration, synthesizer audio klik tombol (Web Audio API), layar OLED digital interaktif, serta adaptor multi-protokol Smart TV dan ESP32 IR Blaster.",
+    tech: ["Next.js", "React", "TypeScript", "PWA", "Web Audio API", "Tailwind CSS"],
+    url: "https://github.com/faizarfi/remote",
+    github: "https://github.com/faizarfi/remote",
     featured: true,
-    category: "Backend & API",
+    category: "React / Next.js",
     details: {
-      role: "Backend Developer",
-      metric: "Kode sumber publik",
+      role: "Frontend Developer",
+      metric: "PWA & Multi-Protocol TV Bridge",
       overview:
-        "Backend API ringan dan modular yang menyediakan endpoint autentikasi (login & register) serta manajemen pengguna melalui arsitektur REST. Dirancang untuk deployment serverless di Vercel dengan konfigurasi CORS dan environment variables yang aman.",
+        "Dibangun sebagai solusi praktis ketika remote TV fisik rusak atau hilang. Aplikasi ini memadukan antarmuka remote genggam ergonomis dengan umpan balik getaran taktil (navigator.vibrate) dan sintesis suara klik mekanikal murni menggunakan Web Audio API tanpa aset audio eksternal, dilengkapi layer protokol (tvProtocols.ts) untuk Roku HTTP ECP, Android TV, Samsung Tizen, LG webOS, hingga TV analog melalui ESP32 IR Blaster.",
       contributions: [
-        "Merancang arsitektur modular Express.js dengan pemisahan routes (auth, users) agar mudah di-scale dan di-maintenance.",
-        "Mengimplementasikan endpoint autentikasi (login & register) dengan validasi input dan penanganan error yang informatif.",
-        "Mengonfigurasi CORS middleware dan dotenv untuk manajemen environment variables yang aman di environment serverless.",
-        "Men-deploy ke Vercel sebagai serverless function dengan konfigurasi vercel.json untuk routing otomatis.",
+        "Mengembangkan antarmuka remote fisik dengan D-Pad 5-arah, rocker volume/channel, numeric keypad lipat, trackpad virtual, dan layar status OLED interaktif.",
+        "Mengimplementasikan modul audioFeedback.ts menggunakan Web Audio API OscillatorNode dan hapticFeedback.ts (navigator.vibrate) tanpa aset audio eksternal.",
+        "Merancang layer protokol tvProtocols.ts dan katalog tvBrands.ts untuk mendukung Roku ECP (port 8060), Android TV REST bridge, Samsung Tizen, LG webOS, dan ESP32 IR Blaster.",
+        "Mengonfigurasi Progressive Web App (manifest.ts) agar aplikasi dapat dipasang langsung di home screen smartphone.",
       ],
-      contributionsCount: 4,
       architecture: {
-        summary: "Arsitektur REST API Serverless berbasis Express.js dengan Modular Routing, CORS Middleware, dan Vercel Deployment.",
+        summary: "Arsitektur PWA Mobile-First dengan Web Audio API Synthesizer, Haptic Feedback Engine, dan Multi-Protocol TV Control Bridge.",
         layers: [
           {
-            tier: "01. API Gateway & Middleware",
-            title: "Request Handler & CORS",
-            tech: "Express.js + CORS Middleware + dotenv",
-            description: "Entry point API yang menangani parsing request, konfigurasi CORS, dan injeksi environment variables.",
+            tier: "01. Remote UI Layer",
+            title: "Handheld Remote & Virtual TV Simulator",
+            tech: "Next.js App Router + React + Tailwind CSS",
+            description: "Antarmuka remote fisik dengan D-Pad 5 arah, rocker volume/channel, numeric keypad lipat, dan pratinjau layar TV 16:9.",
           },
           {
-            tier: "02. Route Controller Layer",
-            title: "Modular Endpoint Router",
-            tech: "Express Router (auth.js + users.js)",
-            description: "Pemisahan routing modular untuk autentikasi (login/register) dan operasi manajemen pengguna (CRUD).",
+            tier: "02. Sensory Feedback Engine",
+            title: "Haptic & Audio Synthesizer",
+            tech: "Navigator.vibrate API + Web Audio API (OscillatorNode)",
+            description: "Getaran taktil untuk penekanan tombol dan efek suara klik mekanikal serta nada power chime yang disintesis di browser.",
           },
           {
-            tier: "03. Serverless Deployment",
-            title: "Edge Function Runtime",
-            tech: "Vercel Serverless Functions",
-            description: "Deployment otomatis sebagai serverless function dengan cold start minimal dan scaling elastis.",
+            tier: "03. TV Control Bridge",
+            title: "Multi-Protocol Device Controller",
+            tech: "Next.js API Route + Roku HTTP ECP + Bridge Adapters",
+            description: "Adaptor protokol (tvProtocols.ts) untuk mengirim perintah ke berbagai merek Smart TV maupun modul ESP32 IR Blaster di jaringan lokal.",
+          },
+          {
+            tier: "04. PWA Configuration",
+            title: "Installable Progressive Web App",
+            tech: "Web App Manifest (manifest.ts) + Local Storage",
+            description: "Aplikasi dapat dipasang langsung di layar utama smartphone dan menyimpan preferensi merek TV serta alamat IP lokal.",
           },
         ],
-        tables: [],
+        tables: [
+          {
+            name: "RemoteState (Client State)",
+            description: "State reaktif yang menampung kondisi remote dan TV target di sisi klien.",
+            columns: [
+              { name: "power_on", type: "BOOLEAN", desc: "Status power TV aktif atau mati" },
+              { name: "current_channel", type: "INTEGER", desc: "Nomor channel aktif" },
+              { name: "volume_level", type: "INTEGER (0-100)", desc: "Level volume TV saat ini" },
+              { name: "active_input", type: "STRING", desc: "Sumber input aktif (HDMI, AV, dll)" },
+              { name: "tv_brand", type: "ENUM", desc: "Merek TV terhubung (Roku, Android TV, Tizen, webOS, IR)" },
+              { name: "connection_ip", type: "STRING", desc: "Alamat IP target TV di jaringan lokal" },
+            ],
+            relations: ["Disimpan di React state dan disinkronkan ke localStorage"],
+          },
+        ],
         highlights: [
-          "Arsitektur Modular Express.js dengan Pemisahan Route yang Bersih",
-          "Deployment Serverless di Vercel Tanpa Overhead Server Management",
-          "Konfigurasi CORS dan Environment Variables yang Aman",
+          "Audio Synthesizer & Haptic Feedback Tanpa Aset Audio Eksternal (Pure Web Audio API)",
+          "Adaptor Multi-Merek TV dari Smart TV hingga TV Analog via ESP32 IR Blaster",
+          "Progressive Web App (PWA) Siap Pasang di Layar Utama Smartphone",
         ],
       },
     },
