@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
   distDir: isNetlifyOrProd ? ".next" : ".next_dev",
   allowedDevOrigins: [
     "192.168.56.1",
+    "192.168.1.122",
+    "192.168.56.*",
+    "192.168.1.*",
+    "*.local",
     "localhost",
     "127.0.0.1",
   ],
