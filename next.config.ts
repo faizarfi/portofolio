@@ -7,6 +7,11 @@ const isNetlifyOrProd =
 
 const nextConfig: NextConfig = {
   distDir: isNetlifyOrProd ? ".next" : ".next_dev",
+  allowedDevOrigins: [
+    "192.168.56.1",
+    "localhost",
+    "127.0.0.1",
+  ],
   async headers() {
     return [
       {
